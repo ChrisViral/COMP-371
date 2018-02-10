@@ -6,7 +6,7 @@
 
 #include <GL/glew.h>
 #include "Input.h"
-#include "Globals.h"
+#include "../Globals.h"
 #include "Render.h"
 
 //Mouse sensitivity

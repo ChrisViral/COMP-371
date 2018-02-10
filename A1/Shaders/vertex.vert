@@ -1,4 +1,4 @@
-#version 330 core
+#version 450 core
 
 //Get vertex location from layout
 layout (location = 0) in vec3 pos;

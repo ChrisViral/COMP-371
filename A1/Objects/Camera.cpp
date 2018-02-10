@@ -6,7 +6,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include "Camera.h"
-#include "Globals.h"
+#include "../Globals.h"
 
 //Camera constants
 #define FOV 45.0f

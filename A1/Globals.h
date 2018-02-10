@@ -8,8 +8,8 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include "Camera.h"
-#include "Shader.h"
+#include "Objects/Camera.h"
+#include "Objects/Shader.h"
 
 /// \brief GL screen width
 extern GLint screenWidth;
@@ -21,11 +21,3 @@ extern Camera camera;
 extern Shader shader;
 /// \brief GL window pointer
 extern GLFWwindow* window;
-/// \brief Cubes GL containers
-extern GLuint cubesVAO, cubesVBO, cubesEBO;
-/// \brief Lines GL containers
-extern GLuint linesVAO, linesVBO;
-/// \brief Axises GL containers
-extern GLuint axisVAO, axisVBO;
-/// \brief Current projection * view matrix
-extern glm::mat4 vpMatrix;

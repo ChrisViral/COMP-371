@@ -2,19 +2,19 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="A1.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Globals.cpp" />
-    <ClCompile Include="Render.cpp" />
-    <ClCompile Include="Input.cpp" />
+    </ClCompile>
+    </ClCompile>
+    </ClCompile>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="A1.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="Globals.h" />
-    <ClInclude Include="Render.h" />
-    <ClInclude Include="Input.h" />
+    </ClInclude>
+    </ClInclude>
+    </ClInclude>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll" />
@@ -28,6 +28,12 @@
   <ItemGroup>
     <Filter Include="Shaders">
       <UniqueIdentifier>{814377f5-4037-4ff1-8cda-075a47e7af76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{023e1376-c14c-45f8-ae4e-dc48f373d3d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Functions">
+      <UniqueIdentifier>{d5ec8cb5-434d-4106-bdc5-8388dd24f552}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

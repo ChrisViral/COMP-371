@@ -14,6 +14,14 @@ extern float size;
 extern float yawAngle;
 /// \brief Horse pitch angle
 extern float pitchAngle;
+/// \brief Cubes GL containers
+extern GLuint cubesVAO, cubesVBO, cubesEBO;
+/// \brief Lines GL containers
+extern GLuint linesVAO, linesVBO;
+/// \brief Axises GL containers
+extern GLuint axisVAO, axisVBO;
+/// \brief Current projection * view matrix
+extern glm::mat4 vpMatrix;
 
 /**
  * \brief Setup the cubes VAO, VBO, and EBO

@@ -4,10 +4,8 @@
 // Assignment 1
 // Feburary 8th 2018
 
-#include <glm/glm.hpp>
 #include "Globals.h"
 
-using glm::mat4;
 
 //Screen size
 GLint screenWidth = 800;
@@ -19,11 +17,3 @@ Shader shader;
 
 //GL Window
 GLFWwindow* window;
-
-//GL containers
-GLuint cubesVAO, cubesVBO, cubesEBO;
-GLuint linesVAO, linesVBO;
-GLuint axisVAO, axisVBO;
-
-//View Projection matrix
-mat4 vpMatrix;

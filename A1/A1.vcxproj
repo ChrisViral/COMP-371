@@ -172,37 +172,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="A1.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Functions\Input.cpp" />
+    <ClCompile Include="Objects\Camera.cpp" />
     <ClCompile Include="Globals.cpp" />
-    <ClCompile Include="Render.cpp" />
-    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Functions\Render.cpp" />
+    <ClCompile Include="Objects\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="A1.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Functions\Input.h" />
+    <ClInclude Include="Objects\Camera.h" />
     <ClInclude Include="Globals.h" />
-    <ClInclude Include="Render.h" />
-    <ClInclude Include="Shader.h" />
+    <ClInclude Include="Functions\Render.h" />
+    <ClInclude Include="Objects\Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
     </None>
-    <None Include="Shaders\fragment.frag">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
-      <FileType>Script</FileType>
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="Shaders\vertex.vert">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
-      <FileType>Script</FileType>
-      <DeploymentContent>true</DeploymentContent>
-    </None>
+    <None Include="Shaders\fragment.frag" />
+    <None Include="Shaders\vertex.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

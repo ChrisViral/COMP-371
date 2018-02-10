@@ -6,7 +6,7 @@
 
 #include <GL/glew.h>
 #include <glm/gtc/matrix_transform.hpp>
-#include "Globals.h"
+#include "../Globals.h"
 #include "Render.h"
 
 //Cube constants
@@ -24,8 +24,16 @@ float size = 1.0f;
 float yawAngle = 0.0f;
 float pitchAngle = 0.0f;
 
+//GL containers
+GLuint cubesVAO, cubesVBO, cubesEBO;
+GLuint linesVAO, linesVBO;
+GLuint axisVAO, axisVBO;
+
+//View Projection matrix
+mat4 vpMatrix;
+
 //Horse cubes colours
-vec3 horseColours[] =
+static vec3 horseColours[] =
 {
 	vec3(0.7f), //Torso
 
@@ -45,7 +53,7 @@ vec3 horseColours[] =
 };
 
 //Horse cubes positions
-vec3 horsePositions[] =
+static vec3 horsePositions[] =
 {
 	vec3(0.0f, 2.0f, 0.0f),    //Torso
 
@@ -65,7 +73,7 @@ vec3 horsePositions[] =
 };
 
 //Horse cubes sizes
-vec3 horseSizes[] =
+static vec3 horseSizes[] =
 {
 	vec3(2.5f, 1.0f, 0.8f),   //Torso
 
