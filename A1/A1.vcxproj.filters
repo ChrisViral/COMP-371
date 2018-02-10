@@ -17,7 +17,17 @@
     <ClInclude Include="Input.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="vertex.vs" />
-    <None Include="fragment.fs" />
+    <None Include="glew32.dll" />
+    <None Include="Shaders\fragment.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\vertex.vert">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{814377f5-4037-4ff1-8cda-075a47e7af76}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
