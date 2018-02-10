@@ -24,6 +24,7 @@
 *.lai
 *.la
 *.a
+*.lib
 
 # Executables
 *.exe
@@ -33,3 +34,8 @@
 # Visual Studio folders
 Debug/
 Release/
+
+# Personal
+Final/
+Lib/
+Include/
