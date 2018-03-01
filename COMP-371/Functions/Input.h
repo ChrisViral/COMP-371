@@ -1,8 +1,8 @@
 // Christophe Savard
 // 40017812
 // COMP-371 WW 
-// Assignment 1
-// Feburary 8th 2018
+// Assignment 2
+// March 8th 2018
 
 #pragma once
 #include <GLFW/glfw3.h>
