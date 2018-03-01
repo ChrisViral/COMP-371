@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="A1.cpp" />
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="Objects\Camera.cpp">
       <Filter>Objects</Filter>
@@ -15,9 +14,9 @@
     <ClCompile Include="Functions\Render.cpp">
       <Filter>Functions</Filter>
     </ClCompile>
+    <ClCompile Include="COMP-371.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="A1.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Objects\Camera.h">
       <Filter>Objects</Filter>
@@ -31,6 +30,7 @@
     <ClInclude Include="Functions\Render.h">
       <Filter>Functions</Filter>
     </ClInclude>
+    <ClInclude Include="COMP-371.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll" />
