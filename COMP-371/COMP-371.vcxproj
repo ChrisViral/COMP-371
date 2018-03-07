@@ -178,6 +178,8 @@
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="Functions\Render.cpp" />
     <ClCompile Include="Objects\Shader.cpp" />
+    <ClCompile Include="Parsers\FileParser.cpp" />
+    <ClCompile Include="Parsers\Parser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="COMP-371.h" />
@@ -186,6 +188,8 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Functions\Render.h" />
     <ClInclude Include="Objects\Shader.h" />
+    <ClInclude Include="Parsers\FileParser.h" />
+    <ClInclude Include="Parsers\Parser.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll">

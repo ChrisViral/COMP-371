@@ -15,6 +15,12 @@
       <Filter>Functions</Filter>
     </ClCompile>
     <ClCompile Include="COMP-371.cpp" />
+    <ClCompile Include="Parsers\Parser.cpp">
+      <Filter>Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="Parsers\FileParser.cpp">
+      <Filter>Parsers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h" />
@@ -31,6 +37,12 @@
       <Filter>Functions</Filter>
     </ClInclude>
     <ClInclude Include="COMP-371.h" />
+    <ClInclude Include="Parsers\Parser.h">
+      <Filter>Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="Parsers\FileParser.h">
+      <Filter>Parsers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll" />
@@ -50,6 +62,9 @@
     </Filter>
     <Filter Include="Functions">
       <UniqueIdentifier>{d5ec8cb5-434d-4106-bdc5-8388dd24f552}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parsers">
+      <UniqueIdentifier>{a3ed0628-f8f3-4bcf-9b70-fa252cec33f0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
