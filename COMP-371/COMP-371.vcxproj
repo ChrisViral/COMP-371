@@ -179,7 +179,6 @@
     <ClCompile Include="Functions\Render.cpp" />
     <ClCompile Include="Objects\Shader.cpp" />
     <ClCompile Include="Parsers\FileParser.cpp" />
-    <ClCompile Include="Parsers\Parser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="COMP-371.h" />

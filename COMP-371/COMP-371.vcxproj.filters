@@ -15,9 +15,6 @@
       <Filter>Functions</Filter>
     </ClCompile>
     <ClCompile Include="COMP-371.cpp" />
-    <ClCompile Include="Parsers\Parser.cpp">
-      <Filter>Parsers</Filter>
-    </ClCompile>
     <ClCompile Include="Parsers\FileParser.cpp">
       <Filter>Parsers</Filter>
     </ClCompile>
