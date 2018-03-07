@@ -18,6 +18,9 @@
     <ClCompile Include="Parsers\FileParser.cpp">
       <Filter>Parsers</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Cube.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h" />
@@ -39,6 +42,9 @@
     </ClInclude>
     <ClInclude Include="Parsers\FileParser.h">
       <Filter>Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Cube.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
