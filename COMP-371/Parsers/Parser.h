@@ -29,7 +29,7 @@ public:
 	  * \brief Parses the file into the given object type and returns it
 	  * \return Parsed object
 	  */
-	 virtual T parseAll() const;
+	 virtual T parseAll() const = 0;
 
 protected:
 
