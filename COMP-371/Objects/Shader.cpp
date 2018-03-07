@@ -5,16 +5,13 @@
 // March 8th 2018
 
 #include <iostream>
-#include <fstream>
-#include <sstream>
 #include <glm/gtc/type_ptr.hpp>
 #include "Shader.h"
+#include "../Parsers/FileParser.h"
 
 using std::cout;
 using std::endl;
 using std::string;
-using std::ifstream;
-using std::stringstream;
 using glm::mat4;
 using glm::vec3;
 
@@ -23,7 +20,8 @@ Shader::Shader() : id(0) { }
 Shader::Shader(const string vertexPath, const string fragmentPath)
 {
 	//Read the vertex shader file
-	string s = readFile(vertexPath);
+	FileParser shaderParser(vertexPath);
+	string s = shaderParser.parse();
 	const GLchar* source = s.c_str();
 	const GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &source, nullptr);
@@ -41,7 +39,8 @@ Shader::Shader(const string vertexPath, const string fragmentPath)
 	}
 
 	//Read the fragment shader file
-	s = readFile(fragmentPath);
+	shaderParser = FileParser(fragmentPath);
+	s = shaderParser.parse();
 	source = s.c_str();
 	const GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragmentShader, 1, &source, nullptr);
@@ -92,30 +91,4 @@ void Shader::setMat4(const string& name, const mat4 value) const
 {
 	//Set the uniform value
 	glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, value_ptr(value));
-}
-
-string Shader::readFile(const string file)
-{
-	ifstream f;
-	//Set exception bits
-	f.exceptions(ifstream::failbit | ifstream::badbit);
-	try
-	{
-		//Open file
-		f.open(file);
-
-		//Read to string buffer
-		stringstream ss;
-		ss << f.rdbuf();
-
-		//Convert to string
-		string s = ss.str();
-		return s;
-	}
-	catch (ifstream::failure e)
-	{
-		//If error happens, print out error then return empty string
-		cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ\n" << e.what() << endl;
-		return "";
-	}
 }

@@ -60,13 +60,5 @@ public:
 private:
 	//Shader program ID
 	GLuint id;
-
-	//Static methods
-	/**
-	 * \brief Reads all the contents of a text file and returns it in one string
-	 * \param file Path (local or absolute) of the file to read
-	 * \return The text contained in the file
-	 */
-	static std::string readFile(std::string file);
 };
 

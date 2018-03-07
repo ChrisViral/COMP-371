@@ -9,9 +9,11 @@ using std::ifstream;
 using std::stringstream;
 using std::string;
 
+FileParser::FileParser(const string location) : Parser(location) { }
+
 FileParser::~FileParser() { }
 
-string FileParser::parseAll() const
+string FileParser::parse() const
 {
 	ifstream f;
 	//Set exception bits

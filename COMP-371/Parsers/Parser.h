@@ -10,7 +10,7 @@ template <class T>
 class Parser
 {
 public:
-
+	//Constructors
 	/**
 	 * \brief Default constructor, no file location stored
 	 */
@@ -25,16 +25,32 @@ public:
 	 */
 	virtual ~Parser() = 0;
 
+	//Methods
 	/**
 	  * \brief Parses the file into the given object type and returns it
 	  * \return Parsed object
 	  */
-	 virtual T parseAll() const = 0;
+	virtual T parse() const = 0;
+
+	//Operators
+	/**
+	 * \brief Assignment operator
+	 * \param other Other object to assign
+	 * \return The assigned object
+	 */
+	Parser& operator=(const Parser& other)
+	{
+		if (&other != this)
+		{
+			location = other.location;
+		}
+		return *this;
+	}
 
 protected:
-
+	//Fields
 	/// \brief Parser file location
-	const std::string location;
+	std::string location;
 };
 
 //Template definitions
@@ -48,7 +64,8 @@ template <class T>
 Parser<T>::~Parser() { }
 
 template <class T>
-T Parser<T>::parseAll() const
+T Parser<T>::parse() const
 {
+	//Default implementation, throw error
 	throw std::runtime_error("No parser available for this type");
 }
