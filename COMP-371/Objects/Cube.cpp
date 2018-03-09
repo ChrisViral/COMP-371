@@ -7,9 +7,9 @@ Cube::Cube() : pos(vec3(0.0f)), scale(vec3(0.0f)), offset(vec3(0.0f)), angle(0),
 
 Cube::~Cube()
 {
-	for (int i = 0; i < children.size(); i++)
+	for (Cube*& child : children)
 	{
-		delete children[i];
+		delete child;
 	}
 	children.clear();
 	parent = nullptr;

@@ -181,6 +181,8 @@
     <ClCompile Include="Objects\Mesh.cpp" />
     <ClCompile Include="Objects\Shader.cpp" />
     <ClCompile Include="Parsers\FileParser.cpp" />
+    <ClCompile Include="Parsers\MeshParser.cpp" />
+    <ClCompile Include="Parsers\TextUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="COMP-371.h" />
@@ -192,7 +194,9 @@
     <ClInclude Include="Objects\Mesh.h" />
     <ClInclude Include="Objects\Shader.h" />
     <ClInclude Include="Parsers\FileParser.h" />
+    <ClInclude Include="Parsers\MeshParser.h" />
     <ClInclude Include="Parsers\Parser.h" />
+    <ClInclude Include="Parsers\TextUtils.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll">
