@@ -178,6 +178,7 @@
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="Functions\Render.cpp" />
     <ClCompile Include="Objects\Cube.cpp" />
+    <ClCompile Include="Objects\Mesh.cpp" />
     <ClCompile Include="Objects\Shader.cpp" />
     <ClCompile Include="Parsers\FileParser.cpp" />
   </ItemGroup>
@@ -188,6 +189,7 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Functions\Render.h" />
     <ClInclude Include="Objects\Cube.h" />
+    <ClInclude Include="Objects\Mesh.h" />
     <ClInclude Include="Objects\Shader.h" />
     <ClInclude Include="Parsers\FileParser.h" />
     <ClInclude Include="Parsers\Parser.h" />

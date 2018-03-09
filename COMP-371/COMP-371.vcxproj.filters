@@ -21,6 +21,9 @@
     <ClCompile Include="Objects\Cube.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Mesh.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h" />
@@ -44,6 +47,9 @@
       <Filter>Parsers</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Cube.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Mesh.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
