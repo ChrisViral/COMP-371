@@ -9,4 +9,15 @@ public:
 	~MeshParser();
 
 	Mesh* parse() const override;
+
+private:
+	struct Link
+	{
+		std::string parent;
+		Cube* child;
+	};
+
+	const std::string sep = "=";
+
+	static Cube* findCube(std::vector<Cube*>& cubes, const std::string name);
 };

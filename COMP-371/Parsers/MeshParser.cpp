@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <stack>
 #include <vector>
 #include "MeshParser.h"
 #include "TextUtils.hpp"
@@ -9,7 +10,9 @@ using namespace TextUtils;
 using std::cout;
 using std::endl;
 using std::getline;
+using std::stof;
 using std::ifstream;
+using std::stack;
 using std::string;
 using std::vector;
 
@@ -19,17 +22,21 @@ MeshParser::~MeshParser() { }
 
 Mesh* MeshParser::parse() const
 {
-	ifstream f;
 	//Set exception bits
+	ifstream f;
 	f.exceptions(ifstream::failbit | ifstream::badbit);
+
+	//Header message
+	cout << "Parsing Mesh file: " << location << endl;
 	try
 	{
+		//Open file
 		f.open(location);
 
-		string line;
-		int l = 0;
+		string line; //Line text
+		int num = 0; //Line number
 		//Skip heading empty and comment lines
-		while (getline(f, line) && ignoreLine(line)) { l++; }
+		while (getline(f, line) && isEmpty(stripComment(trim(line)))) { num++; }
 
 		//If the first text line is not a mesh declaration, exit now
 		if (line != "[Mesh]")
@@ -38,46 +45,232 @@ Mesh* MeshParser::parse() const
 			return nullptr;
 		}
 
+		//Setup mesh
+		string rootName;
 		Mesh* mesh = new Mesh();
+
+		//Loop through all lines
 		while (getline(f, line))
 		{
-			l++;
-			if (ignoreLine(line)) { continue; }
-			if (line == "[Cube]") { break; }
+			num++;							 //Increment line number
+			line = stripComment(line);		 //Remove comments
+			trim(line);						 //Trim line
+			if (isEmpty(line)) { continue; } //Ignore empty lines
+			if (line == "[Cube]") { break; } //Cube encountered, continue
 
-			vector<string> splits = split(line, "=");
+			//Split at separator
+			vector<string> splits = split(line, sep);
+			//Check if there are a valid number of splits
 			if (splits.size() != 2)
 			{
-				cout << "Invalid data at line " << l << endl;
+				cout << "Invalid separators at line " << num << endl;
 				continue;
 			}
 
-			string name = splits[0];
-			//TODO: switch between possible values
+			//Trim current line values
+			const string name = trim(splits[0]);
+			const string value = trim(splits[1]);
+			//Find correct value
+			if (name == "root")
+			{
+				rootName = value;
+			}
+			else if (name == "position")
+			{
+				mesh->position = parseVec3(value);
+			}
+			else if (name == "scale")
+			{
+				mesh->scale = stof(value);
+			}
+			else if(name == "xRot")
+			{
+				mesh->xRot = stof(value);
+			}
+			else if (name == "zRot")
+			{
+				mesh->zRot = stof(value);
+			}
+			else
+			{
+				//Not found, mention error and line number
+				cout << "Invalid value format at line " << num << endl;
+			}
 		}
-
+		
+		//Setup cube parsing
+		string parent = "";
+		Cube* cube = new Cube();
+		vector<Link> links;
 		vector<Cube*> cubes;
+
+		//Loop through lines
 		while (getline(f, line))
 		{
-			l++;
-			if (ignoreLine(line)) { continue; }
+			num++;							 //Increment line number
+			line = stripComment(line);		 //Remove comment if any
+			trim(line);						 //Trim line
+			if (isEmpty(line)) { continue; } //Ignore empty lines
 
-			vector<string> splits = split(line, "=");
-			if (splits.size() != 2)
+			//If new cube declaration, wrap up previous cube and store
+			if (line == "[Cube]")
 			{
-				cout << "Invalid data at line " << l << endl;
+				//Setup and push link data
+				Link link;
+				link.parent = parent;
+				link.child = cube;
+				links.push_back(link);
+				//Push cube
+				cubes.push_back(cube);
+				//Reset cube
+				cube = new Cube();
 				continue;
 			}
 
-			string name = splits[0];
-			//TODO: switch between possible values
+			//Split at separator
+			vector<string> splits = split(line, sep);
+			//Check if there are a valid number of splits
+			if (splits.size() != 2)
+			{
+				cout << "Invalid separators at line " << num << endl;
+				continue;
+			}
+
+			//Trim current line values
+			const string name = trim(splits[0]);
+			const string value = trim(splits[1]);
+			//Find correct value
+			if (name == "name")
+			{
+				cube->name = value;
+			}
+			if (name == "parent")
+			{
+				parent = value;
+			}
+			else if (name == "position")
+			{
+				cube->position = parseVec3(value);
+			}
+			else if (name == "scale")
+			{
+				cube->scale = parseVec3(value);
+			}
+			else if (name == "offset")
+			{
+				cube->offset = parseVec3(value);
+			}
+			else if (name == "angle")
+			{
+				cube->angle = stof(value);
+			}
+			else
+			{
+				//Not found, mention error and line number
+				cout << "Invalid value format at line " << num << endl;
+			}
 		}
+		//Add final child
+		Link link;
+		link.parent = parent;
+		link.child = cube;
+		links.push_back(link);
+		cubes.push_back(cube);
+		cube = nullptr;
+
+		//Set all links
+		for (Link& l : links)
+		{
+			//If root node, set it as such
+		    if (l.child->name == rootName) { mesh->root = l.child; }
+			else
+			{
+				//Find parent cube
+				Cube* p = findCube(cubes, l.parent);
+				//Fail if parent not found
+				if (p == nullptr)
+				{
+					cout << "ERROR::MESH_PARSER::PARENT_NOT_FOUND\nChild name: " << l.child->name << endl;
+					return nullptr;
+				}
+				//Setup parent/children link
+				l.child->parent = p;
+				p->children.push_back(l.child);
+			}
+		}
+
+		//Make sure the root is set
+		if (mesh->root == nullptr)
+		{
+			cout << "ERROR::MESH_PARSER::ROOT_NOT_FOUND\nTarget root: " << rootName << endl;
+			return nullptr;
+		}
+
+		//Make sure all cubes have a parent
+		for (Cube* c : cubes)
+		{
+			if (c->parent == nullptr)
+			{
+				cout << "ERROR::MESH_PARSER::NOT_ALL_PARENTS_SET\nCube name: " << c->name << endl;
+				return nullptr;
+			}
+		}
+
+		//Make sure the cubes form a hierarchical tree structure (avoiding multiple/circular trees)
+		int count = 0;
+		stack<Cube*> search;
+		search.push(mesh->root);
+
+		//DFS the mesh and count cubes
+		while (!search.empty())
+		{
+			count++;				//Increment counter
+			Cube* c = search.top();	//Get top element
+			search.pop();			//Pop top element
+
+			//Add all children
+			for (Cube* child : c->children)
+			{
+				search.push(child);
+			}
+		}
+
+		//If search count is different from total cubes, there is a separate or circular tree somewhere
+		if (count != cubes.size())
+		{
+			cout << "ERROR::MESH_PARSER::INVALID_MESH_STRUCTURE" << endl;
+			return nullptr;
+		}
+
+		cout << "File successfully parsed, " << cubes.size() << " cubes detected." << endl;
+		cubes.clear();
 		return mesh;
 	}
+	//If an error happens, print out error then return empty string
 	catch (ifstream::failure e)
 	{
-		//If error happens, print out error then return empty string
 		cout << "ERROR::MESH_PARSER::FILE_NOT_SUCCESFULLY_READ\n" << e.what() << endl;
 		return nullptr;
 	}
+	catch (std::invalid_argument e)
+	{
+		cout << "ERROR::MESH_PARSER::FLOAT_PARSE_FAILED\n" << e.what() << endl;
+		return nullptr;
+	}
+}
+
+Cube* MeshParser::findCube(vector<Cube*>& cubes, const string name)
+{
+	//Loop through cubes
+	for (Cube* c : cubes)
+	{
+		//Return if name matches
+		if (c->name == name)
+		{
+			return c;
+		}
+	}
+
+	//Otherwise return null pointer
+	return nullptr;
 }

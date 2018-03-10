@@ -15,10 +15,12 @@ public:
 
 private:
 	std::string name;
-	glm::vec3 pos;
+	glm::vec3 position;
 	glm::vec3 scale;
 	glm::vec3 offset;
 	float angle;
 	Cube* parent;
 	std::vector<Cube*> children;
+
+	friend class MeshParser;
 };

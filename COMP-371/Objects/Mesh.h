@@ -19,4 +19,6 @@ private:
 	float scale;
 	float xRot;
 	float zRot;
+
+	friend class MeshParser;
 };
