@@ -15,6 +15,7 @@ public:
 
 private:
 	std::string name;
+	glm::vec3 colour;
 	glm::vec3 position;
 	glm::vec3 scale;
 	glm::vec3 offset;

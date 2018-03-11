@@ -15,6 +15,7 @@ using std::ifstream;
 using std::stack;
 using std::string;
 using std::vector;
+using glm::vec3;
 
 MeshParser::MeshParser(const string location) : Parser(location) { }
 
@@ -148,6 +149,10 @@ Mesh* MeshParser::parse() const
 			{
 				parent = value;
 			}
+			else if (name == "colour")
+			{
+				cube->colour = vec3(stof(value));
+			}
 			else if (name == "position")
 			{
 				cube->position = parseVec3(value);
@@ -259,7 +264,7 @@ Mesh* MeshParser::parse() const
 	}
 }
 
-Cube* MeshParser::findCube(vector<Cube*>& cubes, const string name)
+Cube* MeshParser::findCube(vector<Cube*>& cubes, const string& name)
 {
 	//Loop through cubes
 	for (Cube* c : cubes)

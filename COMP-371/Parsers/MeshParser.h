@@ -19,5 +19,5 @@ private:
 
 	const std::string sep = "=";
 
-	static Cube* findCube(std::vector<Cube*>& cubes, const std::string name);
+	static Cube* findCube(std::vector<Cube*>& cubes, const std::string& name);
 };
