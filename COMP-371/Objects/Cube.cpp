@@ -1,10 +1,18 @@
+#include <glm/gtc/matrix_transform.hpp>
 #include "Cube.h"
+#include "../Globals.h"
+#include "Mesh.h"
+#include "../Functions/Render.h"
 
+#define CUBE_VERTICES 36
+
+using glm::radians;
 using glm::vec3;
+using glm::mat4;
 using std::vector;
 
-Cube::Cube() : name(""), colour(vec3(0.0f)), position(vec3(0.0f)), scale(vec3(0.0f)), offset(vec3(0.0f)),
-			   angle(0.0f), parent(nullptr), children(vector<Cube*>()) { }
+Cube::Cube(Mesh* mesh) : name(""), colour(vec3(0.0f)), position(vec3(0.0f)), size(vec3(0.0f)), offset(vec3(0.0f)),
+						 angle(0.0f), mesh(mesh), parent(nullptr), children(vector<Cube*>()) { }
 
 Cube::~Cube()
 {
@@ -14,4 +22,21 @@ Cube::~Cube()
 	}
 	children.clear();
 	parent = nullptr;
+	mesh = nullptr;
+}
+
+void Cube::render(mat4 model) const
+{
+	model = translate(model, position);
+	model = rotate(model, radians(angle), mesh->getJointAxis());
+	model = translate(model, offset);
+
+	shader.setVec3("colour", colour);
+	shader.setMat4("MVP", vpMatrix * scale(model, size));
+	glDrawElements(GL_TRIANGLES, CUBE_VERTICES, GL_UNSIGNED_INT, nullptr);
+
+	for (Cube* child : children)
+	{
+		child->render(model);
+	}
 }

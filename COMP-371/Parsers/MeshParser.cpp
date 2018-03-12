@@ -101,7 +101,7 @@ Mesh* MeshParser::parse() const
 		
 		//Setup cube parsing
 		string parent = "";
-		Cube* cube = new Cube();
+		Cube* cube = new Cube(mesh);
 		vector<Link> links;
 		vector<Cube*> cubes;
 
@@ -124,7 +124,7 @@ Mesh* MeshParser::parse() const
 				//Push cube
 				cubes.push_back(cube);
 				//Reset cube
-				cube = new Cube();
+				cube = new Cube(mesh);
 				continue;
 			}
 
@@ -157,9 +157,9 @@ Mesh* MeshParser::parse() const
 			{
 				cube->position = parseVec3(value);
 			}
-			else if (name == "scale")
+			else if (name == "size")
 			{
-				cube->scale = parseVec3(value);
+				cube->size = parseVec3(value);
 			}
 			else if (name == "offset")
 			{

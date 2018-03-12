@@ -104,12 +104,25 @@ vec3 Mesh::getJointAxis() const
 	return rotateY(zAxis, yRot);
 }
 
-mat4 Mesh::getModelMatrix() const
+void Mesh::renderMesh() const
 {
+	//Nothing to renderif no root or not set
+	if (root == nullptr || !set) { return; }
+
 	mat4 model(1.0f);
 	model = translate(model, position);				//Horse position on the grid
 	model = rotate(model, radians(yRot), yAxis);	//Yaw (side) rotation of the horse
 	model = rotate(model, radians(zRot), zAxis);	//Pitch (vertical) rotation of the horse
 	model = scale(model, vec3(size));				//Scale factor of the horse
-	return model;
+
+	//Rendering setup
+	glBindVertexArray(VAO);
+	glLineWidth(3.0f);
+
+	//Render starting at the root
+	root->render(model);
+
+	//Rendering end
+	glLineWidth(1.0f);
+	glBindVertexArray(0);
 }

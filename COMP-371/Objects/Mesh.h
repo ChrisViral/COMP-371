@@ -42,7 +42,7 @@ public:
 	 * \brief Calculates the current model matrix for this Mesh object
 	 * \return Model matrix for the whole Mesh
 	 */
-	glm::mat4 getModelMatrix() const;
+	void renderMesh() const;
 
 private:
 	/// \brief Y rotation axis
