@@ -1,8 +1,8 @@
 [Mesh]
 root     = torso
 position = 0.0, 2.0, 0.0
-scale    = 1.0
-xRot     = 0.0
+size     = 1.0
+yRot     = 0.0
 zRot     = 0.0
 
 [Cube]

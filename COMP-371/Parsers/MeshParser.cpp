@@ -80,13 +80,13 @@ Mesh* MeshParser::parse() const
 			{
 				mesh->position = parseVec3(value);
 			}
-			else if (name == "scale")
+			else if (name == "size")
 			{
-				mesh->scale = stof(value);
+				mesh->size = stof(value);
 			}
-			else if(name == "xRot")
+			else if(name == "yRot")
 			{
-				mesh->xRot = stof(value);
+				mesh->yRot = stof(value);
 			}
 			else if (name == "zRot")
 			{
