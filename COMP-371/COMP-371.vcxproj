@@ -203,8 +203,15 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
     </None>
-    <None Include="Shaders\fragment.frag" />
-    <None Include="Shaders\vertex.vert" />
+    <None Include="Meshes\Horse.mesh">
+      <FileType>Script</FileType>
+    </None>
+    <None Include="Shaders\fragment.frag">
+      <FileType>Script</FileType>
+    </None>
+    <None Include="Shaders\vertex.vert">
+      <FileType>Script</FileType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

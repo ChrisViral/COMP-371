@@ -73,6 +73,9 @@
     <None Include="Shaders\vertex.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Meshes\Horse.mesh">
+      <Filter>Meshes</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Shaders">
@@ -86,6 +89,9 @@
     </Filter>
     <Filter Include="Parsers">
       <UniqueIdentifier>{a3ed0628-f8f3-4bcf-9b70-fa252cec33f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Meshes">
+      <UniqueIdentifier>{d6b7a216-be10-4f37-a63d-6d369ed321d2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

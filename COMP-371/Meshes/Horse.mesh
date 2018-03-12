@@ -1,105 +1,105 @@
 [Mesh]
 root     = torso
-position = 0, 2, 0
-scale    = 1
-xRot     = 0
-zRot     = 0
+position = 0.0, 2.0, 0.0
+scale    = 1.0
+xRot     = 0.0
+zRot     = 0.0
 
 [Cube]
 name     = torso
 colour   = 0.7
 parent   = //Root
-position = 0, 0, 0
+position = 0.0, 0.0, 0.0
 scale    = 2.5, 1.0, 0.8
-offset   = 0, 0, 0
-angle    = 0
+offset   = 0.0, 0.0, 0.0
+angle    = 0.0
 
 [Cube]
 name     = ulf_leg
 colour   = 0.4
 parent   = torso
-position = 1.1, -0.7, 0.3
-scale    = 0.24, 0.8, 0.19
-offset   = 0, 0.3, 0
-angle    = 0
+position = 1.1,  -0.4, 0.3
+scale    = 0.24,  0.8, 0.19
+offset   = 0.0,  -0.3, 0.0
+angle    = 0.0
 
 [Cube]
 name     = urf_leg
 colour   = 0.4
 parent   = torso
-position = 1.1, -0.7, -0.3
-scale    = 0.24, 0.8, 0.19
-offset   = 0, 0.3, 0
-angle    = 0
+position = 1.1, -0.4, -0.3
+scale    = 0.24, 0.8,  0.19
+offset   = 0.0, -0.3,  0.0
+angle    = 0.0
 
 [Cube]
 name     = ulb_leg
 colour   = 0.4
 parent   = torso
-position = -1.1, -0.7, 0.3
-scale    = 0.24, 0.8, 0.19
-offset   = 0, 0.3, 0
-angle    = 0
+position = -1.1, -0.4, 0.3
+scale    =  0.24, 0.8, 0.19
+offset   =  0.0, -0.3, 0.0
+angle    =  0.0
 
 [Cube]
 name     = urb_leg
 colour   = 0.4
 parent   = torso
-position = -1.1, -0.7, -0.3
-scale    = 0.24, 0.8, 0.19
-offset   = 0, 0.3, 0
-angle    = 0
+position = -1.1, -0.4, -0.3
+scale    =  0.24, 0.8,  0.19
+offset   =  0.0, -0.3,  0.0
+angle    =  0.0
 
 [Cube]
 name     = llf_leg
 colour   = 0.3
 parent   = ulf_leg
-position = 0.0, -0.8, 0.0
-scale    = 0.28, 1, 0.23
-offset   = 0, 0.5, 0
-angle    = 0
+position = 0.0, -0.3, 0.0
+scale    = 0.28, 1.0, 0.23
+offset   = 0.0, -0.5, 0.0
+angle    = 0.0
 
 [Cube]
 name     = lrf_leg
 colour   = 0.3
 parent   = urf_leg
-position = 0.0, -0.8, 0.0
-scale    = 0.28, 1, 0.23
-offset   = 0, 0.5, 0
-angle    = 0
+position = 0.0, -0.3, 0.0
+scale    = 0.28, 1.0, 0.23
+offset   = 0.0, -0.5, 0.0
+angle    = 0.0
 
 [Cube]
 name     = llb_leg
 colour   = 0.3
 parent   = ulb_leg
-position = 0.0, -0.8, 0.0
-scale    = 0.28, 1, 0.19
-offset   = 0, 0.5, 0
-angle    = 0
+position = 0.0, -0.3, 0.0
+scale    = 0.28, 1.0, 0.19
+offset   = 0.0, -0.5, 0.0
+angle    = 0.0
 
 [Cube]
 name     = lrb_leg
 colour   = 0.3
 parent   = urb_leg
-position = 0.0, -0.8, 0.0
-scale    = 0.28, 1, 0.19
-offset   = 0, 0.5, 0
-angle    = 0
+position = 0.0, -0.3, 0.0
+scale    = 0.28, 1.0, 0.19
+offset   = 0.0, -0.5, 0.0
+angle    = 0.0
 
 [Cube]
 name     = neck
 colour   = 0.6
 parent   = torso
-position = //Calculate
+position = 1.1, 0.4, 0.0
 scale    = 1.7, 0.6, 0.4
-offset   = //Calculate
-angle    = 30
+offset   = 1.1, 0.0, 0.0
+angle    = 30.0
 
 [Cube]
 name     = head
 colour   = 0.5
 parent   = neck
-position = //Calculate
+position = 0.6, 0.0, 0.0
 scale    = 1.1, 0.4, 0.3
-offset   = //Calculate
-angle    = -65
+offset   = 0.5, 0.0, 0.0
+angle    = -95.0
