@@ -25,7 +25,7 @@ Mesh* MeshParser::parse() const
 {
 	//Set exception bits
 	ifstream f;
-	f.exceptions(ifstream::failbit | ifstream::badbit);
+	f.exceptions(ifstream::badbit);
 
 	//Header message
 	cout << "Parsing Mesh file: " << location << endl;
@@ -145,7 +145,7 @@ Mesh* MeshParser::parse() const
 			{
 				cube->name = value;
 			}
-			if (name == "parent")
+			else if (name == "parent")
 			{
 				parent = value;
 			}
@@ -214,7 +214,7 @@ Mesh* MeshParser::parse() const
 		//Make sure all cubes have a parent
 		for (Cube* c : cubes)
 		{
-			if (c->parent == nullptr)
+			if (c->name != rootName && c->parent == nullptr)
 			{
 				cout << "ERROR::MESH_PARSER::NOT_ALL_PARENTS_SET\nCube name: " << c->name << endl;
 				return nullptr;

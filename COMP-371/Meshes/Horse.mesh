@@ -73,7 +73,7 @@ name     = llb_leg
 colour   = 0.3
 parent   = ulb_leg
 position = 0.0, -0.3, 0.0
-size     = 0.28, 1.0, 0.19
+size     = 0.28, 1.0, 0.23
 offset   = 0.0, -0.5, 0.0
 angle    = 0.0
 
@@ -82,7 +82,7 @@ name     = lrb_leg
 colour   = 0.3
 parent   = urb_leg
 position = 0.0, -0.3, 0.0
-size     = 0.28, 1.0, 0.19
+size     = 0.28, 1.0, 0.23
 offset   = 0.0, -0.5, 0.0
 angle    = 0.0
 
@@ -92,8 +92,8 @@ colour   = 0.6
 parent   = torso
 position = 1.1, 0.4, 0.0
 size     = 1.7, 0.6, 0.4
-offset   = 1.1, 0.0, 0.0
-angle    = 30.0
+offset   = 0.6, 0.0, 0.0
+angle    = 35.0
 
 [Cube]
 name     = head
@@ -101,5 +101,5 @@ colour   = 0.5
 parent   = neck
 position = 0.6, 0.0, 0.0
 size     = 1.1, 0.4, 0.3
-offset   = 0.5, 0.0, 0.0
-angle    = -95.0
+offset   = 0.5, 0.2, 0.0
+angle    = -85.0

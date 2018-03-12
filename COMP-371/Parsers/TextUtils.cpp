@@ -19,27 +19,30 @@ bool TextUtils::isEmpty(const string line)
 vector<string> TextUtils::split(string text, const string delimiter)
 {
 	vector<string> splits;
-	if (delimiter.length() == 0) { splits.push_back(text); }
+	const size_t len = delimiter.length();
+	if (len == 0) { splits.push_back(text); }
 	else
 	{
-		for (size_t pos = text.find(delimiter); pos != string::npos; pos = text.find(delimiter))
+		size_t front = 0;
+		for (size_t pos = text.find(delimiter); pos != string::npos; front = pos + len, pos = text.find(delimiter, front))
 		{
-			splits.push_back(text.substr(0, pos));
-			text.erase(0, pos + delimiter.length());
+			splits.push_back(text.substr(front, pos - front));
 		}
+		splits.push_back(text.substr(front, text.length() - front));
 	}
 	return splits;
 }
 
 string TextUtils::stripComment(const string text)
 {
-	return split(text, COMMENT)[0];
+	const size_t pos = text.find(COMMENT);
+	return pos == string::npos ? text : text.substr(0, pos);
 }
 
 string& TextUtils::trim(string &text)
 {
 	text.erase(text.begin(), find_if(text.begin(), text.end(), [](int c) { return !isspace(c); }));
-	text.erase(find_if(text.rbegin(), text.rend(), [](int c) { return isspace(c); }).base(), text.end());
+	text.erase(find_if(text.rbegin(), text.rend(), [](int c) { return !isspace(c); }).base(), text.end());
 	return text;
 }
 
