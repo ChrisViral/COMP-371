@@ -10,6 +10,7 @@
 #include <GLFW/glfw3.h>
 #include "Objects/Camera.h"
 #include "Objects/Shader.h"
+#include "Objects/Mesh.h"
 
 /// \brief GL screen width
 extern GLint screenWidth;
@@ -19,5 +20,7 @@ extern GLint screenHeight;
 extern Camera camera;
 /// \brief Shader program
 extern Shader shader;
+/// \brief Horse mesh
+extern Mesh* horse;
 /// \brief GL window pointer
 extern GLFWwindow* window;

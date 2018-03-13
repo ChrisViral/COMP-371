@@ -73,19 +73,19 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		{
 			//W - Pitch up 5 degrees
 		case GLFW_KEY_W:
-			pitchAngle += 5.0f; break;
+			horse->zRot += 5.0f; break;
 
 			//S - Pitch down 5 degrees
 		case GLFW_KEY_S:
-			pitchAngle -= 5.0f; break;
+			horse->zRot -= 5.0f; break;
 
 			//A - Yaw left 5 degrees
 		case GLFW_KEY_A:
-			yawAngle += 5.0f; break;
+			horse->yRot += 5.0f; break;
 
 			//D - Yaw right 5 degrees
 		case GLFW_KEY_D:
-			yawAngle -= 5.0f; break;
+			horse->yRot -= 5.0f; break;
 
 		default:
 			break;
@@ -103,26 +103,23 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			//Home - reset world
 		case GLFW_KEY_HOME:
 		{
-			offset = vec3(0.0f);
-			yawAngle = 0.0f;
-			pitchAngle = 0.0f;
-			size = 1.0f;
+			horse->reset();
 			camera.reset();
 			break;
 		}
 
 		//Space - randomly position horse
 		case GLFW_KEY_SPACE:
-			offset = vec3(randomRange(-50, 50), 0.0f, randomRange(-50, 50)); break;
+			horse->position = vec3(randomRange(-50, 50), horse->position.y, randomRange(-50, 50)); break;
 
 			//U - scale up horse
 		case GLFW_KEY_U:
-			size += 0.1f; break;
+			horse->size += 0.1f; break;
 
 			//J - scale down horse
 		case GLFW_KEY_J:
 			//Get the max to prevent <=0 sizes
-			size = max(0.1f, size - 0.1f); break;
+			horse->size = max(0.1f, size - 0.1f); break;
 
 			//P - render as points
 		case GLFW_KEY_P:
@@ -138,19 +135,19 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 			//W - move horse up
 		case GLFW_KEY_W:
-			offset.z -= 1.0f; break;
+			horse->position.z -= 1.0f; break;
 
 			//S - move horse down
 		case GLFW_KEY_S:
-			offset.z += 1.0f; break;
+			horse->position.z += 1.0f; break;
 
 			//A - move horse left
 		case GLFW_KEY_A:
-			offset.x -= 1.0f; break;
+			horse->position.x -= 1.0f; break;
 
 			//D - move horse right
 		case GLFW_KEY_D:
-			offset.x += 1.0f; break;
+			horse->position.x += 1.0f; break;
 
 			//Up - move camera up
 		case GLFW_KEY_UP:

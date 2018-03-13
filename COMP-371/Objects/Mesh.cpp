@@ -45,7 +45,13 @@ const GLint Mesh::indices[] =
 	2, 6, 1
 };
 
-Mesh::Mesh() : VAO(0), VBO(0), EBO(0), set(false), root(nullptr), position(vec3(0.0f)), size(0.0f), yRot(0.0f), zRot(0.0f) { }
+Mesh::Mesh() : VAO(0), VBO(0), EBO(0), set(false), root(nullptr), position(vec3(0.0f)), size(0.0f), yRot(0.0f), zRot(0.0f)
+{
+	start.position = vec3(position);
+	start.size = size;
+	start.yRot = yRot;
+	start.zRot = zRot;
+}
 
 Mesh::~Mesh()
 {
@@ -125,4 +131,12 @@ void Mesh::renderMesh() const
 	//Rendering end
 	glLineWidth(1.0f);
 	glBindVertexArray(0);
+}
+
+void Mesh::reset()
+{
+	position = start.position;
+	size = start.size;
+	yRot = start.yRot;
+	zRot = start.zRot;
 }

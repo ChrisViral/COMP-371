@@ -1,6 +1,7 @@
 #pragma once
 
 #include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include "Cube.h"
 
 /**
@@ -43,8 +44,27 @@ public:
 	 * \return Model matrix for the whole Mesh
 	 */
 	void renderMesh() const;
+	/**
+	 * \brief Resets the Mesh to it's original state
+	 */
+	void reset();
 
 private:
+	/**
+	 * \brief Mesh state container
+	 */
+	struct State
+	{
+		/// \brief Mesh position
+		glm::vec3 position;
+		/// \brief Mesh size
+		float size;
+		/// \brief Mesh Y rotation
+		float yRot;
+		/// \brief Mesh Z rotation
+		float zRot;
+	};
+
 	/// \brief Y rotation axis
 	static const glm::vec3 yAxis;
 	/// \brief Z rotation axis
@@ -53,6 +73,9 @@ private:
 	static const GLfloat vertices[];
 	/// \brief Cube face indices
 	static const GLint indices[];
+
+	/// \brief Mesh original state
+	State start;
 
 	/// \brief GL container objects
 	GLuint VAO, VBO, EBO;
@@ -71,4 +94,6 @@ private:
 
 	/// \brief Giving friend access to the MeshParser class
 	friend class MeshParser;
+	///\brief Set input callback function as friend
+	friend void key_callback(GLFWwindow*, int, int, int, int);
 };
