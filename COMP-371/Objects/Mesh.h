@@ -35,11 +35,6 @@ public:
 	 */
 	void setup();
 	/**
-	 * \brief Calculates the joint axis for all children cubes
-	 * \return The current joint axis
-	 */
-	glm::vec3 getJointAxis() const;
-	/**
 	 * \brief Calculates the current model matrix for this Mesh object
 	 * \return Model matrix for the whole Mesh
 	 */
@@ -57,8 +52,6 @@ private:
 	{
 		/// \brief Mesh position
 		glm::vec3 position;
-		/// \brief Mesh size
-		float size;
 		/// \brief Mesh Y rotation
 		float yRot;
 		/// \brief Mesh Z rotation
@@ -85,8 +78,10 @@ private:
 	Cube* root;
 	/// \brief World position of the Mesh
 	glm::vec3 position;
-	/// \brief Scale size of the Mesh
-	float size;
+	/// \brief Size of the Mesh
+	glm::vec3 size;
+	/// \brief Scale factor of the Mesh
+	float scaleFactor;
 	/// \brief Y rotation of the Mesh, in degrees
 	float yRot;
 	/// \brief Z rotation of the Mesh, in degrees

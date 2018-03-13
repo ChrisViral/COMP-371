@@ -45,13 +45,8 @@ const GLint Mesh::indices[] =
 	2, 6, 1
 };
 
-Mesh::Mesh() : VAO(0), VBO(0), EBO(0), set(false), root(nullptr), position(vec3(0.0f)), size(0.0f), yRot(0.0f), zRot(0.0f)
-{
-	start.position = vec3(position);
-	start.size = size;
-	start.yRot = yRot;
-	start.zRot = zRot;
-}
+Mesh::Mesh() : VAO(0), VBO(0), EBO(0), set(false), root(nullptr), position(vec3(0.0f)), size(vec3(0.0f)),
+			   scaleFactor(1.0f), yRot(0.0f), zRot(0.0f) { }
 
 Mesh::~Mesh()
 {
@@ -75,6 +70,11 @@ void Mesh::setup()
 	//Only proceed if not set yet
 	if (!set)
 	{
+		//Setup start state
+		start.position = vec3(position);
+		start.yRot = yRot;
+		start.zRot = zRot;
+
 		//Generate containers
 		glGenVertexArrays(1, &VAO);
 		glGenBuffers(1, &VBO);
@@ -104,22 +104,16 @@ void Mesh::setup()
 	}
 }
 
-vec3 Mesh::getJointAxis() const
-{
-	//Rotate the joint axis (z axis) around the Y axis
-	return rotateY(zAxis, yRot);
-}
-
 void Mesh::renderMesh() const
 {
 	//Nothing to renderif no root or not set
 	if (root == nullptr || !set) { return; }
 
 	mat4 model(1.0f);
-	model = translate(model, position);				//Horse position on the grid
+	model = translate(model, vec3(position.x, position.y * scaleFactor, position.z));	//Horse position on the grid
 	model = rotate(model, radians(yRot), yAxis);	//Yaw (side) rotation of the horse
 	model = rotate(model, radians(zRot), zAxis);	//Pitch (vertical) rotation of the horse
-	model = scale(model, vec3(size));				//Scale factor of the horse
+	model = scale(model, size * scaleFactor);		//Scale factor of the horse
 
 	//Rendering setup
 	glBindVertexArray(VAO);
@@ -136,7 +130,7 @@ void Mesh::renderMesh() const
 void Mesh::reset()
 {
 	position = start.position;
-	size = start.size;
 	yRot = start.yRot;
 	zRot = start.zRot;
+	scaleFactor = 1.0f;
 }

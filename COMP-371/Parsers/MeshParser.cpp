@@ -82,7 +82,7 @@ Mesh* MeshParser::parse() const
 			}
 			else if (name == "size")
 			{
-				mesh->size = stof(value);
+				mesh->size = vec3(stof(value));
 			}
 			else if(name == "yRot")
 			{

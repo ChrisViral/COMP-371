@@ -114,12 +114,12 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 			//U - scale up horse
 		case GLFW_KEY_U:
-			horse->size += 0.1f; break;
+			horse->scaleFactor += 0.1f; break;
 
 			//J - scale down horse
 		case GLFW_KEY_J:
 			//Get the max to prevent <=0 sizes
-			horse->size = max(0.1f, size - 0.1f); break;
+			horse->scaleFactor = max(0.1f, horse->scaleFactor - 0.1f); break;
 
 			//P - render as points
 		case GLFW_KEY_P:

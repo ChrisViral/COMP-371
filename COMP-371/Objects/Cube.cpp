@@ -27,8 +27,10 @@ Cube::~Cube()
 
 void Cube::render(mat4 model) const
 {
+	static const vec3 jointAxis(0.0f, 0.0f, 1.0f);
+
 	model = translate(model, position);
-	model = rotate(model, radians(angle), mesh->getJointAxis());
+	model = rotate(model, radians(angle), jointAxis);
 	model = translate(model, offset);
 
 	shader.setVec3("colour", colour);
