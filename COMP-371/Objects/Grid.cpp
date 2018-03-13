@@ -1,7 +1,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Grid.h"
 #include "../Globals.h"
-#include "../Functions/Render.h"
 
 using glm::radians;
 using glm::vec3;
@@ -61,7 +60,7 @@ void Grid::render() const
 	glBindVertexArray(VAO);
 
 	//Set grid lines to white
-	shader.setVec3("colour", vec3(1.0f));
+	shader->setVec3("colour", vec3(1.0f));
 
 	mat4 base(1.0f), model;
 	//Render lines on the x axis
@@ -69,7 +68,7 @@ void Grid::render() const
 	{
 		model = translate(base, vec3(0.0f, 0.0f, i));
 		model = scale(model, vec3(size));
-		shader.setMat4("MVP", vpMatrix * model);
+		shader->setMat4("MVP", vpMatrix * model);
 		glDrawArrays(GL_LINES, 0, 2);
 	}
 
@@ -81,7 +80,7 @@ void Grid::render() const
 	{
 		model = translate(base, vec3(0.0f, 0.0f, i));
 		model = scale(model, vec3(size));
-		shader.setMat4("MVP", vpMatrix * model);
+		shader->setMat4("MVP", vpMatrix * model);
 		glDrawArrays(GL_LINES, 0, 2);
 	}
 

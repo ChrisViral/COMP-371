@@ -7,7 +7,6 @@
 #include <GL/glew.h>
 #include "Input.h"
 #include "../Globals.h"
-#include "Render.h"
 
 //Mouse sensitivity
 #define SENSITIVITY 0.1f
@@ -41,19 +40,19 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT))
 	{
 		//Pan camera from side to side
-		camera.panCamera((lastMouseX - xpos) * SENSITIVITY);
+		camera->panCamera((lastMouseX - xpos) * SENSITIVITY);
 	}
 	//If the middle mouse button is pressed
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE))
 	{
 		//Tilt camera up and down
-		camera.tiltCamera((ypos - lastMouseY) * SENSITIVITY);
+		camera->tiltCamera((ypos - lastMouseY) * SENSITIVITY);
 	}
 	//If the left mouse button is pressed
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT))
 	{
 		//Zoom in and out
-		camera.adjustDistance((ypos - lastMouseY) * SENSITIVITY);
+		camera->adjustDistance((ypos - lastMouseY) * SENSITIVITY);
 	}
 
 	//Set new last mouse positions
@@ -104,7 +103,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		case GLFW_KEY_HOME:
 		{
 			horse->reset();
-			camera.reset();
+			camera->reset();
 			break;
 		}
 
@@ -151,19 +150,19 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 			//Up - move camera up
 		case GLFW_KEY_UP:
-			camera.moveTarget(vec3(0.0f, 0.0f, -1.0f)); break;
+			camera->moveTarget(vec3(0.0f, 0.0f, -1.0f)); break;
 
 			//Down - move camera down
 		case GLFW_KEY_DOWN:
-			camera.moveTarget(vec3(0.0f, 0.0f, 1.0f)); break;
+			camera->moveTarget(vec3(0.0f, 0.0f, 1.0f)); break;
 
 			//Left - move camera left
 		case GLFW_KEY_LEFT:
-			camera.moveTarget(vec3(-1.0f, 0.0f, 0.0f)); break;
+			camera->moveTarget(vec3(-1.0f, 0.0f, 0.0f)); break;
 
 			//Right - move camera right
 		case GLFW_KEY_RIGHT:
-			camera.moveTarget(vec3(1.0f, 0.0f, 0.0f)); break;
+			camera->moveTarget(vec3(1.0f, 0.0f, 0.0f)); break;
 
 			//Other keys - do nothing
 		default:

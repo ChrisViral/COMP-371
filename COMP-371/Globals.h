@@ -17,10 +17,12 @@ extern GLint screenWidth;
 /// \brief GL screen Height
 extern GLint screenHeight;
 /// \brief Camera object
-extern Camera camera;
+extern Camera* camera;
 /// \brief Shader program
-extern Shader shader;
+extern Shader* shader;
 /// \brief Horse mesh
 extern Mesh* horse;
+/// \brief Projection * View matrix
+extern glm::mat4 vpMatrix;
 /// \brief GL window pointer
 extern GLFWwindow* window;

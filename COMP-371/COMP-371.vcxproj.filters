@@ -11,9 +11,6 @@
     <ClCompile Include="Functions\Input.cpp">
       <Filter>Functions</Filter>
     </ClCompile>
-    <ClCompile Include="Functions\Render.cpp">
-      <Filter>Functions</Filter>
-    </ClCompile>
     <ClCompile Include="COMP-371.cpp" />
     <ClCompile Include="Parsers\FileParser.cpp">
       <Filter>Parsers</Filter>
@@ -36,6 +33,9 @@
     <ClCompile Include="Objects\Object.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Axis.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h" />
@@ -46,9 +46,6 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Functions\Input.h">
-      <Filter>Functions</Filter>
-    </ClInclude>
-    <ClInclude Include="Functions\Render.h">
       <Filter>Functions</Filter>
     </ClInclude>
     <ClInclude Include="COMP-371.h" />
@@ -74,6 +71,9 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Objects\Object.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Axis.h">
       <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>

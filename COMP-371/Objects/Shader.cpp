@@ -73,7 +73,14 @@ Shader::Shader(const string vertexPath, const string fragmentPath)
 	glDeleteShader(fragmentShader);
 }
 
-Shader::~Shader() { }
+Shader::~Shader()
+{
+	if (id != 0)
+	{
+		glUseProgram(0);
+		glDeleteProgram(id);
+	}
+}
 
 void Shader::use() const
 {

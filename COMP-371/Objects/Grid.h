@@ -1,5 +1,4 @@
 #pragma once
-#include <GL/glew.h>
 #include "Object.h"
 
 class Grid : public Object
@@ -14,5 +13,5 @@ public:
 private:
 	static const GLfloat vertices[];
 
-	int size;
+	const int size;
 };

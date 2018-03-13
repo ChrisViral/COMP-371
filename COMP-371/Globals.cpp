@@ -12,9 +12,12 @@ GLint screenWidth = 800;
 GLint screenHeight = 800;
 
 //Shader, camera, and mesh
-Camera camera;
-Shader shader;
+Camera* camera;
+Shader* shader;
 Mesh* horse;
+
+//VP matrix
+glm::mat4 vpMatrix;
 
 //GL Window
 GLFWwindow* window;
