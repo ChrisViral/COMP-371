@@ -6,7 +6,6 @@
 
 #include "Globals.h"
 
-
 //Screen size
 GLint screenWidth = 800;
 GLint screenHeight = 800;

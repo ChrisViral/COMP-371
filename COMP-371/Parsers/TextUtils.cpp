@@ -7,6 +7,7 @@
 using glm::vec3;
 using std::find_if;
 using std::isspace;
+using std::to_string;
 using std::stof;
 using std::string;
 using std::vector;
@@ -49,7 +50,7 @@ string& TextUtils::trim(string &text)
 vec3 TextUtils::parseVec3(const string text)
 {
 	vector<string> splits = split(text, ",");
-	if (splits.size() != 3) { throw std::invalid_argument("Vector3 parse has incorrect amount of elements (" + std::to_string(splits.size()) + ")"); }
+	if (splits.size() != 3) { throw std::invalid_argument("Vector3 parse has incorrect amount of elements (" + to_string(splits.size()) + ")"); }
 	return vec3(stof(trim(splits[0])), stof(trim(splits[1])), stof(trim(splits[2])));
 }
 

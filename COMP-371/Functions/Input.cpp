@@ -5,18 +5,21 @@
 // March 8th 2018
 
 #include <GL/glew.h>
+#include <iostream>
 #include "Input.h"
 #include "../Globals.h"
 
 //Mouse sensitivity
 #define SENSITIVITY 0.1f
 
+using std::cerr;
+using std::endl;
 using glm::max;
 using glm::vec3;
 
 //Last mouse x and y recorded positions
-float lastMouseX = screenWidth / 2.0f;
-float lastMouseY = screenHeight / 2.0f;
+static float lastMouseX = screenWidth / 2.0f;
+static float lastMouseY = screenHeight / 2.0f;
 
 void registerCallbacks()
 {
@@ -24,6 +27,7 @@ void registerCallbacks()
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetKeyCallback(window, key_callback);
+	glfwSetErrorCallback(error_callback);
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -170,6 +174,11 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		}
 	}
 	
+}
+
+void error_callback(int error, const char* description)
+{
+	cerr << "GLFW error code " << error << " encountered\n" << description << endl;
 }
 
 int randomRange(const int min, const int max)

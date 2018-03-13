@@ -40,10 +40,7 @@ public:
 	 */
 	Parser& operator=(const Parser& other)
 	{
-		if (&other != this)
-		{
-			location = other.location;
-		}
+		location = other.location;
 		return *this;
 	}
 
