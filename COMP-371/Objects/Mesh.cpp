@@ -45,8 +45,7 @@ const GLint Mesh::indices[] =
 	2, 6, 1
 };
 
-Mesh::Mesh() : VAO(0), VBO(0), EBO(0), set(false), root(nullptr), position(vec3(0.0f)), size(vec3(0.0f)),
-			   scaleFactor(1.0f), yRot(0.0f), zRot(0.0f) { }
+Mesh::Mesh() : Object(), root(nullptr), position(vec3(0.0f)), size(vec3(0.0f)), scaleFactor(1.0f), yRot(0.0f), zRot(0.0f) { }
 
 Mesh::~Mesh()
 {
@@ -104,7 +103,7 @@ void Mesh::setup()
 	}
 }
 
-void Mesh::renderMesh() const
+void Mesh::render() const
 {
 	//Nothing to renderif no root or not set
 	if (root == nullptr || !set) { return; }

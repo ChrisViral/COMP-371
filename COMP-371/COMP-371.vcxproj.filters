@@ -30,6 +30,12 @@
     <ClCompile Include="Parsers\TextUtils.cpp">
       <Filter>Parsers</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Grid.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Object.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h" />
@@ -63,6 +69,12 @@
     </ClInclude>
     <ClInclude Include="Parsers\TextUtils.hpp">
       <Filter>Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Grid.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Object.h">
+      <Filter>Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -3,11 +3,12 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "Cube.h"
+#include "Object.h"
 
 /**
  * \brief Mesh hierarchical structure object
  */
-class Mesh
+class Mesh : public Object
 {
 public:
 	/**
@@ -33,12 +34,12 @@ public:
 	/**
 	 * \brief Sets up the various OpenGL container objects
 	 */
-	void setup();
+	void setup() override;
 	/**
 	 * \brief Calculates the current model matrix for this Mesh object
 	 * \return Model matrix for the whole Mesh
 	 */
-	void renderMesh() const;
+	void render() const override;
 	/**
 	 * \brief Resets the Mesh to it's original state
 	 */
@@ -70,10 +71,6 @@ private:
 	/// \brief Mesh original state
 	State start;
 
-	/// \brief GL container objects
-	GLuint VAO, VBO, EBO;
-	/// \brief Setup flag
-	bool set;
 	/// \brief Root cube of the Mesh
 	Cube* root;
 	/// \brief World position of the Mesh
