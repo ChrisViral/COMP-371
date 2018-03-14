@@ -12,6 +12,8 @@ public:
 
 private:
 	static const GLfloat vertices[];
+	static const GLint indices[];
+	static const glm::vec3 colour;
 
 	const int size;
 };

@@ -59,10 +59,6 @@ private:
 		float zRot;
 	};
 
-	/// \brief Y rotation axis
-	static const glm::vec3 yAxis;
-	/// \brief Z rotation axis
-	static const glm::vec3 zAxis;
 	/// \brief Cube vertices
 	static const GLfloat vertices[];
 	/// \brief Cube face indices

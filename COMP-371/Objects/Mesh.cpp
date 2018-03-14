@@ -1,27 +1,31 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/rotate_vector.hpp>
+#include <stb/stb_image.h>
+#include <iostream>
 #include "Mesh.h"
+#include "../Globals.h"
+
+#define TEXTURE_PATH "Textures/horse.png"
 
 using glm::radians;
 using glm::vec3;
 using glm::mat4;
-
-const vec3 Mesh::yAxis = vec3(0.0f, 1.0f, 0.0f);
-const vec3 Mesh::zAxis = vec3(0.0f, 0.0f, 1.0f);
+using std::cout;
+using std::endl;
 
 const GLfloat Mesh::vertices[] =
 {
-	//Front face
-	 0.5f,  0.5f,  0.5f, //Top right
-	 0.5f, -0.5f,  0.5f, //Bottom right
-	-0.5f, -0.5f,  0.5f, //Bottom left
-	-0.5f,  0.5f,  0.5f, //Top left
+	//Front face			Texture coords
+	 0.5f,  0.5f,  0.5f,	1.0f, 1.0f, //Top right
+	 0.5f, -0.5f,  0.5f,	1.0f, 0.0f, //Bottom right
+	-0.5f, -0.5f,  0.5f,	0.0f, 0.0f, //Bottom left
+	-0.5f,  0.5f,  0.5f,	0.0f, 1.0f, //Top left
 
-	//Back face
-	 0.5f,  0.5f, -0.5f, //Top right
-	 0.5f, -0.5f, -0.5f, //Bottom right
-	-0.5f, -0.5f, -0.5f, //Bottom left
-	-0.5f,  0.5f, -0.5f, //Top left
+	//Back face				Texture coords
+	 0.5f,  0.5f, -0.5f,	1.0f, 0.0f, //Top right
+	 0.5f, -0.5f, -0.5f,	1.0f, 1.0f, //Bottom right
+	-0.5f, -0.5f, -0.5f,	0.0f, 1.0f, //Bottom left
+	-0.5f,  0.5f, -0.5f,	0.0f, 0.0f  //Top left
 };
 
 const GLint Mesh::indices[] =
@@ -91,8 +95,33 @@ void Mesh::setup()
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 		//Setup the position vertex attribute
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(0));
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(0));
 		glEnableVertexAttribArray(0);
+
+		//Setup the texture vertex attribute
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(3 * sizeof(GLfloat)));
+		glEnableVertexAttribArray(1);
+
+		glGenTextures(1, &tex);
+		glBindTexture(GL_TEXTURE_2D, tex);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		int width, height, nrChannels;
+		unsigned char* data = stbi_load(TEXTURE_PATH, &width, &height, &nrChannels, 0);
+		if (data)
+		{
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+			glGenerateMipmap(GL_TEXTURE_2D);
+		}
+		else
+		{
+			cout << "Failed to load texture at " << TEXTURE_PATH << endl;
+		}
+		stbi_image_free(data);
+
+		shader->setInt("tex2", 1);
 
 		//Unbind
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -105,8 +134,16 @@ void Mesh::setup()
 
 void Mesh::render() const
 {
-	//Nothing to renderif no root or not set
+	//Constant values for the rendering
+	static const vec3 yAxis(0.0f, 1.0f, 0.0f);
+	static const vec3 zAxis(0.0f, 0.0f, 1.0f);
+
+	//Nothing to render if no root or not set
 	if (root == nullptr || !set) { return; }
+
+	shader->setInt("state", 2);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, tex);
 
 	mat4 model(1.0f);
 	model = translate(model, vec3(position.x, position.y * scaleFactor, position.z));	//Horse position on the grid

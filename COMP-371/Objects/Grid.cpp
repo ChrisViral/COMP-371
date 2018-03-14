@@ -1,17 +1,35 @@
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb/stb_image.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include <iostream>
 #include "Grid.h"
 #include "../Globals.h"
+
+#define GRID_VERTICES 6
+#define TEXTURE_PATH "Textures/grass.png"
 
 using glm::radians;
 using glm::vec3;
 using glm::mat4;
+using std::cout;
+using std::endl;
 
-//Vertices for a length 100 unit length line on the X axis, centered on the world origin
 const GLfloat Grid::vertices[] =
 {
-	-1.0f,  0.0f, 0.0f, //First vertex
-	 1.0f,  0.0f, 0.0f, //Second vertex
+	//Position			Texture
+	0.0f, 0.0f, 0.0f,	0.0f, 0.0f,
+	1.0f, 0.0f, 0.0f,	1.0f, 0.0f,
+	1.0f, 0.0f, 1.0f,	1.0f, 1.0f,
+	0.0f, 0.0f, 1.0f,	0.0f, 1.0f
 };
+
+const GLint Grid::indices[] =
+{
+	0, 1, 2,
+	0, 2, 3
+};
+
+const vec3 Grid::colour = vec3(1.0f);
 
 Grid::Grid(const int size) : Object(), size(size) { }
 
@@ -21,6 +39,7 @@ Grid::~Grid()
 	{
 		glDeleteVertexArrays(1, &VAO);
 		glDeleteBuffers(1, &VBO);
+		glDeleteBuffers(1, &EBO);
 	}
 }
 
@@ -31,6 +50,7 @@ void Grid::setup()
 		//Generate containers
 		glGenVertexArrays(1, &VAO);
 		glGenBuffers(1, &VBO);
+		glGenBuffers(1, &EBO);
 
 		//Bind VAO
 		glBindVertexArray(VAO);
@@ -39,9 +59,38 @@ void Grid::setup()
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+		//Bind EBO
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
 		//Setup the position vertex attribute
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(0));
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(0));
 		glEnableVertexAttribArray(0);
+
+		//Setup the texture vertex attribute
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(3 * sizeof(GLfloat)));
+		glEnableVertexAttribArray(1);
+
+		glGenTextures(1, &tex);
+		glBindTexture(GL_TEXTURE_2D, tex);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		int width, height, nrChannels;
+		unsigned char* data = stbi_load(TEXTURE_PATH, &width, &height, &nrChannels, 0);
+		if (data)
+		{
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+			glGenerateMipmap(GL_TEXTURE_2D);
+		}
+		else
+		{
+			cout << "Failed to load texture at " << TEXTURE_PATH << endl;
+		}
+		stbi_image_free(data);
+
+		shader->setInt("tex1", 0);
 
 		//Unbind
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -59,29 +108,19 @@ void Grid::render() const
 	//Bind VAO
 	glBindVertexArray(VAO);
 
-	//Set grid lines to white
-	shader->setVec3("colour", vec3(1.0f));
+	//Set shader
+	shader->setVec3("colour", colour);
+	shader->setInt("state", 1);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, tex);
 
-	mat4 base(1.0f), model;
-	//Render lines on the x axis
-	for (int i = -size; i <= size; i++)
+	for (int i = -size; i < size; i++)
 	{
-		model = translate(base, vec3(0.0f, 0.0f, i));
-		model = scale(model, vec3(size));
-		shader->setMat4("MVP", vpMatrix * model);
-		glDrawArrays(GL_LINES, 0, 2);
-	}
-
-	//Rotate base matrix 90 degrees on the Y axis
-	base = rotate(base, radians(90.0f), vec3(0.0f, 1.0f, 0.0f));
-
-	//Render the lines on the y axis
-	for (int i = -size; i <= size; i++)
-	{
-		model = translate(base, vec3(0.0f, 0.0f, i));
-		model = scale(model, vec3(size));
-		shader->setMat4("MVP", vpMatrix * model);
-		glDrawArrays(GL_LINES, 0, 2);
+		for (int j = -size; j < size; j++)
+		{
+			shader->setMat4("MVP", translate(vpMatrix, vec3(i, 0.0f, j)));
+			glDrawElements(GL_TRIANGLES, GRID_VERTICES, GL_UNSIGNED_INT, nullptr);
+		}
 	}
 
 	//Unbind VAO

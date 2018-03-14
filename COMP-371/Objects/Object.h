@@ -11,6 +11,6 @@ public:
 	virtual void render() const = 0;
 
 protected:
-	GLuint VAO, VBO, EBO;
+	GLuint VAO, VBO, EBO, tex;
 	bool set;
 };
