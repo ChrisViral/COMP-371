@@ -106,7 +106,7 @@ void Grid::setup()
 		}
 		stbi_image_free(data);
 
-		shader->setInt("tex1", 0);
+		lightingShader->setInt("tex1", 0);
 
 		//Unbind
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
@@ -120,16 +120,17 @@ void Grid::setup()
 void Grid::render() const
 {
 	//Don't render if not correctly setup
-	if (!set) { return; }
+	if (!set || size <= 0) { return; }
 
 	//Bind VAO
+	lightingShader->use();
 	glBindVertexArray(VAO);
 
 	GLenum renderMode;
 	if (useTextures)
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		shader->setInt("state", 1);
+		lightingShader->setInt("state", 1);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, tex);
 		renderMode = GL_TRIANGLES;
@@ -137,8 +138,8 @@ void Grid::render() const
 	else
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, lEBO);
-		shader->setInt("state", 0);
-		shader->setVec3("colour", colour);
+		lightingShader->setInt("state", 0);
+		lightingShader->setVec3("colour", colour);
 		renderMode = GL_LINES;
 	}
 
@@ -146,7 +147,7 @@ void Grid::render() const
 	{
 		for (int j = -size; j < size; j++)
 		{
-			shader->setMat4("MVP", translate(vpMatrix, vec3(i, 0.0f, j)));
+			lightingShader->setMat4("MVP", translate(vpMatrix, vec3(i, 0.0f, j)));
 			glDrawElements(renderMode, GRID_VERTICES, GL_UNSIGNED_INT, nullptr);
 		}
 	}

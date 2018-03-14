@@ -19,7 +19,7 @@ Shader::Shader() : id(0) { }
 
 Shader::Shader(const string vertexPath, const string fragmentPath)
 {
-	//Read the vertex shader file
+	//Read the vertex lightingShader file
 	FileParser shaderParser(vertexPath);
 	string s = shaderParser.parse();
 	const GLchar* source = s.c_str();
@@ -27,7 +27,7 @@ Shader::Shader(const string vertexPath, const string fragmentPath)
 	glShaderSource(vertexShader, 1, &source, nullptr);
 	glCompileShader(vertexShader);
 
-	//Test for shader compilation errors
+	//Test for lightingShader compilation errors
 	const int bufferSize = 512;
 	GLint success;
 	GLchar info[bufferSize];
@@ -38,7 +38,7 @@ Shader::Shader(const string vertexPath, const string fragmentPath)
 		cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << info << endl;
 	}
 
-	//Read the fragment shader file
+	//Read the fragment lightingShader file
 	shaderParser = FileParser(fragmentPath);
 	s = shaderParser.parse();
 	source = s.c_str();
@@ -46,7 +46,7 @@ Shader::Shader(const string vertexPath, const string fragmentPath)
 	glShaderSource(fragmentShader, 1, &source, nullptr);
 	glCompileShader(fragmentShader);
 	;
-	//Test for shader compilation errors
+	//Test for lightingShader compilation errors
 	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
 	if (!success)
 	{
@@ -54,13 +54,13 @@ Shader::Shader(const string vertexPath, const string fragmentPath)
 		cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << info << endl;
 	}
 
-	//Create the shader program
+	//Create the lightingShader program
 	id = glCreateProgram();
 	glAttachShader(id, vertexShader);
 	glAttachShader(id, fragmentShader);
 	glLinkProgram(id);
 
-	//Test for shader program linkin errors
+	//Test for lightingShader program linkin errors
 	glGetProgramiv(id, GL_LINK_STATUS, &success);
 	if (!success)
 	{

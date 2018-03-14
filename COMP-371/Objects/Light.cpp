@@ -1,31 +1,18 @@
-#include <glm/gtc/matrix_transform.hpp>
-#include "Axis.h"
+#include <glm/gtx/transform.hpp>
 #include "../Globals.h"
+#include "Light.h"
 
-#define VERTEX_NUMBER 6
+#define VERTEX_NUMBER 1
 
-using glm::radians;
-using glm::vec3;
-using glm::mat4;
-
-const GLfloat Axis::vertices[] =
+const GLfloat Light::vertices[] =
 {
-	//X axis			Colour
-	0.0f, 0.02f, 0.0f,	1.0f, 0.0f, 0.0f, //First vertex
-	1.0f, 0.02f, 0.0f,	1.0f, 0.0f, 0.0f, //Second vertex
-
-	//Y axis			Colour
-	0.0f, 0.02f, 0.0f,	0.0f, 1.0f, 0.0f, //First vertex
-	0.0f, 1.0f, 0.0f,	0.0f, 1.0f, 0.0f, //Second vertex
-
-	//Z axis			Colour
-	0.0f, 0.02f, 0.0f,	0.0f, 0.0f, 1.0f, //First vertex
-	0.0f, 0.02f, 1.0f,	0.0f, 0.0f, 1.0f  //Second vertex
+	//Position			Colour
+	0.0f, 0.0f, 0.0f,	1.0f, 1.0f, 1.0f
 };
 
-Axis::Axis(const int length) : Object(), length(length) { }
+Light::Light(const glm::vec3 position) : Object(), position(position) { }
 
-Axis::~Axis()
+Light::~Light()
 {
 	if (set)
 	{
@@ -34,7 +21,7 @@ Axis::~Axis()
 	}
 }
 
-void Axis::setup()
+void Light::setup()
 {
 	if (!set)
 	{
@@ -65,19 +52,15 @@ void Axis::setup()
 	}
 }
 
-void Axis::render() const
+void Light::render() const
 {
 	//Bind VAO
 	simpleShader->use();
 	glBindVertexArray(VAO);
 
 	//Set line width
-	glLineWidth(5.0f);
-	simpleShader->setMat4("MVP", scale(vpMatrix, vec3(length)));
-	glDrawArrays(GL_LINES, 0, VERTEX_NUMBER);
-
-	//Reset line width
-	glLineWidth(1.0f);
+	simpleShader->setMat4("MVP", translate(vpMatrix, position));
+	glDrawArrays(GL_POINTS, 0, VERTEX_NUMBER);
 
 	//Unbind VAO
 	glBindVertexArray(0);

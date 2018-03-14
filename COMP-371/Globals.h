@@ -11,6 +11,7 @@
 #include "Objects/Camera.h"
 #include "Objects/Shader.h"
 #include "Objects/Mesh.h"
+#include "Objects/Light.h"
 
 /// \brief GL screen width
 extern GLint screenWidth;
@@ -19,9 +20,11 @@ extern GLint screenHeight;
 /// \brief Camera object
 extern Camera* camera;
 /// \brief Shader program
-extern Shader* shader;
+extern Shader* lightingShader, *simpleShader;
 /// \brief Horse mesh
 extern Mesh* horse;
+/// \brief Light source
+extern Light* light;
 /// \brief Projection * View matrix
 extern glm::mat4 vpMatrix;
 /// \brief GL window pointer

@@ -12,8 +12,9 @@ GLint screenHeight = 800;
 
 //Shader, camera, and mesh
 Camera* camera;
-Shader* shader;
+Shader* lightingShader, *simpleShader;
 Mesh* horse;
+Light* light;
 
 //VP matrix
 glm::mat4 vpMatrix;

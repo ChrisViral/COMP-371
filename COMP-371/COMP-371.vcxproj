@@ -179,6 +179,7 @@
     <ClCompile Include="Objects\Camera.cpp" />
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="Objects\Cube.cpp" />
+    <ClCompile Include="Objects\Light.cpp" />
     <ClCompile Include="Objects\Mesh.cpp" />
     <ClCompile Include="Objects\Object.cpp" />
     <ClCompile Include="Objects\Shader.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Objects\Camera.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Objects\Cube.h" />
+    <ClInclude Include="Objects\Light.h" />
     <ClInclude Include="Objects\Mesh.h" />
     <ClInclude Include="Objects\Object.h" />
     <ClInclude Include="Objects\Shader.h" />
@@ -210,10 +212,16 @@
     <None Include="Meshes\Horse.mesh">
       <FileType>Script</FileType>
     </None>
-    <None Include="Shaders\fragment.frag">
+    <None Include="Shaders\lightFragment.frag">
       <FileType>Script</FileType>
     </None>
-    <None Include="Shaders\vertex.vert">
+    <None Include="Shaders\lightVertex.vert">
+      <FileType>Script</FileType>
+    </None>
+    <None Include="Shaders\simpleFragment.frag">
+      <FileType>Script</FileType>
+    </None>
+    <None Include="Shaders\simpleVertex.vert">
       <FileType>Script</FileType>
     </None>
   </ItemGroup>

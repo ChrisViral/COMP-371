@@ -130,7 +130,7 @@ void Mesh::setup()
 		}
 		stbi_image_free(data);
 
-		shader->setInt("tex2", 1);
+		lightingShader->setInt("tex2", 1);
 
 		//Unbind
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -150,15 +150,16 @@ void Mesh::render() const
 	//Nothing to render if no root or not set
 	if (root == nullptr || !set) { return; }
 
+	lightingShader->use();
 	glPolygonMode(GL_FRONT_AND_BACK, meshRender);
 
 	if (useTextures)
 	{
-		shader->setInt("state", 2);
+		lightingShader->setInt("state", 2);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, tex);
 	}
-	else { shader->setInt("state", 0); }
+	else { lightingShader->setInt("state", 0); }
 
 	mat4 model(1.0f);
 	model = translate(model, vec3(position.x, position.y * scaleFactor, position.z));	//Horse position on the grid

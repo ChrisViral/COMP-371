@@ -36,6 +36,9 @@
     <ClCompile Include="Objects\Axis.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Light.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h" />
@@ -76,17 +79,26 @@
     <ClInclude Include="Objects\Axis.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Light.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll" />
-    <None Include="Shaders\fragment.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Shaders\vertex.vert">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="Meshes\Horse.mesh">
       <Filter>Meshes</Filter>
+    </None>
+    <None Include="Shaders\lightFragment.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\lightVertex.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\simpleFragment.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\simpleVertex.vert">
+      <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

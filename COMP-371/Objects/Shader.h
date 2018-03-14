@@ -11,30 +11,30 @@
 #include <string>
 
 /**
- * \brief Shader Program wrapper object handling a Vertex and a Fragment shader
+ * \brief Shader Program wrapper object handling a Vertex and a Fragment lightingShader
  */
 class Shader
 {
 public:
 	//Constructors/Destructors
 	/**
-	 * \brief Creates a new empty shader, with no associated programs
+	 * \brief Creates a new empty lightingShader, with no associated programs
 	 */
 	Shader();
 	/**
-	 * \brief Creates a new Shader from the given vertex shader and fragment shader file pathes
-	 * \param vertexPath   Path (local or absolute) to the vertex shader file
-	 * \param fragmentPath Path (local or absolute) to the fragment shader file
+	 * \brief Creates a new Shader from the given vertex lightingShader and fragment lightingShader file pathes
+	 * \param vertexPath   Path (local or absolute) to the vertex lightingShader file
+	 * \param fragmentPath Path (local or absolute) to the fragment lightingShader file
 	 */
 	Shader(const std::string vertexPath, const std::string fragmentPath);
 	/**
-	 * \brief Frees up the memory associated to this shader
+	 * \brief Frees up the memory associated to this lightingShader
 	 */
 	~Shader();
 
 	//Setters/Getters
 	/**
-	 * \brief Gets the shader program ID associated to this Shader object
+	 * \brief Gets the lightingShader program ID associated to this Shader object
 	 * \return The program ID
 	 */
 	GLuint getID() const { return id; }
