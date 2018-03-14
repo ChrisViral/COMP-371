@@ -32,6 +32,13 @@ public:
 	 */
 	~Camera();
 
+	//Getters
+	/**
+	 * \brief World position of the Camera
+	 * \return Position vector of the Camera
+	 */
+	glm::vec3 getPosition() const { return target + position; }
+
 	//Methods
 	/**
 	 * \brief Gets the view Matrix associated with the current state of the camera

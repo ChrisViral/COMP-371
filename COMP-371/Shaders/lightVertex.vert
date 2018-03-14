@@ -7,7 +7,7 @@ layout (location = 2) in vec2 tex;
 
 //Output vectors
 out vec3 normal;
-out vec3 fragPos;
+out vec3 fragPosition;
 out vec2 texCoord;
 
 //Model View Projection matrix
@@ -20,6 +20,6 @@ void main()
     vec4 p = model * vec4(pos, 1.0);
     gl_Position = vpMat * p;
     normal = mat3(transpose(inverse(model))) * norm;
-    fragPos = vec3(p);
+    fragPosition = vec3(p);
     texCoord = tex;
 }

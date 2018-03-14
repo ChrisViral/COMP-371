@@ -123,12 +123,17 @@ void Grid::setup()
 
 void Grid::render() const
 {
+	static const vec3 ambient(0.05f, 0.15f, 0.05f);
+	static const vec3 diffuse(0.4f, 0.5f, 0.4f);
+	static const vec3 specular(0.05f, 0.7f, 0.05f);
+	static const float shininess = 13.0f;
+
 	//Don't render if not correctly setup
 	if (!set || size <= 0) { return; }
 
 	//Bind VAO
-	lightingShader->use();
 	glBindVertexArray(VAO);
+	lightingShader->use();
 
 	GLenum renderMode;
 	if (useTextures)
@@ -138,6 +143,10 @@ void Grid::render() const
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, tex);
 		renderMode = GL_TRIANGLES;
+		lightingShader->setVec3("material.ambient", ambient);
+		lightingShader->setVec3("material.diffuse", diffuse);
+		lightingShader->setVec3("material.specular", specular);
+		lightingShader->setFloat("material.shininess", shininess);
 	}
 	else
 	{
@@ -145,6 +154,10 @@ void Grid::render() const
 		lightingShader->setInt("state", 0);
 		lightingShader->setVec3("colour", colour);
 		renderMode = GL_LINES;
+		lightingShader->setVec3("material.ambient", Object::ambient);
+		lightingShader->setVec3("material.diffuse", Object::diffuse);
+		lightingShader->setVec3("material.specular", Object::specular);
+		lightingShader->setFloat("material.shininess", Object::shininess);
 	}
 	
 	const mat4 m(1.0f);

@@ -41,7 +41,7 @@ Camera::~Camera() { }
 mat4 Camera::view() const
 {
 	//Get view with lookAt
-	return lookAt(position + target, target, up);
+	return lookAt(getPosition(), target, up);
 }
 
 mat4 Camera::perspective() const

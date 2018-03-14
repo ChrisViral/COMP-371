@@ -2,6 +2,9 @@
 #include "../Globals.h"
 #include "Light.h"
 
+#define AMBIENT glm::vec3(0.3f)
+#define DIFFUSE glm::vec3(1.0f)
+#define SPECULAR glm::vec3(1.0f)
 #define VERTEX_NUMBER 1
 
 const GLfloat Light::vertices[] =
@@ -48,6 +51,11 @@ void Light::setup()
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 
+		//Set shader attributes
+		lightingShader->setVec3("light.position", position);
+		lightingShader->setVec3("light.ambient", AMBIENT);
+		lightingShader->setVec3("light.diffuse", DIFFUSE);
+		lightingShader->setVec3("light.specular", SPECULAR);
 		set = true;
 	}
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <GL/glew.h>
+#include <glm/glm.hpp>
 
 class Object
 {
@@ -11,6 +12,11 @@ public:
 	virtual void render() const = 0;
 
 protected:
+	static const glm::vec3 ambient;
+	static const glm::vec3 diffuse;
+	static const glm::vec3 specular;
+	static const float shininess;
+
 	GLuint VAO, VBO, EBO, tex;
 	bool set;
 };

@@ -168,11 +168,20 @@ void Mesh::render() const
 	//Constant values for the rendering
 	static const vec3 yAxis(0.0f, 1.0f, 0.0f);
 	static const vec3 zAxis(0.0f, 0.0f, 1.0f);
+	static const vec3 ambient(0.2f, 0.1f, 0.05f);
+	static const vec3 diffuse(0.7f, 0.25f, 0.1f);
+	static const vec3 specular(0.25f, 0.15f, 0.1f);
+	static const float shininess = 13.0f;
 
 	//Nothing to render if no root or not set
 	if (root == nullptr || !set) { return; }
 
+	//Rendering setup
+	glBindVertexArray(VAO);
+	glLineWidth(3.0f);
 	lightingShader->use();
+
+	//Setup render mode
 	glPolygonMode(GL_FRONT_AND_BACK, meshRender);
 
 	if (useTextures)
@@ -180,18 +189,25 @@ void Mesh::render() const
 		lightingShader->setInt("state", 2);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, tex);
+		lightingShader->setVec3("material.ambient", ambient);
+		lightingShader->setVec3("material.diffuse", diffuse);
+		lightingShader->setVec3("material.specular", specular);
+		lightingShader->setFloat("material.shininess", shininess);
 	}
-	else { lightingShader->setInt("state", 0); }
+	else
+	{
+		lightingShader->setInt("state", 0);
+		lightingShader->setVec3("material.ambient", Object::ambient);
+		lightingShader->setVec3("material.diffuse", Object::diffuse);
+		lightingShader->setVec3("material.specular", Object::specular);
+		lightingShader->setFloat("material.shininess", Object::shininess);
+	}
 
 	mat4 model(1.0f);
 	model = translate(model, vec3(position.x, position.y * scaleFactor, position.z));	//Horse position on the grid
 	model = rotate(model, radians(yRot), yAxis);	//Yaw (side) rotation of the horse
 	model = rotate(model, radians(zRot), zAxis);	//Pitch (vertical) rotation of the horse
 	model = scale(model, size * scaleFactor);		//Scale factor of the horse
-
-	//Rendering setup
-	glBindVertexArray(VAO);
-	glLineWidth(3.0f);
 
 	//Render starting at the root
 	root->render(model);
