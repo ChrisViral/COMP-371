@@ -2,6 +2,7 @@
 #include <glm/gtx/rotate_vector.hpp>
 #include <stb/stb_image.h>
 #include <iostream>
+#include <stack>
 #include "Mesh.h"
 #include "../Globals.h"
 
@@ -12,6 +13,7 @@ using glm::vec3;
 using glm::mat4;
 using std::cout;
 using std::endl;
+using std::stack;
 
 const GLfloat Mesh::vertices[] =
 {
@@ -148,6 +150,8 @@ void Mesh::render() const
 	//Nothing to render if no root or not set
 	if (root == nullptr || !set) { return; }
 
+	glPolygonMode(GL_FRONT_AND_BACK, meshRender);
+
 	if (useTextures)
 	{
 		shader->setInt("state", 2);
@@ -171,6 +175,7 @@ void Mesh::render() const
 
 	//Rendering end
 	glLineWidth(1.0f);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBindVertexArray(0);
 }
 
@@ -180,4 +185,35 @@ void Mesh::reset()
 	yRot = start.yRot;
 	zRot = start.zRot;
 	scaleFactor = 1.0f;
+}
+
+Cube* Mesh::findCube(const std::string& name) const
+{
+	//Return null if no root
+	if (root == nullptr) { return nullptr; }
+
+	//Setup stack
+	stack<Cube*> search;
+	search.push(root);
+
+	//Keep searching until empty
+	while (!search.empty())
+	{
+		//Get top cube
+		Cube* c = search.top();
+		search.pop();
+
+		//Return if name matches
+		if (c->getName() == name) { return c; }
+
+		//Add children
+		for (Cube* child : c->getChildren())
+		{
+			search.push(child);
+		}
+	}
+
+	//Nothing found, return null
+	cout << "Cube of name " << name << " could not be found" << endl;
+	return nullptr;
 }

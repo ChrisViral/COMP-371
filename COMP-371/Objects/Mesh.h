@@ -44,6 +44,12 @@ public:
 	 * \brief Resets the Mesh to it's original state
 	 */
 	void reset();
+	/**
+	 * \brief Finds cube of the given name within the Mesh
+	 * \param name Name of the cube to find
+	 * \return	   The cube of the given name, or nullptr if it was not found
+	 */
+	Cube* findCube(const std::string& name) const;
 
 private:
 	/**

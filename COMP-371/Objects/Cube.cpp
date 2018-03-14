@@ -11,7 +11,7 @@ using glm::mat4;
 using std::vector;
 
 Cube::Cube(Mesh* mesh) : name(""), colour(vec3(0.0f)), position(vec3(0.0f)), size(vec3(0.0f)), offset(vec3(0.0f)),
-						 angle(0.0f), mesh(mesh), parent(nullptr), children(vector<Cube*>()) { }
+						 angle(0.0f), startAngle(0.0f), mesh(mesh), parent(nullptr), children(vector<Cube*>()) { }
 
 Cube::~Cube()
 {

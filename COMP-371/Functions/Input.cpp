@@ -90,6 +90,46 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		case GLFW_KEY_D:
 			horse->yRot -= 5.0f; break;
 
+			//0 - Rotate joint 0 by -5 degrees
+		case GLFW_KEY_0:
+			joints[0]->angle -= 5.0f; break;
+
+			//1 - Rotate joint 1 by -5 degrees
+		case GLFW_KEY_1:
+			joints[1]->angle -= 5.0f; break;
+
+			//2 - Rotate joint 2 by -5 degrees
+		case GLFW_KEY_2:
+			joints[2]->angle -= 5.0f; break;
+
+			//3 - Rotate joint 3 by -5 degrees
+		case GLFW_KEY_3:
+			joints[3]->angle -= 5.0f; break;
+
+			//4 - Rotate joint 4 by -5 degrees
+		case GLFW_KEY_4:
+			joints[4]->angle -= 5.0f; break;
+
+			//5 - Rotate joint 5 by -5 degrees
+		case GLFW_KEY_5:
+			joints[5]->angle -= 5.0f; break;
+
+			//6 - Rotate joint 6 by -5 degrees
+		case GLFW_KEY_6:
+			joints[6]->angle -= 5.0f; break;
+
+			//7 - Rotate joint 7 by -5 degrees
+		case GLFW_KEY_7:
+			joints[7]->angle -= 5.0f; break;
+
+			//8 - Rotate joint 8 by -5 degrees
+		case GLFW_KEY_8:
+			joints[8]->angle -= 5.0f; break;
+
+			//9 - Rotate joint 9 by -5 degrees
+		case GLFW_KEY_9:
+			joints[9]->angle -= 5.0f; break;
+
 		default:
 			break;
 		}
@@ -108,6 +148,10 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		{
 			horse->reset();
 			camera->reset();
+			for (Cube* c : joints)
+			{
+				c->angle = c->startAngle;
+			}
 			break;
 		}
 
@@ -126,15 +170,15 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 			//P - render as points
 		case GLFW_KEY_P:
-			glPolygonMode(GL_FRONT_AND_BACK, GL_POINT); break;
+			meshRender = GL_POINT; break;
 
 			//T - render as triangles
 		case GLFW_KEY_T:
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); break;
+			meshRender = GL_FILL; break;
 
 			//L - render as lines
 		case GLFW_KEY_L:
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); break;
+			meshRender = GL_LINE; break;
 
 			//W - move horse up
 		case GLFW_KEY_W:
@@ -168,8 +212,49 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		case GLFW_KEY_RIGHT:
 			camera->moveTarget(vec3(1.0f, 0.0f, 0.0f)); break;
 
+			//B - Toggle texture rendering
 		case GLFW_KEY_B:
-			useTextures = !useTextures;
+			useTextures = !useTextures; break;
+
+			//0 - Rotate joint 0 by 5 degrees
+		case GLFW_KEY_0:
+			joints[0]->angle += 5.0f; break;
+
+			//1 - Rotate joint 1 by 5 degrees
+		case GLFW_KEY_1:
+			joints[1]->angle += 5.0f; break;
+
+			//2 - Rotate joint 2 by 5 degrees
+		case GLFW_KEY_2:
+			joints[2]->angle += 5.0f; break;
+
+			//3 - Rotate joint 3 by 5 degrees
+		case GLFW_KEY_3:
+			joints[3]->angle += 5.0f; break;
+
+			//4 - Rotate joint 4 by 5 degrees
+		case GLFW_KEY_4:
+			joints[4]->angle += 5.0f; break;
+
+			//5 - Rotate joint 5 by 5 degrees
+		case GLFW_KEY_5:
+			joints[5]->angle += 5.0f; break;
+
+			//6 - Rotate joint 6 by 5 degrees
+		case GLFW_KEY_6:
+			joints[6]->angle += 5.0f; break;
+
+			//7 - Rotate joint 7 by 5 degrees
+		case GLFW_KEY_7:
+			joints[7]->angle += 5.0f; break;
+
+			//8 - Rotate joint 8 by 5 degrees
+		case GLFW_KEY_8:
+			joints[8]->angle += 5.0f; break;
+
+			//9 - Rotate joint 9 by 5 degrees
+		case GLFW_KEY_9:
+			joints[9]->angle += 5.0f; break;
 
 			//Other keys - do nothing
 		default:

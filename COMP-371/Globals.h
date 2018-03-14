@@ -26,5 +26,9 @@ extern Mesh* horse;
 extern glm::mat4 vpMatrix;
 /// \brief GL window pointer
 extern GLFWwindow* window;
-
+/// \brief If textures should be used when rendering
 extern bool useTextures;
+/// \brief Rendering type for the horse mesh
+extern GLenum meshRender;
+/// \brief Joints, in the correct order
+extern std::vector<Cube*> joints;

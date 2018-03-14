@@ -13,6 +13,11 @@
 static bool init();
 
 /**
+ * \brief Loads all the joints into the joints vector
+ */
+static void loadJoints();
+
+/**
  * \brief Clears all current memory then closes the application
  * \param code Exit code
  */

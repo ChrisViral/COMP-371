@@ -1,3 +1,9 @@
+// Christophe Savard
+// 40017812
+// COMP-371 WW 
+// Assignment 2
+// March 15th 2018
+
 [Mesh]
 root     = torso
 position = 0.0, 2.0, 0.0
@@ -99,7 +105,7 @@ angle    = 35.0
 name     = head
 colour   = 0.5
 parent   = neck
-position = 0.6, 0.0, 0.0
+position = 0.8, 0.0, 0.0
 size     = 1.1, 0.4, 0.3
-offset   = 0.5, 0.2, 0.0
+offset   = 0.4, 0.0, 0.0
 angle    = -85.0

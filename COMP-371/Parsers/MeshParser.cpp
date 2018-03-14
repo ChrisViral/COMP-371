@@ -168,6 +168,7 @@ Mesh* MeshParser::parse() const
 			else if (name == "angle")
 			{
 				cube->angle = stof(value);
+				cube->startAngle = cube->angle;
 			}
 			else
 			{
@@ -247,6 +248,7 @@ Mesh* MeshParser::parse() const
 			return nullptr;
 		}
 
+		//Wrap up and return
 		cout << "File successfully parsed, " << cubes.size() << " cubes detected." << endl;
 		cubes.clear();
 		return mesh;

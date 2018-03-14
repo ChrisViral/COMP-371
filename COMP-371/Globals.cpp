@@ -23,3 +23,7 @@ GLFWwindow* window;
 
 //Rendering options
 bool useTextures = false;
+GLenum meshRender = GL_FILL;
+
+//Joints
+std::vector<Cube*> joints;
