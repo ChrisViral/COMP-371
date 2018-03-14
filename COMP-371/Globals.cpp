@@ -16,7 +16,7 @@ Shader* lightingShader, *simpleShader;
 Mesh* horse;
 Light* light;
 
-//VP matrix
+//View Projection matrix
 glm::mat4 vpMatrix;
 
 //GL Window

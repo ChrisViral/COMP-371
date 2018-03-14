@@ -17,11 +17,11 @@ using std::endl;
 
 const GLfloat Grid::vertices[] =
 {
-	//Position			Texture
-	0.0f, 0.0f, 0.0f,	0.0f, 0.0f,
-	1.0f, 0.0f, 0.0f,	1.0f, 0.0f,
-	1.0f, 0.0f, 1.0f,	1.0f, 1.0f,
-	0.0f, 0.0f, 1.0f,	0.0f, 1.0f
+	//Position			Normal				Texture
+	0.0f, 0.0f, 0.0f,	0.0f, 1.0f,0.0f,	0.0f, 0.0f,
+	1.0f, 0.0f, 0.0f,	0.0f, 1.0f,0.0f,	1.0f, 0.0f,
+	1.0f, 0.0f, 1.0f,	0.0f, 1.0f,0.0f,	1.0f, 1.0f,
+	0.0f, 0.0f, 1.0f,	0.0f, 1.0f,0.0f,	0.0f, 1.0f
 };
 
 const GLint Grid::indices[] =
@@ -80,12 +80,16 @@ void Grid::setup()
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(lineIndices), lineIndices, GL_STATIC_DRAW);
 
 		//Setup the position vertex attribute
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(0));
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(0));
 		glEnableVertexAttribArray(0);
 
-		//Setup the texture vertex attribute
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(3 * sizeof(GLfloat)));
+		//Setup normal vector vertex attribute
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(3 * sizeof(GLfloat)));
 		glEnableVertexAttribArray(1);
+
+		//Setup the texture vertex attribute
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(6 * sizeof(GLfloat)));
+		glEnableVertexAttribArray(2);
 
 		glGenTextures(1, &tex);
 		glBindTexture(GL_TEXTURE_2D, tex);
@@ -94,7 +98,7 @@ void Grid::setup()
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		int width, height, nrChannels;
-		unsigned char* data = stbi_load(TEXTURE_PATH, &width, &height, &nrChannels, 0);
+		stbi_uc* data = stbi_load(TEXTURE_PATH, &width, &height, &nrChannels, 0);
 		if (data)
 		{
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -142,12 +146,13 @@ void Grid::render() const
 		lightingShader->setVec3("colour", colour);
 		renderMode = GL_LINES;
 	}
-
+	
+	const mat4 m(1.0f);
 	for (int i = -size; i < size; i++)
 	{
 		for (int j = -size; j < size; j++)
 		{
-			lightingShader->setMat4("MVP", translate(vpMatrix, vec3(i, 0.0f, j)));
+			lightingShader->setMat4("model", translate(m, vec3(i, 0.0f, j)));
 			glDrawElements(renderMode, GRID_VERTICES, GL_UNSIGNED_INT, nullptr);
 		}
 	}

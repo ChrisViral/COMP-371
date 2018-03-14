@@ -17,44 +17,62 @@ using std::stack;
 
 const GLfloat Mesh::vertices[] =
 {
-	//Front face			Texture coords
-	 0.5f,  0.5f,  0.5f,	1.0f, 1.0f, //Top right
-	 0.5f, -0.5f,  0.5f,	1.0f, 0.0f, //Bottom right
-	-0.5f, -0.5f,  0.5f,	0.0f, 0.0f, //Bottom left
-	-0.5f,  0.5f,  0.5f,	0.0f, 1.0f, //Top left
+	//Front face			Normal					Texture
+	-0.5f, -0.5f,  0.5f,	0.0f,  0.0f,  1.0f,		0.0f, 0.0f, //Bottom left
+	 0.5f, -0.5f,  0.5f,	0.0f,  0.0f,  1.0f,		1.0f, 0.0f, //Bottom right
+	 0.5f,  0.5f,  0.5f,	0.0f,  0.0f,  1.0f,		1.0f, 1.0f, //Top right
+	-0.5f,  0.5f,  0.5f,	0.0f,  0.0f,  1.0f,		0.0f, 1.0f, //Top left
 
-	//Back face				Texture coords
-	 0.5f,  0.5f, -0.5f,	1.0f, 0.0f, //Top right
-	 0.5f, -0.5f, -0.5f,	1.0f, 1.0f, //Bottom right
-	-0.5f, -0.5f, -0.5f,	0.0f, 1.0f, //Bottom left
-	-0.5f,  0.5f, -0.5f,	0.0f, 0.0f,  //Top left
+	//Right face
+	 0.5f,  0.5f,  0.5f,	1.0f,  0.0f,  0.0f,		0.0f, 0.0f, //Bottom left
+	 0.5f,  0.5f, -0.5f,	1.0f,  0.0f,  0.0f,		1.0f, 0.0f, //Bottom right
+	 0.5f, -0.5f, -0.5f,	1.0f,  0.0f,  0.0f,		1.0f, 1.0f, //Top right
+	 0.5f, -0.5f,  0.5f,	1.0f,  0.0f,  0.0f,		0.0f, 1.0f, //Top left
 
-	//Sides (texture fix)
-	 0.5f,  0.5f, -0.5f,	0.0f, 1.0f, //Top right
-	 0.5f, -0.5f, -0.5f,	0.0f, 0.0f, //Bottom right
-	-0.5f, -0.5f, -0.5f,	1.0f, 0.0f, //Bottom left
-	-0.5f,  0.5f, -0.5f,	1.0f, 1.0f  //Top left
+	//Left face
+	-0.5f,  0.5f,  0.5f,   -1.0f,  0.0f,  0.0f,		0.0f, 0.0f, //Bottom left
+	-0.5f,  0.5f, -0.5f,   -1.0f,  0.0f,  0.0f,		1.0f, 0.0f, //Bottom right
+	-0.5f, -0.5f, -0.5f,   -1.0f,  0.0f,  0.0f,		1.0f, 1.0f, //Top right
+	-0.5f, -0.5f,  0.5f,   -1.0f,  0.0f,  0.0f,		0.0f, 1.0f, //Top left
+
+	//Back face
+	-0.5f, -0.5f, -0.5f,	0.0f,  0.0f, -1.0f,		0.0f, 0.0f, //Bottom left
+	 0.5f, -0.5f, -0.5f,	0.0f,  0.0f, -1.0f,		1.0f, 0.0f, //Bottom right
+	 0.5f,  0.5f, -0.5f,	0.0f,  0.0f, -1.0f,		1.0f, 1.0f, //Top right
+	-0.5f,  0.5f, -0.5f,	0.0f,  0.0f, -1.0f,		0.0f, 1.0f, //Top left
+
+	//Top face
+	-0.5f,  0.5f,  0.5f,	0.0f,  1.0f,  0.0f,		0.0f, 0.0f, //Bottom left
+	 0.5f,  0.5f,  0.5f,	0.0f,  1.0f,  0.0f,		1.0f, 0.0f, //Bottom right
+	 0.5f,  0.5f, -0.5f,	0.0f,  1.0f,  0.0f,		1.0f, 1.0f, //Top right
+	-0.5f,  0.5f, -0.5f,	0.0f,  1.0f,  0.0f,		0.0f, 1.0f, //Top left
+
+	//Bottom face
+	-0.5f, -0.5f,  0.5f,	0.0f, -1.0f,  0.0f,		0.0f, 0.0f, //Bottom left
+	 0.5f, -0.5f,  0.5f,	0.0f, -1.0f,  0.0f,		1.0f, 0.0f, //Bottom right
+	 0.5f, -0.5f, -0.5f,	0.0f, -1.0f,  0.0f,		1.0f, 1.0f, //Top right
+	-0.5f, -0.5f, -0.5f,	0.0f, -1.0f,  0.0f,		0.0f, 1.0f  //Top left
 };
 
 const GLint Mesh::indices[] =
 {
-	0, 3, 1, //Front face
-	1, 3, 2,
+	0, 1, 2,	//Front face
+	0, 2, 3,
 
-	0, 1, 8, //Right face
-	8, 1, 9,
+	7, 4, 5,	//Right face
+	7, 5, 6,
 
-	10, 3, 11, //Left face
-	2, 3, 10,
+	11, 8, 9,	//Left face
+	11, 9, 10,
 
-	5, 6, 4, //Back face
-	4, 6, 7,
+	12, 15, 14,	//Back face
+	12, 14, 13,
 
-	0, 4, 3, //Top face
-	3, 4, 7,
+	16, 17, 18,	//Top face
+	16, 18, 19,
 
-	1, 6, 5, //Bottom face
-	2, 6, 1
+	23, 22, 21,	//Bottom face
+	23, 21, 20
 };
 
 Mesh::Mesh() : Object(), root(nullptr), position(vec3(0.0f)), size(vec3(0.0f)), scaleFactor(1.0f), yRot(0.0f), zRot(0.0f) { }
@@ -104,12 +122,16 @@ void Mesh::setup()
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 		//Setup the position vertex attribute
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(0));
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(0));
 		glEnableVertexAttribArray(0);
 
-		//Setup the texture vertex attribute
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(3 * sizeof(GLfloat)));
+		//Setup normal vector vertex attribute
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(3 * sizeof(GLfloat)));
 		glEnableVertexAttribArray(1);
+
+		//Setup the texture vertex attribute
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(6 * sizeof(GLfloat)));
+		glEnableVertexAttribArray(2);
 
 		glGenTextures(1, &tex);
 		glBindTexture(GL_TEXTURE_2D, tex);
@@ -118,7 +140,7 @@ void Mesh::setup()
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		int width, height, nrChannels;
-		unsigned char* data = stbi_load(TEXTURE_PATH, &width, &height, &nrChannels, 0);
+		stbi_uc* data = stbi_load(TEXTURE_PATH, &width, &height, &nrChannels, 0);
 		if (data)
 		{
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);

@@ -8,6 +8,8 @@ public:
 	explicit Light(const glm:: vec3 position);
 	~Light();
 
+	glm::vec3 getPosition() const { return position; }
+
 	void setup() override;
 	void render() const override;
 

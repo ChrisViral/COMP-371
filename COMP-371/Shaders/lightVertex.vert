@@ -2,17 +2,24 @@
 
 //Get vertex location from layout
 layout (location = 0) in vec3 pos;
-layout (location = 1) in vec2 tex;
+layout (location = 1) in vec3 norm;
+layout (location = 2) in vec2 tex;
 
-//Output texture coordinate
+//Output vectors
+out vec3 normal;
+out vec3 fragPos;
 out vec2 texCoord;
 
 //Model View Projection matrix
-uniform mat4 MVP;
+uniform mat4 vpMat;
+uniform mat4 model;
 
 void main()
 {
 	//Set the vertex position according to the MVP matrix
-    gl_Position = MVP * vec4(pos, 1.0);
+    vec4 p = model * vec4(pos, 1.0);
+    gl_Position = vpMat * p;
+    normal = mat3(transpose(inverse(model))) * norm;
+    fragPos = vec3(p);
     texCoord = tex;
 }

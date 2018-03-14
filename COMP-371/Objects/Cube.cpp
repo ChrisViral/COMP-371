@@ -33,7 +33,7 @@ void Cube::render(mat4 model) const
 	model = translate(model, offset);
 
 	if (!useTextures) { lightingShader->setVec3("colour", colour); }
-	lightingShader->setMat4("MVP", vpMatrix * scale(model, size));
+	lightingShader->setMat4("model", scale(model, size));
 	glDrawElements(GL_TRIANGLES, CUBE_VERTICES, GL_UNSIGNED_INT, nullptr);
 
 	for (Cube* child : children)

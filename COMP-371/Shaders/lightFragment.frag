@@ -3,18 +3,19 @@
 //Vertex colour
 out vec4 fragColour;
 
-//Texture coordinate
+//Input vectors
+in vec3 normal;
+in vec3 fragPos;
 in vec2 texCoord;
 
-//Lighting variables
-const float ambient = 0.2;
-const vec3 lightColour = vec3(1.0, 1.0, 1.0);
-
-//Input texture
+//Uniforms
 uniform int state;
 uniform sampler2D tex1;
 uniform sampler2D tex2;
 uniform vec3 colour;
+uniform vec3 lightPosition;
+uniform vec3 lightColour;
+uniform float ambientStrength;
   
 void main()
 {
@@ -24,13 +25,12 @@ void main()
         case 0:
             pixColour = colour; break;
         case 1:
-            pixColour = texture(tex1, texCoord).xyz; break;
+            pixColour = vec3(texture(tex1, texCoord)); break;
         case 2:
-            pixColour = texture(tex2, texCoord).xyz; break;
+            pixColour = vec3(texture(tex2, texCoord)); break;
     }
-
-    vec3 ambientLight = lightColour * ambient;
-    pixColour *= ambientLight;
-    fragColour = vec4(pixColour, 1.0);
+    vec3 ambient = lightColour * ambientStrength;
+    vec3 diffuse = max(dot(normalize(normal), normalize(lightPosition - fragPos)), 0.0) * lightColour;
+    fragColour = vec4((ambient + diffuse) * pixColour, 1.0);
 
 }

@@ -46,6 +46,7 @@ public:
 	void use() const;
 
 	void setInt(const std::string& name, const int value) const;
+	void setFloat(const std::string& name, const float value) const;
 	/**
 	* \brief Sets a uniform Vector3 value of the given name
 	* \param name  Name of the uniform value
