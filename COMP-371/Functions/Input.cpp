@@ -168,6 +168,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		case GLFW_KEY_RIGHT:
 			camera->moveTarget(vec3(1.0f, 0.0f, 0.0f)); break;
 
+		case GLFW_KEY_B:
+			useTextures = !useTextures;
+
 			//Other keys - do nothing
 		default:
 			break;

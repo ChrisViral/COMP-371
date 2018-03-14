@@ -25,7 +25,13 @@ const GLfloat Mesh::vertices[] =
 	 0.5f,  0.5f, -0.5f,	1.0f, 0.0f, //Top right
 	 0.5f, -0.5f, -0.5f,	1.0f, 1.0f, //Bottom right
 	-0.5f, -0.5f, -0.5f,	0.0f, 1.0f, //Bottom left
-	-0.5f,  0.5f, -0.5f,	0.0f, 0.0f  //Top left
+	-0.5f,  0.5f, -0.5f,	0.0f, 0.0f,  //Top left
+
+	//Sides (texture fix)
+	 0.5f,  0.5f, -0.5f,	0.0f, 1.0f, //Top right
+	 0.5f, -0.5f, -0.5f,	0.0f, 0.0f, //Bottom right
+	-0.5f, -0.5f, -0.5f,	1.0f, 0.0f, //Bottom left
+	-0.5f,  0.5f, -0.5f,	1.0f, 1.0f  //Top left
 };
 
 const GLint Mesh::indices[] =
@@ -33,11 +39,11 @@ const GLint Mesh::indices[] =
 	0, 3, 1, //Front face
 	1, 3, 2,
 
-	0, 1, 4, //Right face
-	4, 1, 5,
+	0, 1, 8, //Right face
+	8, 1, 9,
 
-	6, 3, 7, //Left face
-	2, 3, 6,
+	10, 3, 11, //Left face
+	2, 3, 10,
 
 	5, 6, 4, //Back face
 	4, 6, 7,
@@ -65,6 +71,7 @@ Mesh::~Mesh()
 		glDeleteVertexArrays(1, &VAO);
 		glDeleteBuffers(1, &VBO);
 		glDeleteBuffers(1, &EBO);
+		glDeleteTextures(1, &tex);
 	}
 }
 
@@ -141,9 +148,13 @@ void Mesh::render() const
 	//Nothing to render if no root or not set
 	if (root == nullptr || !set) { return; }
 
-	shader->setInt("state", 2);
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, tex);
+	if (useTextures)
+	{
+		shader->setInt("state", 2);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, tex);
+	}
+	else { shader->setInt("state", 0); }
 
 	mat4 model(1.0f);
 	model = translate(model, vec3(position.x, position.y * scaleFactor, position.z));	//Horse position on the grid

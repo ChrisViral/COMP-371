@@ -6,6 +6,7 @@
 #include "../Globals.h"
 
 #define GRID_VERTICES 6
+#define LINE_INDICES 8
 #define TEXTURE_PATH "Textures/grass.png"
 
 using glm::radians;
@@ -29,9 +30,17 @@ const GLint Grid::indices[] =
 	0, 2, 3
 };
 
+const GLint Grid::lineIndices[] =
+{
+	0, 1,
+	1, 2,
+	2, 3,
+	3, 4
+};
+
 const vec3 Grid::colour = vec3(1.0f);
 
-Grid::Grid(const int size) : Object(), size(size) { }
+Grid::Grid(const int size) : Object(), size(size), lEBO(0) { }
 
 Grid::~Grid()
 {
@@ -40,6 +49,8 @@ Grid::~Grid()
 		glDeleteVertexArrays(1, &VAO);
 		glDeleteBuffers(1, &VBO);
 		glDeleteBuffers(1, &EBO);
+		glDeleteBuffers(1, &lEBO);
+		glDeleteTextures(1, &tex);
 	}
 }
 
@@ -51,6 +62,7 @@ void Grid::setup()
 		glGenVertexArrays(1, &VAO);
 		glGenBuffers(1, &VBO);
 		glGenBuffers(1, &EBO);
+		glGenBuffers(1, &lEBO);
 
 		//Bind VAO
 		glBindVertexArray(VAO);
@@ -62,6 +74,10 @@ void Grid::setup()
 		//Bind EBO
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+		//Bind lEBO
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, lEBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(lineIndices), lineIndices, GL_STATIC_DRAW);
 
 		//Setup the position vertex attribute
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(0));
@@ -93,6 +109,7 @@ void Grid::setup()
 		shader->setInt("tex1", 0);
 
 		//Unbind
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 
@@ -108,18 +125,29 @@ void Grid::render() const
 	//Bind VAO
 	glBindVertexArray(VAO);
 
-	//Set shader
-	shader->setVec3("colour", colour);
-	shader->setInt("state", 1);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, tex);
+	GLenum renderMode;
+	if (useTextures)
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		shader->setInt("state", 1);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, tex);
+		renderMode = GL_TRIANGLES;
+	}
+	else
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, lEBO);
+		shader->setInt("state", 0);
+		shader->setVec3("colour", colour);
+		renderMode = GL_LINES;
+	}
 
 	for (int i = -size; i < size; i++)
 	{
 		for (int j = -size; j < size; j++)
 		{
 			shader->setMat4("MVP", translate(vpMatrix, vec3(i, 0.0f, j)));
-			glDrawElements(GL_TRIANGLES, GRID_VERTICES, GL_UNSIGNED_INT, nullptr);
+			glDrawElements(renderMode, GRID_VERTICES, GL_UNSIGNED_INT, nullptr);
 		}
 	}
 

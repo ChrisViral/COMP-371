@@ -26,3 +26,5 @@ extern Mesh* horse;
 extern glm::mat4 vpMatrix;
 /// \brief GL window pointer
 extern GLFWwindow* window;
+
+extern bool useTextures;

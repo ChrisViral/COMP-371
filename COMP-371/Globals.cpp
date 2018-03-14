@@ -20,3 +20,6 @@ glm::mat4 vpMatrix;
 
 //GL Window
 GLFWwindow* window;
+
+//Rendering options
+bool useTextures = false;

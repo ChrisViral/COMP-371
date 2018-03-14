@@ -32,7 +32,7 @@ void Cube::render(mat4 model) const
 	model = rotate(model, radians(angle), jointAxis);
 	model = translate(model, offset);
 
-	shader->setVec3("colour", colour);
+	if (!useTextures) { shader->setVec3("colour", colour); }
 	shader->setMat4("MVP", vpMatrix * scale(model, size));
 	glDrawElements(GL_TRIANGLES, CUBE_VERTICES, GL_UNSIGNED_INT, nullptr);
 
