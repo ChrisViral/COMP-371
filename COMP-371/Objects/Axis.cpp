@@ -65,15 +65,20 @@ void Axis::setup()
 	}
 }
 
-void Axis::render() const
+void Axis::render(Shader* shader) const
 {
 	//Bind VAO
-	simpleShader->use();
+	if (shader == nullptr)
+	{
+		shader = simpleShader;
+		shader->use();
+		shader->setMat4("vpMat", vpMatrix);
+	}
 	glBindVertexArray(VAO);
 
 	//Set line width
 	glLineWidth(5.0f);
-	simpleShader->setMat4("MVP", scale(vpMatrix, vec3(length)));
+	shader->setMat4("model", scale(mat4(1.0f), vec3(length)));
 	glDrawArrays(GL_LINES, 0, VERTEX_NUMBER);
 
 	//Reset line width

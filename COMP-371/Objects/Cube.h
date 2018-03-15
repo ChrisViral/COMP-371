@@ -7,6 +7,7 @@
 #include <vector>
 
 class Mesh;
+class Shader;
 
 class Cube
 {
@@ -19,7 +20,7 @@ public:
 	Cube* getParent() const { return parent; }
 	std::vector<Cube*> getChildren() const { return children; }
 
-	void render(glm::mat4 model) const;
+	void render(glm::mat4 model, Shader* shader) const;
 
 private:
 	std::string name;

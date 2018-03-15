@@ -163,7 +163,7 @@ void Mesh::setup()
 	}
 }
 
-void Mesh::render() const
+void Mesh::render(Shader* shader) const
 {
 	//Constant values for the rendering
 	static const vec3 yAxis(0.0f, 1.0f, 0.0f);
@@ -179,29 +179,37 @@ void Mesh::render() const
 	//Rendering setup
 	glBindVertexArray(VAO);
 	glLineWidth(3.0f);
-	lightingShader->use();
 
 	//Setup render mode
 	glPolygonMode(GL_FRONT_AND_BACK, meshRender);
 
-	if (useTextures)
+	if (shader == nullptr)
 	{
-		lightingShader->setInt("state", 2);
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, tex);
-		lightingShader->setVec3("material.ambient", ambient);
-		lightingShader->setVec3("material.diffuse", diffuse);
-		lightingShader->setVec3("material.specular", specular);
-		lightingShader->setFloat("material.shininess", shininess);
+		shader = lightingShader;
+		shader->use();
+		shader->setMat4("vpMat", vpMatrix);
+		shader->setVec3("cameraPosition", camera->getPosition());
+
+		if (useTextures)
+		{
+			shader->setInt("state", 2);
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, tex);
+			shader->setVec3("material.ambient", ambient);
+			shader->setVec3("material.diffuse", diffuse);
+			shader->setVec3("material.specular", specular);
+			shader->setFloat("material.shininess", shininess);
+		}
+		else
+		{
+			shader->setInt("state", 0);
+			shader->setVec3("material.ambient", Object::ambient);
+			shader->setVec3("material.diffuse", Object::diffuse);
+			shader->setVec3("material.specular", Object::specular);
+			shader->setFloat("material.shininess", Object::shininess);
+		}
 	}
-	else
-	{
-		lightingShader->setInt("state", 0);
-		lightingShader->setVec3("material.ambient", Object::ambient);
-		lightingShader->setVec3("material.diffuse", Object::diffuse);
-		lightingShader->setVec3("material.specular", Object::specular);
-		lightingShader->setFloat("material.shininess", Object::shininess);
-	}
+
 
 	mat4 model(1.0f);
 	model = translate(model, vec3(position.x, position.y * scaleFactor, position.z));	//Horse position on the grid
@@ -210,7 +218,7 @@ void Mesh::render() const
 	model = scale(model, size * scaleFactor);		//Scale factor of the horse
 
 	//Render starting at the root
-	root->render(model);
+	root->render(model, shader);
 
 	//Rendering end
 	glLineWidth(1.0f);

@@ -11,7 +11,7 @@ public:
 	glm::vec3 getPosition() const { return position; }
 
 	void setup() override;
-	void render() const override;
+	void render(Shader* shader = nullptr) const override;
 
 private:
 	static const GLfloat vertices[];

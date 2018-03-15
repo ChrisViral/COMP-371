@@ -39,7 +39,7 @@ public:
 	 * \brief Calculates the current model matrix for this Mesh object
 	 * \return Model matrix for the whole Mesh
 	 */
-	void render() const override;
+	void render(Shader* shader = nullptr) const override;
 	/**
 	 * \brief Resets the Mesh to it's original state
 	 */

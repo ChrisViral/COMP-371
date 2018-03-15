@@ -7,6 +7,8 @@
 #define SPECULAR glm::vec3(1.0f)
 #define VERTEX_NUMBER 1
 
+using glm::mat4;
+
 const GLfloat Light::vertices[] =
 {
 	//Position			Colour
@@ -60,14 +62,19 @@ void Light::setup()
 	}
 }
 
-void Light::render() const
+void Light::render(Shader* shader) const
 {
 	//Bind VAO
-	simpleShader->use();
+	if (shader == nullptr)
+	{
+		shader = simpleShader;
+		shader->use();
+		shader->setMat4("vpMat", vpMatrix);
+	}
 	glBindVertexArray(VAO);
 
 	//Set line width
-	simpleShader->setMat4("MVP", translate(vpMatrix, position));
+	shader->setMat4("model", translate(mat4(1.0f), position));
 	glDrawArrays(GL_POINTS, 0, VERTEX_NUMBER);
 
 	//Unbind VAO

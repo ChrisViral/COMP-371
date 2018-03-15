@@ -2,6 +2,7 @@
 #include "Cube.h"
 #include "../Globals.h"
 #include "Mesh.h"
+#include "Shader.h"
 
 #define CUBE_VERTICES 36
 
@@ -24,7 +25,7 @@ Cube::~Cube()
 	mesh = nullptr;
 }
 
-void Cube::render(mat4 model) const
+void Cube::render(mat4 model, Shader* shader) const
 {
 	static const vec3 jointAxis(0.0f, 0.0f, 1.0f);
 
@@ -32,12 +33,12 @@ void Cube::render(mat4 model) const
 	model = rotate(model, radians(angle), jointAxis);
 	model = translate(model, offset);
 
-	if (!useTextures) { lightingShader->setVec3("colour", colour); }
-	lightingShader->setMat4("model", scale(model, size));
+	if (!useTextures) { shader->setVec3("colour", colour); }
+	shader->setMat4("model", scale(model, size));
 	glDrawElements(GL_TRIANGLES, CUBE_VERTICES, GL_UNSIGNED_INT, nullptr);
 
 	for (Cube* child : children)
 	{
-		child->render(model);
+		child->render(model, shader);
 	}
 }

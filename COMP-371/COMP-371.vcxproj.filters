@@ -39,6 +39,9 @@
     <ClCompile Include="Objects\Light.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Objects\Shadows.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h" />
@@ -82,6 +85,9 @@
     <ClInclude Include="Objects\Light.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Objects\Shadows.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll" />
@@ -98,6 +104,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Shaders\simpleVertex.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\shadowFragment.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\shadowVertex.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

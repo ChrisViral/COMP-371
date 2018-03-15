@@ -1,6 +1,7 @@
 #pragma once
 #include <GL/glew.h>
 #include <glm/glm.hpp>
+#include "Shader.h"
 
 class Object
 {
@@ -9,7 +10,7 @@ public:
 	virtual ~Object() = 0;
 
 	virtual void setup() = 0;
-	virtual void render() const = 0;
+	virtual void render(Shader* shader = nullptr) const = 0;
 
 protected:
 	static const glm::vec3 ambient;

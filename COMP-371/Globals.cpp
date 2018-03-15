@@ -10,11 +10,12 @@
 GLint screenWidth = 800;
 GLint screenHeight = 800;
 
-//Shader, camera, and mesh
+//Shader, camera, mesh, shadows
 Camera* camera;
-Shader* lightingShader, *simpleShader;
+Shader* lightingShader, *simpleShader, *shadowsShader;
 Mesh* horse;
 Light* light;
+Shadows* shadows;
 
 //View Projection matrix
 glm::mat4 vpMatrix;

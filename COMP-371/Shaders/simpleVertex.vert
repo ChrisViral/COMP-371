@@ -8,11 +8,12 @@ layout (location = 1) in vec3 vertexColour;
 out vec3 colour;
 
 //Model View Projection matrix
-uniform mat4 MVP;
+uniform mat4 vpMat;
+uniform mat4 model;
 
 void main()
 {
 	//Set the vertex position according to the MVP matrix
-    gl_Position = MVP * vec4(pos, 1.0);
+    gl_Position = vpMat * model * vec4(pos, 1.0);
     colour = vertexColour;
 }

@@ -183,6 +183,7 @@
     <ClCompile Include="Objects\Mesh.cpp" />
     <ClCompile Include="Objects\Object.cpp" />
     <ClCompile Include="Objects\Shader.cpp" />
+    <ClCompile Include="Objects\Shadows.cpp" />
     <ClCompile Include="Parsers\FileParser.cpp" />
     <ClCompile Include="Parsers\MeshParser.cpp" />
     <ClCompile Include="Parsers\TextUtils.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="Objects\Mesh.h" />
     <ClInclude Include="Objects\Object.h" />
     <ClInclude Include="Objects\Shader.h" />
+    <ClInclude Include="Objects\Shadows.h" />
     <ClInclude Include="Parsers\FileParser.h" />
     <ClInclude Include="Parsers\MeshParser.h" />
     <ClInclude Include="Parsers\Parser.h" />
@@ -216,6 +218,12 @@
       <FileType>Script</FileType>
     </None>
     <None Include="Shaders\lightVertex.vert">
+      <FileType>Script</FileType>
+    </None>
+    <None Include="Shaders\shadowFragment.frag">
+      <FileType>Script</FileType>
+    </None>
+    <None Include="Shaders\shadowVertex.vert">
       <FileType>Script</FileType>
     </None>
     <None Include="Shaders\simpleFragment.frag">

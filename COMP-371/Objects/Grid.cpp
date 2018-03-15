@@ -121,7 +121,7 @@ void Grid::setup()
 	}
 }
 
-void Grid::render() const
+void Grid::render(Shader* shader) const
 {
 	static const vec3 ambient(0.05f, 0.15f, 0.05f);
 	static const vec3 diffuse(0.4f, 0.5f, 0.4f);
@@ -133,31 +133,36 @@ void Grid::render() const
 
 	//Bind VAO
 	glBindVertexArray(VAO);
-	lightingShader->use();
 
-	GLenum renderMode;
-	if (useTextures)
+	const GLenum renderMode = useTextures ? GL_TRIANGLES : GL_LINES;
+	if (shader == nullptr)
 	{
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		lightingShader->setInt("state", 1);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, tex);
-		renderMode = GL_TRIANGLES;
-		lightingShader->setVec3("material.ambient", ambient);
-		lightingShader->setVec3("material.diffuse", diffuse);
-		lightingShader->setVec3("material.specular", specular);
-		lightingShader->setFloat("material.shininess", shininess);
-	}
-	else
-	{
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, lEBO);
-		lightingShader->setInt("state", 0);
-		lightingShader->setVec3("colour", colour);
-		renderMode = GL_LINES;
-		lightingShader->setVec3("material.ambient", Object::ambient);
-		lightingShader->setVec3("material.diffuse", Object::diffuse);
-		lightingShader->setVec3("material.specular", Object::specular);
-		lightingShader->setFloat("material.shininess", Object::shininess);
+		shader = lightingShader;
+		shader->use();
+		shader->setMat4("vpMat", vpMatrix);
+		shader->setVec3("cameraPosition", camera->getPosition());
+
+		if (useTextures)
+		{
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+			shader->setInt("state", 1);
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, tex);
+			shader->setVec3("material.ambient", ambient);
+			shader->setVec3("material.diffuse", diffuse);
+			shader->setVec3("material.specular", specular);
+			shader->setFloat("material.shininess", shininess);
+		}
+		else
+		{
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, lEBO);
+			shader->setInt("state", 0);
+			shader->setVec3("colour", colour);
+			shader->setVec3("material.ambient", Object::ambient);
+			shader->setVec3("material.diffuse", Object::diffuse);
+			shader->setVec3("material.specular", Object::specular);
+			shader->setFloat("material.shininess", Object::shininess);
+		}
 	}
 	
 	const mat4 m(1.0f);
@@ -165,7 +170,7 @@ void Grid::render() const
 	{
 		for (int j = -size; j < size; j++)
 		{
-			lightingShader->setMat4("model", translate(m, vec3(i, 0.0f, j)));
+			shader->setMat4("model", translate(m, vec3(i, 0.0f, j)));
 			glDrawElements(renderMode, GRID_VERTICES, GL_UNSIGNED_INT, nullptr);
 		}
 	}
