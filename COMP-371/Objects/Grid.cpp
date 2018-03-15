@@ -6,7 +6,7 @@
 #include "../Globals.h"
 
 #define GRID_VERTICES 6
-#define LINE_INDICES 8
+#define LINE_VERTICES 8
 #define TEXTURE_PATH "Textures/grass.png"
 
 using glm::radians;
@@ -35,7 +35,7 @@ const GLint Grid::lineIndices[] =
 	0, 1,
 	1, 2,
 	2, 3,
-	3, 4
+	3, 0
 };
 
 const vec3 Grid::colour = vec3(1.0f);
@@ -134,13 +134,33 @@ void Grid::render(Shader* shader) const
 	//Bind VAO
 	glBindVertexArray(VAO);
 
-	const GLenum renderMode = useTextures ? GL_TRIANGLES : GL_LINES;
+	GLenum renderMode;
+	int renderSize;
+	if (useTextures)
+	{
+		renderMode = GL_TRIANGLES;
+		renderSize = GRID_VERTICES;
+	}
+	else
+	{
+		renderMode = GL_LINES;
+		renderSize = LINE_VERTICES;
+	}
+
 	if (shader == nullptr)
 	{
 		shader = lightingShader;
 		shader->use();
 		shader->setMat4("vpMat", vpMatrix);
 		shader->setVec3("cameraPosition", camera->getPosition());
+
+		if (useShadows)
+		{
+			shader->setBool("useShadows", true);
+			shader->setMat4("lightSpace", lightSpaceMatrix);
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_2D, shadows->getDepthMap());
+		}
 
 		if (useTextures)
 		{
@@ -171,7 +191,7 @@ void Grid::render(Shader* shader) const
 		for (int j = -size; j < size; j++)
 		{
 			shader->setMat4("model", translate(m, vec3(i, 0.0f, j)));
-			glDrawElements(renderMode, GRID_VERTICES, GL_UNSIGNED_INT, nullptr);
+			glDrawElements(renderMode, renderSize, GL_UNSIGNED_INT, nullptr);
 		}
 	}
 

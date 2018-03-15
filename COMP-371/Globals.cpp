@@ -14,17 +14,18 @@ GLint screenHeight = 800;
 Camera* camera;
 Shader* lightingShader, *simpleShader, *shadowsShader;
 Mesh* horse;
+Grid* grid;
 Light* light;
 Shadows* shadows;
 
 //View Projection matrix
-glm::mat4 vpMatrix;
+glm::mat4 vpMatrix, lightSpaceMatrix;
 
 //GL Window
 GLFWwindow* window;
 
 //Rendering options
-bool useTextures = false;
+bool useTextures = false, useShadows = true;
 GLenum meshRender = GL_FILL;
 
 //Joints

@@ -13,6 +13,7 @@ public:
 	~Shadows();
 
 	GLuint getFBO() const { return FBO; }
+	GLuint getDepthMap() const { return depthMap; }
 
 	void setup();
 	glm::mat4 view() const;

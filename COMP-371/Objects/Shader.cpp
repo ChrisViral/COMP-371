@@ -35,7 +35,7 @@ Shader::Shader(const string vertexPath, const string fragmentPath)
 	if (!success)
 	{
 		glGetShaderInfoLog(vertexShader, bufferSize, nullptr, info);
-		cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << info << endl;
+		cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\nFile: " << vertexPath << endl << info << endl;
 	}
 
 	//Read the fragment lightingShader file
@@ -51,7 +51,7 @@ Shader::Shader(const string vertexPath, const string fragmentPath)
 	if (!success)
 	{
 		glGetShaderInfoLog(fragmentShader, bufferSize, nullptr, info);
-		cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << info << endl;
+		cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\nFile: " << fragmentPath << endl << info << endl;
 	}
 
 	//Create the lightingShader program
@@ -86,6 +86,11 @@ void Shader::use() const
 {
 	//Use program
 	glUseProgram(id);
+}
+
+void Shader::setBool(const string& name, const bool value) const
+{
+	glUniform1i(glGetUniformLocation(id, name.c_str()), value);
 }
 
 void Shader::setInt(const string& name, const int value) const

@@ -34,7 +34,7 @@ string FileParser::parse() const
 	catch (ifstream::failure e)
 	{
 		//If error happens, print out error then return empty string
-		cout << "ERROR::FILE_PARSER::FILE_NOT_SUCCESFULLY_READ\n" << e.what() << endl;
+		cout << "ERROR::FILE_PARSER::FILE_NOT_SUCCESFULLY_READ\nFile: " << location << endl << e.what() << endl;
 		return "";
 	}
 }

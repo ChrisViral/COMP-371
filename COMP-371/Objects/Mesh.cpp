@@ -190,6 +190,14 @@ void Mesh::render(Shader* shader) const
 		shader->setMat4("vpMat", vpMatrix);
 		shader->setVec3("cameraPosition", camera->getPosition());
 
+		if (useShadows)
+		{
+			shader->setBool("useShadows", true);
+			shader->setMat4("lightSpace", lightSpaceMatrix);
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_2D, shadows->getDepthMap());
+		}
+
 		if (useTextures)
 		{
 			shader->setInt("state", 2);

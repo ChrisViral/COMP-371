@@ -33,7 +33,7 @@ void Cube::render(mat4 model, Shader* shader) const
 	model = rotate(model, radians(angle), jointAxis);
 	model = translate(model, offset);
 
-	if (!useTextures) { shader->setVec3("colour", colour); }
+	if (!useTextures && shader == lightingShader) { shader->setVec3("colour", colour); }
 	shader->setMat4("model", scale(model, size));
 	glDrawElements(GL_TRIANGLES, CUBE_VERTICES, GL_UNSIGNED_INT, nullptr);
 
