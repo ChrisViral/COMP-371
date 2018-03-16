@@ -19,7 +19,17 @@ struct Light
 };
 
 //Constants
-const float tolerance = 0.001;
+const float tolerance = 0.05;
+const float radius = 0.05;
+const int size = 20;
+const vec3 offsets[20] = vec3[]
+(
+   vec3(1, 1,  1), vec3( 1, -1,  1), vec3(-1, -1,  1), vec3(-1, 1,  1), 
+   vec3(1, 1, -1), vec3( 1, -1, -1), vec3(-1, -1, -1), vec3(-1, 1, -1),
+   vec3(1, 1,  0), vec3( 1, -1,  0), vec3(-1, -1,  0), vec3(-1, 1,  0),
+   vec3(1, 0,  1), vec3(-1,  0,  1), vec3( 1,  0, -1), vec3(-1, 0, -1),
+   vec3(0, 1,  1), vec3( 0, -1,  1), vec3( 0, -1, -1), vec3( 0, 1, -1)
+);
 
 //Vertex colour
 out vec4 fragColour;
@@ -38,7 +48,8 @@ uniform vec3 colour;
 
 //Shadows
 uniform bool useShadows;
-uniform sampler2D shadowMap;
+uniform samplerCube shadowMap;
+uniform float farPlane;
 
 //Lighting
 uniform Material material;
@@ -66,7 +77,8 @@ void main()
 
     //Diffuse
     vec3 n = normalize(normal);
-    vec3 lightDir = normalize(light.position - fragPosition);
+    vec3 diff = fragPosition - light.position;
+    vec3 lightDir = normalize(-diff);
     vec3 diffuse = max(dot(n, lightDir), 0.0) * light.diffuse * material.diffuse;
 
     //Specular
@@ -74,26 +86,22 @@ void main()
     vec3 reflectDir = reflect(-lightDir, n);
     vec3 specular = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess) * light.specular * material.specular;
 
-    //Shadow
-    float shadow = 1.0f;
+    //Shadows
+    float shadows = 1.0;
     if (useShadows)
     {
-        vec3 projectedCoord = ((lightSpacePosition.xyz / lightSpacePosition.w) * 0.5) + 0.5;
-        if (projectedCoord.z <= 1.0)
+        shadows = 0.0;
+        float radius = (1.0 + (length(cameraPosition - fragPosition) / farPlane)) / 25.0;
+        for (int i = 0; i < size; i++)
         {
-            vec2 texel = 1.0 / textureSize(shadowMap, 0);
-            for (int x = -1; x <= 1; ++x)
+            if ((length(diff) - tolerance) > (texture(shadowMap, diff + (offsets[i] * radius)).r * farPlane))
             {
-                for (int y = -1; y <= 1; ++y)
-                {
-                    float depth = texture(shadowMap, projectedCoord.xy + (vec2(x, y) * texel)).r;
-                    shadow += (projectedCoord.z - tolerance) > depth ? 0.0 : 1.0;
-                }
+                shadows++;
             }
-            shadow /= 9.0;
         }
+        shadows = 1.0f - (shadows / float(size));
     }
 
     //Final
-    fragColour = vec4((ambient + (shadow * (diffuse + specular))) * fragmentColour, 1.0);
+    fragColour = vec4((ambient + (shadows * (diffuse + specular))) * fragmentColour, 1.0);
 }

@@ -177,9 +177,9 @@ void Grid::render(Shader* shader) const
 		if (useShadows)
 		{
 			shader->setBool("useShadows", true);
-			shader->setMat4("lightSpace", lightSpaceMatrix);
+			shader->setFloat("farPlane", SHADOWS_FAR_PLANE);
 			glActiveTexture(GL_TEXTURE2);
-			glBindTexture(GL_TEXTURE_2D, shadows->getDepthMap());
+			glBindTexture(GL_TEXTURE_CUBE_MAP, shadows->getCubeMap());
 		}
 		else { shader->setBool("useShadows", false); }
 

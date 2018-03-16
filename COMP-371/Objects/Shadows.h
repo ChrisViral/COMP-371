@@ -10,6 +10,7 @@
 
 #define SHADOW_WIDTH 2048
 #define SHADOW_HEIGHT 2048
+#define SHADOWS_FAR_PLANE 100.0f
 
 /**
  * \brief Two pass shadows implementation
@@ -42,7 +43,7 @@ public:
 	 * \brief Gets the depth map of this Shadows
 	 * \return Depth map address
 	 */
-	GLuint getDepthMap() const { return depthMap; }
+	GLuint getCubeMap() const { return cubeMap; }
 
 	//Methods
 	/**
@@ -50,10 +51,10 @@ public:
 	*/
 	void setup();
 	/**
-	 * \brief Gets the view matrix from the light source
+	 * \brief Gets the views matrix from the light source
 	 * \return View matrix
 	 */
-	glm::mat4 view() const;
+	std::vector<glm::mat4> views() const;
 	/**
 	 * \brief Gets the projection matrix from the light source
 	 * \return Projection matrix
@@ -63,6 +64,6 @@ public:
 private:
 	//Fields
 	Light* light;
-	GLuint FBO, depthMap;
+	GLuint FBO, cubeMap;
 	bool set;
 };

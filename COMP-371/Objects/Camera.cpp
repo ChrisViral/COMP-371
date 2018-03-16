@@ -40,7 +40,7 @@ Camera::~Camera() { }
 
 mat4 Camera::view() const
 {
-	//Get view with lookAt
+	//Get views with lookAt
 	return lookAt(getPosition(), target, up);
 }
 

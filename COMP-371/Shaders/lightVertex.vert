@@ -9,12 +9,10 @@ layout (location = 2) in vec2 tex;
 out vec3 normal;
 out vec3 fragPosition;
 out vec2 texCoord;
-out vec4 lightSpacePosition;
 
 //Model View Projection matrix
 uniform mat4 vpMat;
 uniform mat4 model;
-uniform mat4 lightSpace;
 
 void main()
 {
@@ -26,8 +24,6 @@ void main()
     normal = mat3(transpose(inverse(model))) * norm;
     //Set frag model position
     fragPosition = vec3(p);
-    //Get lightspace position
-    lightSpacePosition = lightSpace * vec4(fragPosition, 1.0);
     //Pass on texture coordinate
     texCoord = tex;
 }

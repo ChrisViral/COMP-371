@@ -19,7 +19,7 @@ Shader::Shader() : id(0) { }
 
 Shader::Shader(const string vertexPath, const string fragmentPath)
 {
-	//Read the vertex lightingShader file
+	//Read the vertex Shader file
 	FileParser shaderParser(vertexPath);
 	string s = shaderParser.parse();
 	const GLchar* source = s.c_str();
@@ -27,7 +27,7 @@ Shader::Shader(const string vertexPath, const string fragmentPath)
 	glShaderSource(vertexShader, 1, &source, nullptr);
 	glCompileShader(vertexShader);
 
-	//Test for lightingShader compilation errors
+	//Test for Shader compilation errors
 	const int bufferSize = 512;
 	GLint success;
 	GLchar info[bufferSize];
@@ -38,7 +38,7 @@ Shader::Shader(const string vertexPath, const string fragmentPath)
 		cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\nFile: " << vertexPath << endl << info << endl;
 	}
 
-	//Read the fragment lightingShader file
+	//Read the fragment Shader file
 	shaderParser = FileParser(fragmentPath);
 	s = shaderParser.parse();
 	source = s.c_str();
@@ -46,7 +46,7 @@ Shader::Shader(const string vertexPath, const string fragmentPath)
 	glShaderSource(fragmentShader, 1, &source, nullptr);
 	glCompileShader(fragmentShader);
 	;
-	//Test for lightingShader compilation errors
+	//Test for Shader compilation errors
 	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
 	if (!success)
 	{
@@ -54,13 +54,13 @@ Shader::Shader(const string vertexPath, const string fragmentPath)
 		cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\nFile: " << fragmentPath << endl << info << endl;
 	}
 
-	//Create the lightingShader program
+	//Create the Shader program
 	id = glCreateProgram();
 	glAttachShader(id, vertexShader);
 	glAttachShader(id, fragmentShader);
 	glLinkProgram(id);
 
-	//Test for lightingShader program linkin errors
+	//Test for Shader program linkin errors
 	glGetProgramiv(id, GL_LINK_STATUS, &success);
 	if (!success)
 	{
@@ -70,6 +70,80 @@ Shader::Shader(const string vertexPath, const string fragmentPath)
 
 	//Free up the memory associated to the shaders
 	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+}
+
+Shader::Shader(const string vertexPath, const string geometryPath, const string fragmentPath)
+{
+	//Read the vertex Shader file
+	FileParser shaderParser(vertexPath);
+	string s = shaderParser.parse();
+	const GLchar* source = s.c_str();
+	const GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShader, 1, &source, nullptr);
+	glCompileShader(vertexShader);
+
+	//Test for Shader compilation errors
+	const int bufferSize = 512;
+	GLint success;
+	GLchar info[bufferSize];
+	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(vertexShader, bufferSize, nullptr, info);
+		cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\nFile: " << vertexPath << endl << info << endl;
+	}
+
+	//Read the fragment Shader file
+	shaderParser = FileParser(geometryPath);
+	s = shaderParser.parse();
+	source = s.c_str();
+	const GLuint geometryShader = glCreateShader(GL_GEOMETRY_SHADER);
+	glShaderSource(geometryShader, 1, &source, nullptr);
+	glCompileShader(geometryShader);
+	;
+	//Test for Shader compilation errors
+	glGetShaderiv(geometryShader, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(geometryShader, bufferSize, nullptr, info);
+		cout << "ERROR::SHADER::GEOMETRY::COMPILATION_FAILED\nFile: " << geometryPath << endl << info << endl;
+	}
+
+	//Read the fragment Shader file
+	shaderParser = FileParser(fragmentPath);
+	s = shaderParser.parse();
+	source = s.c_str();
+	const GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader, 1, &source, nullptr);
+	glCompileShader(fragmentShader);
+	;
+	//Test for Shader compilation errors
+	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(fragmentShader, bufferSize, nullptr, info);
+		cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\nFile: " << fragmentPath << endl << info << endl;
+	}
+
+	//Create the Shader program
+	id = glCreateProgram();
+	glAttachShader(id, vertexShader);
+	glAttachShader(id, geometryShader);
+	glAttachShader(id, fragmentShader);
+	glLinkProgram(id);
+
+	//Test for Shader program linkin errors
+	glGetProgramiv(id, GL_LINK_STATUS, &success);
+	if (!success)
+	{
+		glGetProgramInfoLog(id, bufferSize, nullptr, info);
+		cout << "ERROR::SHADER::PROGRAM::LINK_FAILED\n" << info << endl;
+	}
+
+	//Free up the memory associated to the shaders
+	glDeleteShader(vertexShader);
+	glDeleteShader(geometryShader);
 	glDeleteShader(fragmentShader);
 }
 
@@ -105,12 +179,10 @@ void Shader::setFloat(const string& name, const float value) const
 
 void Shader::setVec3(const string& name, const vec3 value) const
 {
-	//Set the uniform value
 	glUniform3fv(glGetUniformLocation(id, name.c_str()), 1, value_ptr(value));
 }
 
 void Shader::setMat4(const string& name, const mat4 value) const
 {
-	//Set the uniform value
 	glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, value_ptr(value));
 }

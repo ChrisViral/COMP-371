@@ -18,15 +18,22 @@ class Shader
 public:
 	//Constructors/Destructors
 	/**
-	 * \brief Creates a new empty lightingShader, with no associated programs
+	 * \brief Creates a new empty Shader, with no associated programs
 	 */
 	Shader();
 	/**
-	 * \brief Creates a new Shader from the given vertex lightingShader and fragment lightingShader file pathes
-	 * \param vertexPath   Path (local or absolute) to the vertex lightingShader file
-	 * \param fragmentPath Path (local or absolute) to the fragment lightingShader file
+	 * \brief Creates a new Shader from the given vertex Shader and fragment Shader file pathes
+	 * \param vertexPath   Path (local or absolute) to the vertex Shader file
+	 * \param fragmentPath Path (local or absolute) to the fragment Shader file
 	 */
 	Shader(const std::string vertexPath, const std::string fragmentPath);
+	/**
+	* \brief Creates a new Shader from the given vertex Shader, geometry Shader, and fragment Shader file pathes
+	* \param vertexPath   Path (local or absolute) to the vertex Shader file
+	* \param geometryPath Path (local or absolute) to the geometry Shader file
+	* \param fragmentPath Path (local or absolute) to the fragment Shader file
+	*/
+	Shader(const std::string vertexPath, const std::string geometryPath, const std::string fragmentPath);
 	/**
 	 * \brief Frees up the memory associated to this lightingShader
 	 */

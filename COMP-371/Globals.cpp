@@ -19,7 +19,7 @@ Light* light;
 Shadows* shadows;
 
 //View Projection matrix
-glm::mat4 vpMatrix, lightSpaceMatrix;
+glm::mat4 vpMatrix;
 
 //GL Window
 GLFWwindow* window;

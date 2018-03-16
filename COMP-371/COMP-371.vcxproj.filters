@@ -112,6 +112,9 @@
     <None Include="Shaders\shadowVertex.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Shaders\shadowGeometry.geom">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Shaders">

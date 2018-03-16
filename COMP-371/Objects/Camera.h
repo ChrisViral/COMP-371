@@ -9,7 +9,7 @@
 #include <glm/glm.hpp>
 
 /**
- * \brief Target focused Camera implementation, implemented with view angle
+ * \brief Target focused Camera implementation, implemented with views angle
  */
 class Camera
 {
@@ -41,8 +41,8 @@ public:
 
 	//Methods
 	/**
-	 * \brief Gets the view Matrix associated with the current state of the camera
-	 * \return The view Matrix
+	 * \brief Gets the views Matrix associated with the current state of the camera
+	 * \return The views Matrix
 	 */
 	glm::mat4 view() const;
 	/**
@@ -97,7 +97,7 @@ private:
 	 */
 	float distance() const { return length(position); }
 	/**
-	 * \brief Updates the camera's position vector according to it's distance and view angles
+	 * \brief Updates the camera's position vector according to it's distance and views angles
 	 */
 	void updatePosition();
 };

@@ -30,7 +30,7 @@ extern Light* light;
 /// \brief Shadows
 extern Shadows* shadows;
 /// \brief View matrices
-extern glm::mat4 vpMatrix, lightSpaceMatrix;
+extern glm::mat4 vpMatrix;
 /// \brief GL window pointer
 extern GLFWwindow* window;
 /// \brief If textures should be used when rendering

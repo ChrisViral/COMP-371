@@ -223,6 +223,9 @@
     <None Include="Shaders\shadowFragment.frag">
       <FileType>Script</FileType>
     </None>
+    <None Include="Shaders\shadowGeometry.geom">
+      <FileType>Script</FileType>
+    </None>
     <None Include="Shaders\shadowVertex.vert">
       <FileType>Script</FileType>
     </None>
