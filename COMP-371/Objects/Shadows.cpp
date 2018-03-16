@@ -1,3 +1,9 @@
+// Christophe Savard
+// 40017812
+// COMP-371 WW 
+// Assignment 2
+// March 8th 2018
+
 #include <glm/gtc/matrix_transform.hpp>
 #include "Shadows.h"
 #include "../Globals.h"
@@ -18,11 +24,13 @@ Shadows::Shadows(Light* light): light(light), FBO(0), depthMap(0), set(false) { 
 
 Shadows::~Shadows()
 {
+	//Free up memory when set
 	if (set)
 	{
 		glDeleteFramebuffers(1, &FBO);
 		glDeleteTextures(1, &depthMap);
 	}
+	//Clear dangling pointers
 	light = nullptr;
 }
 
@@ -67,12 +75,14 @@ mat4 Shadows::view() const
 	//Light look vectors
 	static const vec3 target(0.0f, 0.0f, 0.0f);
 	static const vec3 up(0.0f, 0.0f, -1.0f);
+
+	//Lookat matrix
 	return lookAt(light->getPosition(), target, up);
 }
 
 mat4 Shadows::projection() const
 {
-	//return glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, 1.0f, 100.0f);
+	//Point light means a perspective matrix
 	return perspective(radians(FOV), static_cast<float>(SHADOW_WIDTH) / SHADOW_HEIGHT, NEAR, FAR);
 }
 

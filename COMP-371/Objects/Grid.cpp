@@ -1,3 +1,9 @@
+// Christophe Savard
+// 40017812
+// COMP-371 WW 
+// Assignment 2
+// March 8th 2018
+
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
 #include <glm/gtc/matrix_transform.hpp>
@@ -24,12 +30,14 @@ const GLfloat Grid::vertices[] =
 	1.0f, 0.0f, 0.0f,	0.0f, 1.0f,0.0f,	1.0f, 0.0f
 };
 
+//Indices when rendered as a plane
 const GLint Grid::indices[] =
 {
 	0, 1, 2,
 	0, 2, 3
 };
 
+//Vertices when rendered as lines
 const GLint Grid::lineIndices[] =
 {
 	0, 1,
@@ -38,12 +46,14 @@ const GLint Grid::lineIndices[] =
 	3, 0
 };
 
+//Line colours
 const vec3 Grid::colour = vec3(1.0f);
 
 Grid::Grid(const int size) : Object(), size(size), lEBO(0) { }
 
 Grid::~Grid()
 {
+	//Free up buffers and textures when set
 	if (set)
 	{
 		glDeleteVertexArrays(1, &VAO);
@@ -91,6 +101,7 @@ void Grid::setup()
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(6 * sizeof(GLfloat)));
 		glEnableVertexAttribArray(2);
 
+		//Load texture
 		glGenTextures(1, &tex);
 		glBindTexture(GL_TEXTURE_2D, tex);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -108,8 +119,11 @@ void Grid::setup()
 		{
 			cout << "Failed to load texture at " << TEXTURE_PATH << endl;
 		}
+
+		//Free data
 		stbi_image_free(data);
 
+		//Set texture in shader
 		lightingShader->setInt("tex1", 0);
 
 		//Unbind
@@ -117,12 +131,14 @@ void Grid::setup()
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 
+		//Raise set flag
 		set = true;
 	}
 }
 
 void Grid::render(Shader* shader) const
 {
+	//Material properties
 	static const vec3 ambient(0.05f, 0.15f, 0.05f);
 	static const vec3 diffuse(0.4f, 0.5f, 0.4f);
 	static const vec3 specular(0.05f, 0.7f, 0.05f);
@@ -136,6 +152,7 @@ void Grid::render(Shader* shader) const
 	//Bind VAO
 	glBindVertexArray(VAO);
 
+	//Set render mode
 	GLenum renderMode;
 	int renderSize;
 	if (useTextures)
@@ -149,6 +166,7 @@ void Grid::render(Shader* shader) const
 		renderSize = LINE_VERTICES;
 	}
 
+	//Assign shader if none found
 	if (shader == nullptr)
 	{
 		shader = lightingShader;
@@ -165,6 +183,7 @@ void Grid::render(Shader* shader) const
 		}
 		else { shader->setBool("useShadows", false); }
 
+		//Assign different material properties if textures are rendered
 		if (useTextures)
 		{
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
@@ -188,6 +207,7 @@ void Grid::render(Shader* shader) const
 		}
 	}
 	
+	//Render whole grid
 	const mat4 m(1.0f);
 	for (int i = -size; i < size; i++)
 	{

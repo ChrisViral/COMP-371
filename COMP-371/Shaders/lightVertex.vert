@@ -21,8 +21,13 @@ void main()
 	//Set the vertex position according to the MVP matrix
     vec4 p = model * vec4(pos, 1.0);
     gl_Position = vpMat * p;
+
+    //Get the correct normal vector
     normal = mat3(transpose(inverse(model))) * norm;
+    //Set frag model position
     fragPosition = vec3(p);
+    //Get lightspace position
     lightSpacePosition = lightSpace * vec4(fragPosition, 1.0);
+    //Pass on texture coordinate
     texCoord = tex;
 }

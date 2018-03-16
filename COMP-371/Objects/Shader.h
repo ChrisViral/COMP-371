@@ -44,9 +44,23 @@ public:
 	 * \brief Sets OpenGL to use this Shader Program
 	 */
 	void use() const;
-
+	/**
+	* \brief Sets a uniform bool value of the given name
+	* \param name  Name of the uniform value
+	* \param value Bool value to set
+	*/
 	void setBool(const std::string& name, const bool value) const;
+	/**
+	* \brief Sets a uniform integer value of the given name
+	* \param name  Name of the uniform value
+	* \param value Integer value to set
+	*/
 	void setInt(const std::string& name, const int value) const;
+	/**
+	* \brief Sets a uniform float value of the given name
+	* \param name  Name of the uniform value
+	* \param value Float value to set
+	*/
 	void setFloat(const std::string& name, const float value) const;
 	/**
 	* \brief Sets a uniform Vector3 value of the given name

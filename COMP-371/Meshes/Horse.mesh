@@ -11,6 +11,7 @@ size     = 1.0
 yRot     = 0.0
 zRot     = 0.0
 
+//Cubes
 [Cube]
 name     = torso
 colour   = 0.7

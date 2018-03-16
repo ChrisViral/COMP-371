@@ -8,5 +8,6 @@ out vec4 fragColour;
   
 void main()
 {
+    //Output fragment colour as passed colour
     fragColour = vec4(colour, 1.0);
 }

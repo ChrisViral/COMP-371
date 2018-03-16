@@ -1,3 +1,9 @@
+// Christophe Savard
+// 40017812
+// COMP-371 WW 
+// Assignment 2
+// March 8th 2018
+
 #include <fstream>
 #include <iostream>
 #include <stack>
@@ -16,6 +22,8 @@ using std::stack;
 using std::string;
 using std::vector;
 using glm::vec3;
+
+const string MeshParser::sep = "=";
 
 MeshParser::MeshParser(const string location) : Parser(location) { }
 

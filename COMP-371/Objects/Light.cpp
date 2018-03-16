@@ -1,7 +1,14 @@
+// Christophe Savard
+// 40017812
+// COMP-371 WW 
+// Assignment 2
+// March 8th 2018
+
 #include <glm/gtx/transform.hpp>
 #include "../Globals.h"
 #include "Light.h"
 
+//Light attributes
 #define AMBIENT glm::vec3(0.3f)
 #define DIFFUSE glm::vec3(1.0f)
 #define SPECULAR glm::vec3(1.0f)
@@ -19,6 +26,7 @@ Light::Light(const glm::vec3 position) : Object(), position(position) { }
 
 Light::~Light()
 {
+	//Frees up buffers
 	if (set)
 	{
 		glDeleteVertexArrays(1, &VAO);
@@ -64,16 +72,17 @@ void Light::setup()
 
 void Light::render(Shader* shader) const
 {
-	//Bind VAO
+	//Get shader if none provided
 	if (shader == nullptr)
 	{
 		shader = simpleShader;
 		shader->use();
 		shader->setMat4("vpMat", vpMatrix);
 	}
+	//Bind VAO
 	glBindVertexArray(VAO);
 
-	//Set line width
+	//Render
 	shader->setMat4("model", translate(mat4(1.0f), position));
 	glDrawArrays(GL_POINTS, 0, VERTEX_NUMBER);
 

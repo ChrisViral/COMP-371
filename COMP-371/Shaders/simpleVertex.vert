@@ -1,6 +1,5 @@
 #version 450 core
 
-//Get vertex location from layout
 layout (location = 0) in vec3 pos;
 layout (location = 1) in vec3 vertexColour;
 
@@ -15,5 +14,6 @@ void main()
 {
 	//Set the vertex position according to the MVP matrix
     gl_Position = vpMat * model * vec4(pos, 1.0);
+    //Pass on vertex colour
     colour = vertexColour;
 }

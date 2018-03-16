@@ -1,3 +1,9 @@
+// Christophe Savard
+// 40017812
+// COMP-371 WW 
+// Assignment 2
+// March 8th 2018
+
 #pragma once
 
 #include <string>
@@ -10,7 +16,7 @@ template <class T>
 class Parser
 {
 public:
-	//Constructors
+	//Constructors/Destructors
 	/**
 	 * \brief Default constructor, no file location stored
 	 */
@@ -45,8 +51,7 @@ public:
 	}
 
 protected:
-	//Fields
-	/// \brief Parser file location
+	//Parser file location
 	std::string location;
 };
 

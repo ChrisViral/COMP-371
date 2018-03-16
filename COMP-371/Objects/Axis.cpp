@@ -1,3 +1,9 @@
+// Christophe Savard
+// 40017812
+// COMP-371 WW 
+// Assignment 2
+// March 8th 2018
+
 #include <glm/gtc/matrix_transform.hpp>
 #include "Axis.h"
 #include "../Globals.h"
@@ -27,6 +33,7 @@ Axis::Axis(const int length) : Object(), length(length) { }
 
 Axis::~Axis()
 {
+	//Get rid of buffers
 	if (set)
 	{
 		glDeleteVertexArrays(1, &VAO);
@@ -36,6 +43,7 @@ Axis::~Axis()
 
 void Axis::setup()
 {
+	//Do not generate more than once per lifetime
 	if (!set)
 	{
 		//Generate containers
@@ -67,13 +75,17 @@ void Axis::setup()
 
 void Axis::render(Shader* shader) const
 {
-	//Bind VAO
+	//Do not render until set
+	if (!set) { return; }
+
+	//Get shader if none provided
 	if (shader == nullptr)
 	{
 		shader = simpleShader;
 		shader->use();
 		shader->setMat4("vpMat", vpMatrix);
 	}
+	//Bind VAO
 	glBindVertexArray(VAO);
 
 	//Set line width

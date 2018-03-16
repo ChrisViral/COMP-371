@@ -1,3 +1,9 @@
+// Christophe Savard
+// 40017812
+// COMP-371 WW 
+// Assignment 2
+// March 8th 2018
+
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -15,8 +21,8 @@ FileParser::~FileParser() { }
 
 string FileParser::parse() const
 {
-	ifstream f;
 	//Set exception bits
+	ifstream f;
 	f.exceptions(ifstream::failbit | ifstream::badbit);
 	try
 	{

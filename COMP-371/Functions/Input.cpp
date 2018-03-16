@@ -148,6 +148,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		{
 			horse->reset();
 			camera->reset();
+			//Reset all joints too
 			for (Cube* c : joints)
 			{
 				c->angle = c->startAngle;
@@ -270,6 +271,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 void error_callback(int error, const char* description)
 {
+	//Output to console
 	cerr << "GLFW error code " << error << " encountered\n" << description << endl;
 }
 

@@ -1,3 +1,9 @@
+// Christophe Savard
+// 40017812
+// COMP-371 WW 
+// Assignment 2
+// March 8th 2018
+
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/rotate_vector.hpp>
 #include <stb/stb_image.h>
@@ -133,6 +139,7 @@ void Mesh::setup()
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), reinterpret_cast<GLvoid*>(6 * sizeof(GLfloat)));
 		glEnableVertexAttribArray(2);
 
+		//Load texture
 		glGenTextures(1, &tex);
 		glBindTexture(GL_TEXTURE_2D, tex);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -152,6 +159,7 @@ void Mesh::setup()
 		}
 		stbi_image_free(data);
 
+		//Set texture location
 		lightingShader->setInt("tex2", 1);
 
 		//Unbind
@@ -180,6 +188,7 @@ void Mesh::render(Shader* shader) const
 	glBindVertexArray(VAO);
 	glLineWidth(3.0f);
 
+	//Face culling if rendering as cubes
 	if (meshRender == GL_FILL)
 	{
 		glEnable(GL_CULL_FACE);
@@ -194,6 +203,7 @@ void Mesh::render(Shader* shader) const
 	//Setup render mode
 	glPolygonMode(GL_FRONT_AND_BACK, meshRender);
 
+	//Get shader if none specified
 	if (shader == nullptr)
 	{
 		shader = lightingShader;
@@ -201,6 +211,7 @@ void Mesh::render(Shader* shader) const
 		shader->setMat4("vpMat", vpMatrix);
 		shader->setVec3("cameraPosition", camera->getPosition());
 
+		//Set shadow texture
 		if (useShadows)
 		{
 			shader->setBool("useShadows", true);
@@ -210,6 +221,7 @@ void Mesh::render(Shader* shader) const
 		}
 		else { shader->setBool("useShadows", false); }
 
+		//Set material properties if using textures
 		if (useTextures)
 		{
 			shader->setInt("state", 2);
@@ -230,7 +242,7 @@ void Mesh::render(Shader* shader) const
 		}
 	}
 
-
+	//World position of the Mesh
 	mat4 model(1.0f);
 	model = translate(model, vec3(position.x, position.y * scaleFactor, position.z));	//Horse position on the grid
 	model = rotate(model, radians(yRot), yAxis);	//Yaw (side) rotation of the horse

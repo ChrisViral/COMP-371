@@ -1,3 +1,9 @@
+// Christophe Savard
+// 40017812
+// COMP-371 WW 
+// Assignment 2
+// March 8th 2018
+
 #pragma once
 
 #include <GL/glew.h>
@@ -11,6 +17,7 @@
 class Mesh : public Object
 {
 public:
+	//Constructors/destructors
 	/**
 	 * \brief Creates a new empty Mesh object
 	 */
@@ -20,6 +27,7 @@ public:
 	 */
 	~Mesh();
 
+	//Getters
 	/**
 	 * \brief Gets the root Cube of this Mesh
 	 * \return Pointer to the root Cube object
@@ -31,14 +39,15 @@ public:
 	 */
 	GLuint getVAO() const { return VAO; }
 
+	//Methods
 	/**
-	 * \brief Sets up the various OpenGL container objects
-	 */
+	* \brief Sets up all necessary objects for rendering
+	*/
 	void setup() override;
 	/**
-	 * \brief Calculates the current model matrix for this Mesh object
-	 * \return Model matrix for the whole Mesh
-	 */
+	* \brief Renders the Mesh
+	* \param shader Shader to use for rendering, a lighting shader is used if none is provided
+	*/
 	void render(Shader* shader = nullptr) const override;
 	/**
 	 * \brief Resets the Mesh to it's original state
@@ -52,6 +61,7 @@ public:
 	Cube* findCube(const std::string& name) const;
 
 private:
+	//Structs
 	/**
 	 * \brief Mesh state container
 	 */
@@ -65,27 +75,22 @@ private:
 		float zRot;
 	};
 
-	/// \brief Cube vertices
+	//Constants
 	static const GLfloat vertices[];
-	/// \brief Cube face indices
 	static const GLint indices[];
 
-	/// \brief Mesh original state
+	//Mesh info
 	State start;
-
-	/// \brief Root cube of the Mesh
 	Cube* root;
-	/// \brief World position of the Mesh
+
+	//Render values
 	glm::vec3 position;
-	/// \brief Size of the Mesh
 	glm::vec3 size;
-	/// \brief Scale factor of the Mesh
 	float scaleFactor;
-	/// \brief Y rotation of the Mesh, in degrees
 	float yRot;
-	/// \brief Z rotation of the Mesh, in degrees
 	float zRot;
 
+	//Friends
 	/// \brief Giving friend access to the MeshParser class
 	friend class MeshParser;
 	///\brief Set input callback function as friend
