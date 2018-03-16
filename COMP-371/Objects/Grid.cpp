@@ -130,6 +130,8 @@ void Grid::render(Shader* shader) const
 
 	//Don't render if not correctly setup
 	if (!set || size <= 0) { return; }
+	//Can't render a line's shadow
+	if (shader == shadowsShader && !useTextures) { return; }
 
 	//Bind VAO
 	glBindVertexArray(VAO);
@@ -161,6 +163,7 @@ void Grid::render(Shader* shader) const
 			glActiveTexture(GL_TEXTURE2);
 			glBindTexture(GL_TEXTURE_2D, shadows->getDepthMap());
 		}
+		else { shader->setBool("useShadows", false); }
 
 		if (useTextures)
 		{

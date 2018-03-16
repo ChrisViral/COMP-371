@@ -72,11 +72,11 @@ void main()
     vec3 specular = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess) * light.specular * material.specular;
 
     //Shadow
-    float shadow = 0.0f;
+    float shadow = 1.0f;
     if (useShadows)
     {
         vec3 projectedCoord = ((lightSpacePosition.xyz / lightSpacePosition.w) * 0.5) + 0.5;
-        shadow = 1.0 - projectedCoord.z > texture(shadowMap, projectedCoord.xy).r ? 1.0 : 0;
+        shadow = projectedCoord.z > texture(shadowMap, projectedCoord.xy).r ? 0.0 : 1.0;
     }
 
     //Final

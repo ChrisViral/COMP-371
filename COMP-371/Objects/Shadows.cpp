@@ -4,7 +4,7 @@
 
 #define FOV 160.0f
 #define NEAR 0.5f
-#define FAR 100.0f
+#define FAR 150.0f
 
 using glm::lookAt;
 using glm::perspective;
@@ -63,13 +63,14 @@ void Shadows::setup()
 mat4 Shadows::view() const
 {
 	//Light look vectors
-	static const vec3 center(0.0f);
+	static const vec3 target(0.0f, 0.0f, 0.0f);
 	static const vec3 up(0.0f, 0.0f, -1.0f);
-	return lookAt(light->getPosition(), center, up);
+	return lookAt(light->getPosition(), target, up);
 }
 
 mat4 Shadows::projection() const
 {
+	//return glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, 1.0f, 100.0f);
 	return perspective(radians(FOV), static_cast<float>(SHADOW_WIDTH) / SHADOW_HEIGHT, NEAR, FAR);
 }
 

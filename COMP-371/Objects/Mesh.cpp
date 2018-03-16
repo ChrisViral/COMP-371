@@ -197,6 +197,7 @@ void Mesh::render(Shader* shader) const
 			glActiveTexture(GL_TEXTURE2);
 			glBindTexture(GL_TEXTURE_2D, shadows->getDepthMap());
 		}
+		else { shader->setBool("useShadows", false); }
 
 		if (useTextures)
 		{

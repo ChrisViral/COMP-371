@@ -19,11 +19,10 @@ uniform mat4 lightSpace;
 void main()
 {
 	//Set the vertex position according to the MVP matrix
-    vec4 uniPos = vec4(pos, 1.0);
-    vec4 p = model * uniPos;
+    vec4 p = model * vec4(pos, 1.0);
     gl_Position = vpMat * p;
     normal = mat3(transpose(inverse(model))) * norm;
     fragPosition = vec3(p);
-    lightSpacePosition = lightSpace * uniPos;
+    lightSpacePosition = lightSpace * vec4(fragPosition, 1.0);
     texCoord = tex;
 }

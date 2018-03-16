@@ -2,5 +2,5 @@
   
 void main()
 {
-    //No fragments to process for shadows
+    gl_FragDepth = gl_FragCoord.z;
 }
