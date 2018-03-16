@@ -1,15 +1,15 @@
 Christophe Savard
 40017812
 COMP-317 WW
-Assignment 1
-Feburary 8th 2018
+Assignment 2
+March 15th 2018
 
 ===== Compilation Information =====
 
-Compiled using Visual Studio 2017 (15.5.5), using the visual studio compilation tools v141, on Windows 10.
-GLEW, GLFW, and GLM have been configured to be in the project folder for compilation, for both lib and header files.
-Header files should be in ./Include, lib files should be in ./Lib, and glew32.dll in ./A1, with the code files.
-A compiled binary for Windows is also given in ./Compiled, along with the necessary shader files.
+Compiled using Visual Studio 2017 (15.6.2), using the visual studio compilation tools v141, on Windows 10.
+GLEW, GLFW, and GLM, and STBI have been configured to be in the project folder for compilation, for both lib and header files.
+Header files should be in ./Include, lib files should be in ./Lib, and glew32.dll in ./COMP-371, with the code files.
+A compiled binary for Windows is also given in ./Compiled, along with the necessary shader, mesh, and texture files.
 
 ===== Controls =====
 
@@ -39,6 +39,30 @@ Right - Move the camera right one grid unit (X+)
 P - Change polygons rendering mode to points
 T - Change polygons rendering mode to triangles
 L - Change polygons rendering mode to lines
+B - Toggles textures rendering
+X - Toggles shadows rendering
+
+0 - Bends head_to_neck joint +5 degrees
+1 - Bends neck_to_torso joint +5 degrees
+2 - Bends torso_to_front_upper_right_leg joint +5 degrees
+3 - Bends front_right_knee joint +5 degrees
+4 - Bends torso_to_hind_upper_right_leg joint +5 degrees
+5 - Bends hind_right_knee joint +5 degrees
+6 - Bends torso_to_front_upper_left_leg joint +5 degrees
+7 - Bends front_left_knee joint +5 degrees
+8 - Bends torso_to_hind_upper_left_leg joint +5 degrees
+9 - Bends hind_left_knee joint +5 degrees
+
+Shift + 0 - Bends head_to_neck joint -5 degrees
+Shift + 1 - Bends neck_to_torso joint -5 degrees
+Shift + 2 - Bends torso_to_front_upper_right_leg joint -5 degrees
+Shift + 3 - Bends front_right_knee joint -5 degrees
+Shift + 4 - Bends torso_to_hind_upper_right_leg joint -5 degrees
+Shift + 5 - Bends hind_right_knee joint -5 degrees
+Shift + 6 - Bends torso_to_front_upper_left_leg joint -5 degrees
+Shift + 7 - Bends front_left_knee joint -5 degrees
+Shift + 8 - Bends torso_to_hind_upper_left_leg joint -5 degrees
+Shift + 9 - Bends hind_left_knee joint -5 degrees
 
 
 ===== Mouse controls =====
