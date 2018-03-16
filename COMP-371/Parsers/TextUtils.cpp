@@ -1,3 +1,9 @@
+// Christophe Savard
+// 40017812
+// COMP-371 WW 
+// Assignment 2
+// March 15th 2018
+
 #include <algorithm>
 #include <cctype>
 #include <locale>

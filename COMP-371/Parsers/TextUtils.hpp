@@ -1,3 +1,8 @@
+// Christophe Savard
+// 40017812
+// COMP-371 WW 
+// Assignment 2
+
 #pragma once
 
 #include <glm/glm.hpp>

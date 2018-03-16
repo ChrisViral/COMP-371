@@ -2,7 +2,7 @@
 // 40017812
 // COMP-371 WW 
 // Assignment 2
-// March 8th 2018
+// March 15th 2018
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
