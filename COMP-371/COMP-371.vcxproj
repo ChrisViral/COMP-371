@@ -174,26 +174,67 @@
   <ItemGroup>
     <ClCompile Include="COMP-371.cpp" />
     <ClCompile Include="Functions\Input.cpp" />
+    <ClCompile Include="Objects\Axis.cpp" />
+    <ClCompile Include="Objects\Grid.cpp" />
     <ClCompile Include="Objects\Camera.cpp" />
     <ClCompile Include="Globals.cpp" />
-    <ClCompile Include="Functions\Render.cpp" />
+    <ClCompile Include="Objects\Cube.cpp" />
+    <ClCompile Include="Objects\Light.cpp" />
+    <ClCompile Include="Objects\Mesh.cpp" />
+    <ClCompile Include="Objects\Object.cpp" />
     <ClCompile Include="Objects\Shader.cpp" />
+    <ClCompile Include="Objects\Shadows.cpp" />
+    <ClCompile Include="Parsers\FileParser.cpp" />
+    <ClCompile Include="Parsers\MeshParser.cpp" />
+    <ClCompile Include="Parsers\TextUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="COMP-371.h" />
     <ClInclude Include="Functions\Input.h" />
+    <ClInclude Include="Objects\Axis.h" />
+    <ClInclude Include="Objects\Grid.h" />
     <ClInclude Include="Objects\Camera.h" />
     <ClInclude Include="Globals.h" />
-    <ClInclude Include="Functions\Render.h" />
+    <ClInclude Include="Objects\Cube.h" />
+    <ClInclude Include="Objects\Light.h" />
+    <ClInclude Include="Objects\Mesh.h" />
+    <ClInclude Include="Objects\Object.h" />
     <ClInclude Include="Objects\Shader.h" />
+    <ClInclude Include="Objects\Shadows.h" />
+    <ClInclude Include="Parsers\FileParser.h" />
+    <ClInclude Include="Parsers\MeshParser.h" />
+    <ClInclude Include="Parsers\Parser.h" />
+    <ClInclude Include="Parsers\TextUtils.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
     </None>
-    <None Include="Shaders\fragment.frag" />
-    <None Include="Shaders\vertex.vert" />
+    <None Include="Meshes\Horse.mesh">
+      <FileType>Script</FileType>
+    </None>
+    <None Include="Shaders\lightFragment.frag">
+      <FileType>Script</FileType>
+    </None>
+    <None Include="Shaders\lightVertex.vert">
+      <FileType>Script</FileType>
+    </None>
+    <None Include="Shaders\shadowFragment.frag">
+      <FileType>Script</FileType>
+    </None>
+    <None Include="Shaders\shadowGeometry.geom">
+      <FileType>Script</FileType>
+    </None>
+    <None Include="Shaders\shadowVertex.vert">
+      <FileType>Script</FileType>
+    </None>
+    <None Include="Shaders\simpleFragment.frag">
+      <FileType>Script</FileType>
+    </None>
+    <None Include="Shaders\simpleVertex.vert">
+      <FileType>Script</FileType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

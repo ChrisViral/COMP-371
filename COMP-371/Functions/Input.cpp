@@ -2,22 +2,24 @@
 // 40017812
 // COMP-371 WW 
 // Assignment 2
-// March 8th 2018
+// March 15th 2018
 
 #include <GL/glew.h>
+#include <iostream>
 #include "Input.h"
 #include "../Globals.h"
-#include "Render.h"
 
 //Mouse sensitivity
 #define SENSITIVITY 0.1f
 
+using std::cerr;
+using std::endl;
 using glm::max;
 using glm::vec3;
 
 //Last mouse x and y recorded positions
-float lastMouseX = screenWidth / 2.0f;
-float lastMouseY = screenHeight / 2.0f;
+static float lastMouseX = screenWidth / 2.0f;
+static float lastMouseY = screenHeight / 2.0f;
 
 void registerCallbacks()
 {
@@ -25,6 +27,7 @@ void registerCallbacks()
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetKeyCallback(window, key_callback);
+	glfwSetErrorCallback(error_callback);
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -41,19 +44,19 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT))
 	{
 		//Pan camera from side to side
-		camera.panCamera((lastMouseX - xpos) * SENSITIVITY);
+		camera->panCamera((lastMouseX - xpos) * SENSITIVITY);
 	}
 	//If the middle mouse button is pressed
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE))
 	{
 		//Tilt camera up and down
-		camera.tiltCamera((ypos - lastMouseY) * SENSITIVITY);
+		camera->tiltCamera((ypos - lastMouseY) * SENSITIVITY);
 	}
 	//If the left mouse button is pressed
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT))
 	{
 		//Zoom in and out
-		camera.adjustDistance((ypos - lastMouseY) * SENSITIVITY);
+		camera->adjustDistance((ypos - lastMouseY) * SENSITIVITY);
 	}
 
 	//Set new last mouse positions
@@ -73,19 +76,59 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		{
 			//W - Pitch up 5 degrees
 		case GLFW_KEY_W:
-			pitchAngle += 5.0f; break;
+			horse->zRot += 5.0f; break;
 
 			//S - Pitch down 5 degrees
 		case GLFW_KEY_S:
-			pitchAngle -= 5.0f; break;
+			horse->zRot -= 5.0f; break;
 
 			//A - Yaw left 5 degrees
 		case GLFW_KEY_A:
-			yawAngle += 5.0f; break;
+			horse->yRot += 5.0f; break;
 
 			//D - Yaw right 5 degrees
 		case GLFW_KEY_D:
-			yawAngle -= 5.0f; break;
+			horse->yRot -= 5.0f; break;
+
+			//0 - Rotate joint 0 by -5 degrees
+		case GLFW_KEY_0:
+			joints[0]->angle -= 5.0f; break;
+
+			//1 - Rotate joint 1 by -5 degrees
+		case GLFW_KEY_1:
+			joints[1]->angle -= 5.0f; break;
+
+			//2 - Rotate joint 2 by -5 degrees
+		case GLFW_KEY_2:
+			joints[2]->angle -= 5.0f; break;
+
+			//3 - Rotate joint 3 by -5 degrees
+		case GLFW_KEY_3:
+			joints[3]->angle -= 5.0f; break;
+
+			//4 - Rotate joint 4 by -5 degrees
+		case GLFW_KEY_4:
+			joints[4]->angle -= 5.0f; break;
+
+			//5 - Rotate joint 5 by -5 degrees
+		case GLFW_KEY_5:
+			joints[5]->angle -= 5.0f; break;
+
+			//6 - Rotate joint 6 by -5 degrees
+		case GLFW_KEY_6:
+			joints[6]->angle -= 5.0f; break;
+
+			//7 - Rotate joint 7 by -5 degrees
+		case GLFW_KEY_7:
+			joints[7]->angle -= 5.0f; break;
+
+			//8 - Rotate joint 8 by -5 degrees
+		case GLFW_KEY_8:
+			joints[8]->angle -= 5.0f; break;
+
+			//9 - Rotate joint 9 by -5 degrees
+		case GLFW_KEY_9:
+			joints[9]->angle -= 5.0f; break;
 
 		default:
 			break;
@@ -103,70 +146,120 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			//Home - reset world
 		case GLFW_KEY_HOME:
 		{
-			offset = vec3(0.0f);
-			yawAngle = 0.0f;
-			pitchAngle = 0.0f;
-			size = 1.0f;
-			camera.reset();
+			horse->reset();
+			camera->reset();
+			//Reset all joints too
+			for (Cube* c : joints)
+			{
+				c->angle = c->startAngle;
+			}
 			break;
 		}
 
 		//Space - randomly position horse
 		case GLFW_KEY_SPACE:
-			offset = vec3(randomRange(-50, 50), 0.0f, randomRange(-50, 50)); break;
+			horse->position = vec3(randomRange(-50, 50), horse->position.y, randomRange(-50, 50)); break;
 
 			//U - scale up horse
 		case GLFW_KEY_U:
-			size += 0.1f; break;
+			horse->scaleFactor += 0.1f; break;
 
 			//J - scale down horse
 		case GLFW_KEY_J:
 			//Get the max to prevent <=0 sizes
-			size = max(0.1f, size - 0.1f); break;
+			horse->scaleFactor = max(0.1f, horse->scaleFactor - 0.1f); break;
 
 			//P - render as points
 		case GLFW_KEY_P:
-			glPolygonMode(GL_FRONT_AND_BACK, GL_POINT); break;
+			meshRender = GL_POINT; break;
 
 			//T - render as triangles
 		case GLFW_KEY_T:
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); break;
+			meshRender = GL_FILL; break;
 
 			//L - render as lines
 		case GLFW_KEY_L:
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); break;
+			meshRender = GL_LINE; break;
 
 			//W - move horse up
 		case GLFW_KEY_W:
-			offset.z -= 1.0f; break;
+			horse->position.z -= 1.0f; break;
 
 			//S - move horse down
 		case GLFW_KEY_S:
-			offset.z += 1.0f; break;
+			horse->position.z += 1.0f; break;
 
 			//A - move horse left
 		case GLFW_KEY_A:
-			offset.x -= 1.0f; break;
+			horse->position.x -= 1.0f; break;
 
 			//D - move horse right
 		case GLFW_KEY_D:
-			offset.x += 1.0f; break;
+			horse->position.x += 1.0f; break;
 
 			//Up - move camera up
 		case GLFW_KEY_UP:
-			camera.moveTarget(vec3(0.0f, 0.0f, -1.0f)); break;
+			camera->moveTarget(vec3(0.0f, 0.0f, -1.0f)); break;
 
 			//Down - move camera down
 		case GLFW_KEY_DOWN:
-			camera.moveTarget(vec3(0.0f, 0.0f, 1.0f)); break;
+			camera->moveTarget(vec3(0.0f, 0.0f, 1.0f)); break;
 
 			//Left - move camera left
 		case GLFW_KEY_LEFT:
-			camera.moveTarget(vec3(-1.0f, 0.0f, 0.0f)); break;
+			camera->moveTarget(vec3(-1.0f, 0.0f, 0.0f)); break;
 
 			//Right - move camera right
 		case GLFW_KEY_RIGHT:
-			camera.moveTarget(vec3(1.0f, 0.0f, 0.0f)); break;
+			camera->moveTarget(vec3(1.0f, 0.0f, 0.0f)); break;
+
+			//B - Toggle texture rendering
+		case GLFW_KEY_B:
+			useTextures = !useTextures; break;
+
+			//X - Togle shadows rendering
+		case GLFW_KEY_X:
+			useShadows = !useShadows; break;
+
+			//0 - Rotate joint 0 by 5 degrees
+		case GLFW_KEY_0:
+			joints[0]->angle += 5.0f; break;
+
+			//1 - Rotate joint 1 by 5 degrees
+		case GLFW_KEY_1:
+			joints[1]->angle += 5.0f; break;
+
+			//2 - Rotate joint 2 by 5 degrees
+		case GLFW_KEY_2:
+			joints[2]->angle += 5.0f; break;
+
+			//3 - Rotate joint 3 by 5 degrees
+		case GLFW_KEY_3:
+			joints[3]->angle += 5.0f; break;
+
+			//4 - Rotate joint 4 by 5 degrees
+		case GLFW_KEY_4:
+			joints[4]->angle += 5.0f; break;
+
+			//5 - Rotate joint 5 by 5 degrees
+		case GLFW_KEY_5:
+			joints[5]->angle += 5.0f; break;
+
+			//6 - Rotate joint 6 by 5 degrees
+		case GLFW_KEY_6:
+			joints[6]->angle += 5.0f; break;
+
+			//7 - Rotate joint 7 by 5 degrees
+		case GLFW_KEY_7:
+			joints[7]->angle += 5.0f; break;
+
+			//8 - Rotate joint 8 by 5 degrees
+		case GLFW_KEY_8:
+			joints[8]->angle += 5.0f; break;
+
+			//9 - Rotate joint 9 by 5 degrees
+		case GLFW_KEY_9:
+			joints[9]->angle += 5.0f; break;
 
 			//Other keys - do nothing
 		default:
@@ -174,6 +267,12 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		}
 	}
 	
+}
+
+void error_callback(int error, const char* description)
+{
+	//Output to console
+	cerr << "GLFW error code " << error << " encountered\n" << description << endl;
 }
 
 int randomRange(const int min, const int max)

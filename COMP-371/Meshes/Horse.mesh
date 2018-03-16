@@ -1,0 +1,112 @@
+// Christophe Savard
+// 40017812
+// COMP-371 WW 
+// Assignment 2
+// March 15th 2018
+
+[Mesh]
+root     = torso
+position = 0.0, 2.0, 0.0
+size     = 1.0
+yRot     = 0.0
+zRot     = 0.0
+
+//Cubes
+[Cube]
+name     = torso
+colour   = 0.7
+parent   = //Root
+position = 0.0, 0.0, 0.0
+size     = 2.5, 1.0, 0.8
+offset   = 0.0, 0.0, 0.0
+angle    = 0.0
+
+[Cube]
+name     = ulf_leg
+colour   = 0.4
+parent   = torso
+position = 1.1,  -0.4, 0.3
+size     = 0.24,  0.8, 0.19
+offset   = 0.0,  -0.3, 0.0
+angle    = 0.0
+
+[Cube]
+name     = urf_leg
+colour   = 0.4
+parent   = torso
+position = 1.1, -0.4, -0.3
+size     = 0.24, 0.8,  0.19
+offset   = 0.0, -0.3,  0.0
+angle    = 0.0
+
+[Cube]
+name     = ulb_leg
+colour   = 0.4
+parent   = torso
+position = -1.1, -0.4, 0.3
+size     =  0.24, 0.8, 0.19
+offset   =  0.0, -0.3, 0.0
+angle    =  0.0
+
+[Cube]
+name     = urb_leg
+colour   = 0.4
+parent   = torso
+position = -1.1, -0.4, -0.3
+size     =  0.24, 0.8,  0.19
+offset   =  0.0, -0.3,  0.0
+angle    =  0.0
+
+[Cube]
+name     = llf_leg
+colour   = 0.3
+parent   = ulf_leg
+position = 0.0, -0.3, 0.0
+size     = 0.28, 1.0, 0.23
+offset   = 0.0, -0.5, 0.0
+angle    = 0.0
+
+[Cube]
+name     = lrf_leg
+colour   = 0.3
+parent   = urf_leg
+position = 0.0, -0.3, 0.0
+size     = 0.28, 1.0, 0.23
+offset   = 0.0, -0.5, 0.0
+angle    = 0.0
+
+[Cube]
+name     = llb_leg
+colour   = 0.3
+parent   = ulb_leg
+position = 0.0, -0.3, 0.0
+size     = 0.28, 1.0, 0.23
+offset   = 0.0, -0.5, 0.0
+angle    = 0.0
+
+[Cube]
+name     = lrb_leg
+colour   = 0.3
+parent   = urb_leg
+position = 0.0, -0.3, 0.0
+size     = 0.28, 1.0, 0.23
+offset   = 0.0, -0.5, 0.0
+angle    = 0.0
+
+[Cube]
+name     = neck
+colour   = 0.6
+parent   = torso
+position = 1.1, 0.4, 0.0
+size     = 1.7, 0.6, 0.4
+offset   = 0.6, 0.0, 0.0
+angle    = 35.0
+
+[Cube]
+name     = head
+colour   = 0.5
+parent   = neck
+position = 0.8, 0.0, 0.0
+size     = 1.1, 0.4, 0.3
+offset   = 0.4, 0.0, 0.0
+angle    = -85.0

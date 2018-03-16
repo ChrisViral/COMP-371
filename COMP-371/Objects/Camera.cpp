@@ -2,7 +2,7 @@
 // 40017812
 // COMP-371 WW 
 // Assignment 2
-// March 8th 2018
+// March 15th 2018
 
 #include <glm/gtc/matrix_transform.hpp>
 #include "Camera.h"
@@ -40,8 +40,8 @@ Camera::~Camera() { }
 
 mat4 Camera::view() const
 {
-	//Get view with lookAt
-	return lookAt(position + target, target, up);
+	//Get views with lookAt
+	return lookAt(getPosition(), target, up);
 }
 
 mat4 Camera::perspective() const

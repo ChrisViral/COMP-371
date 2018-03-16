@@ -2,13 +2,14 @@
 // 40017812
 // COMP-371 WW 
 // Assignment 2
-// March 8th 2018
+// March 15th 2018
 
 #pragma once
+
 #include <GLFW/glfw3.h>
 
 /**
- * \brief Register all GL callbacks
+ * \brief Register all GLFW callbacks
  */
 void registerCallbacks();
 
@@ -37,6 +38,13 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
  * \param mods     Key modifiers
  */
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+/**
+ * \brief GLFW error callback
+ * \param error		  Error code
+ * \param description Error descritpion
+ */
+void error_callback(int error, const char* description);
 
 /**
  * \brief Generates a random integer value between the min and max values inclusively

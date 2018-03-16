@@ -11,10 +11,37 @@
     <ClCompile Include="Functions\Input.cpp">
       <Filter>Functions</Filter>
     </ClCompile>
-    <ClCompile Include="Functions\Render.cpp">
-      <Filter>Functions</Filter>
-    </ClCompile>
     <ClCompile Include="COMP-371.cpp" />
+    <ClCompile Include="Parsers\FileParser.cpp">
+      <Filter>Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Cube.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Mesh.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Parsers\MeshParser.cpp">
+      <Filter>Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="Parsers\TextUtils.cpp">
+      <Filter>Parsers</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Grid.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Object.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Axis.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Light.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Shadows.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h" />
@@ -27,17 +54,65 @@
     <ClInclude Include="Functions\Input.h">
       <Filter>Functions</Filter>
     </ClInclude>
-    <ClInclude Include="Functions\Render.h">
-      <Filter>Functions</Filter>
-    </ClInclude>
     <ClInclude Include="COMP-371.h" />
+    <ClInclude Include="Parsers\Parser.h">
+      <Filter>Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="Parsers\FileParser.h">
+      <Filter>Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Cube.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Mesh.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Parsers\MeshParser.h">
+      <Filter>Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="Parsers\TextUtils.hpp">
+      <Filter>Parsers</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Grid.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Object.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Axis.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Light.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Shadows.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="glew32.dll" />
-    <None Include="Shaders\fragment.frag">
+    <None Include="Meshes\Horse.mesh">
+      <Filter>Meshes</Filter>
+    </None>
+    <None Include="Shaders\lightFragment.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="Shaders\vertex.vert">
+    <None Include="Shaders\lightVertex.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\simpleFragment.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\simpleVertex.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\shadowFragment.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\shadowVertex.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\shadowGeometry.geom">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
@@ -50,6 +125,12 @@
     </Filter>
     <Filter Include="Functions">
       <UniqueIdentifier>{d5ec8cb5-434d-4106-bdc5-8388dd24f552}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parsers">
+      <UniqueIdentifier>{a3ed0628-f8f3-4bcf-9b70-fa252cec33f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Meshes">
+      <UniqueIdentifier>{d6b7a216-be10-4f37-a63d-6d369ed321d2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

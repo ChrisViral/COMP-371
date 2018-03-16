@@ -2,7 +2,7 @@
 // 40017812
 // COMP-371 WW 
 // Assignment 2
-// March 8th 2018
+// March 15th 2018
 
 #pragma once
 
@@ -11,30 +11,37 @@
 #include <string>
 
 /**
- * \brief Shader Program wrapper object handling a Vertex and a Fragment shader
+ * \brief Shader Program wrapper object handling a Vertex and a Fragment lightingShader
  */
 class Shader
 {
 public:
 	//Constructors/Destructors
 	/**
-	 * \brief Creates a new empty shader, with no associated programs
+	 * \brief Creates a new empty Shader, with no associated programs
 	 */
 	Shader();
 	/**
-	 * \brief Creates a new Shader from the given vertex shader and fragment shader file pathes
-	 * \param vertexPath   Path (local or absolute) to the vertex shader file
-	 * \param fragmentPath Path (local or absolute) to the fragment shader file
+	 * \brief Creates a new Shader from the given vertex Shader and fragment Shader file pathes
+	 * \param vertexPath   Path (local or absolute) to the vertex Shader file
+	 * \param fragmentPath Path (local or absolute) to the fragment Shader file
 	 */
 	Shader(const std::string vertexPath, const std::string fragmentPath);
 	/**
-	 * \brief Frees up the memory associated to this shader
+	* \brief Creates a new Shader from the given vertex Shader, geometry Shader, and fragment Shader file pathes
+	* \param vertexPath   Path (local or absolute) to the vertex Shader file
+	* \param geometryPath Path (local or absolute) to the geometry Shader file
+	* \param fragmentPath Path (local or absolute) to the fragment Shader file
+	*/
+	Shader(const std::string vertexPath, const std::string geometryPath, const std::string fragmentPath);
+	/**
+	 * \brief Frees up the memory associated to this lightingShader
 	 */
 	~Shader();
 
 	//Setters/Getters
 	/**
-	 * \brief Gets the shader program ID associated to this Shader object
+	 * \brief Gets the lightingShader program ID associated to this Shader object
 	 * \return The program ID
 	 */
 	GLuint getID() const { return id; }
@@ -44,6 +51,24 @@ public:
 	 * \brief Sets OpenGL to use this Shader Program
 	 */
 	void use() const;
+	/**
+	* \brief Sets a uniform bool value of the given name
+	* \param name  Name of the uniform value
+	* \param value Bool value to set
+	*/
+	void setBool(const std::string& name, const bool value) const;
+	/**
+	* \brief Sets a uniform integer value of the given name
+	* \param name  Name of the uniform value
+	* \param value Integer value to set
+	*/
+	void setInt(const std::string& name, const int value) const;
+	/**
+	* \brief Sets a uniform float value of the given name
+	* \param name  Name of the uniform value
+	* \param value Float value to set
+	*/
+	void setFloat(const std::string& name, const float value) const;
 	/**
 	* \brief Sets a uniform Vector3 value of the given name
 	* \param name  Name of the uniform value
@@ -60,13 +85,5 @@ public:
 private:
 	//Shader program ID
 	GLuint id;
-
-	//Static methods
-	/**
-	 * \brief Reads all the contents of a text file and returns it in one string
-	 * \param file Path (local or absolute) of the file to read
-	 * \return The text contained in the file
-	 */
-	static std::string readFile(std::string file);
 };
 
