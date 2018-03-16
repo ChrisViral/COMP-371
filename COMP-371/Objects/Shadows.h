@@ -2,8 +2,8 @@
 #include <GL/glew.h>
 #include "Light.h"
 
-#define SHADOW_WIDTH 1024
-#define SHADOW_HEIGHT 1024
+#define SHADOW_WIDTH 4096
+#define SHADOW_HEIGHT 4096
 
 class Shadows
 {

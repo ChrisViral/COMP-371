@@ -59,8 +59,8 @@ const GLint Mesh::indices[] =
 	0, 1, 2,	//Front face
 	0, 2, 3,
 
-	7, 4, 5,	//Right face
-	7, 5, 6,
+	5, 4, 7,	//Right face
+	5, 7, 6,
 
 	11, 8, 9,	//Left face
 	11, 9, 10,
@@ -180,6 +180,17 @@ void Mesh::render(Shader* shader) const
 	glBindVertexArray(VAO);
 	glLineWidth(3.0f);
 
+	if (meshRender == GL_FILL)
+	{
+		glEnable(GL_CULL_FACE);
+		if (shader == shadowsShader)
+		{
+			glCullFace(GL_FRONT);
+		}
+	}
+	//No shadows for lines or points
+	else if (shader == shadowsShader) { return; }
+
 	//Setup render mode
 	glPolygonMode(GL_FRONT_AND_BACK, meshRender);
 
@@ -233,6 +244,8 @@ void Mesh::render(Shader* shader) const
 	glLineWidth(1.0f);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBindVertexArray(0);
+	glCullFace(GL_BACK);
+	glDisable(GL_CULL_FACE);
 }
 
 void Mesh::reset()

@@ -18,6 +18,9 @@ struct Light
     vec3 specular;
 };
 
+//Constants
+const float tolerance = 0.001;
+
 //Vertex colour
 out vec4 fragColour;
 
@@ -76,7 +79,19 @@ void main()
     if (useShadows)
     {
         vec3 projectedCoord = ((lightSpacePosition.xyz / lightSpacePosition.w) * 0.5) + 0.5;
-        shadow = projectedCoord.z > texture(shadowMap, projectedCoord.xy).r ? 0.0 : 1.0;
+        if (projectedCoord.z <= 1.0)
+        {
+            vec2 texel = 1.0 / textureSize(shadowMap, 0);
+            for (int x = -1; x <= 1; ++x)
+            {
+                for (int y = -1; y <= 1; ++y)
+                {
+                    float depth = texture(shadowMap, projectedCoord.xy + (vec2(x, y) * texel)).r;
+                    shadow += (projectedCoord.z - tolerance) > depth ? 0.0 : 1.0;
+                }
+            }
+            shadow /= 9.0;
+        }
     }
 
     //Final
