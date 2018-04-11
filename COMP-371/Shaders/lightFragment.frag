@@ -19,10 +19,11 @@ struct Light
 };
 
 //Constants
-const float tolerance = 0.05;
 const float radius = 0.05;
 const int size = 20;
-const vec3 offsets[20] = vec3[]
+
+//Shadows smoothing directions
+const vec3 offsets[size] = vec3[]
 (
    vec3(1, 1,  1), vec3( 1, -1,  1), vec3(-1, -1,  1), vec3(-1, 1,  1), 
    vec3(1, 1, -1), vec3( 1, -1, -1), vec3(-1, -1, -1), vec3(-1, 1, -1),
@@ -82,25 +83,27 @@ void main()
     vec3 diffuse = max(dot(n, lightDir), 0.0) * light.diffuse * material.diffuse;
 
     //Specular
-    vec3 viewDir = normalize(cameraPosition - fragPosition);
-    vec3 reflectDir = reflect(-lightDir, n);
-    vec3 specular = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess) * light.specular * material.specular;
+    vec3 viewDir = cameraPosition - fragPosition;
+    vec3 specular = pow(max(dot(normalize(viewDir), reflect(-lightDir, n)), 0.0), material.shininess) * light.specular * material.specular;
 
     //Shadows
-    float shadows = 1.0;
+    float shadows;
     if (useShadows)
     {
         shadows = 0.0;
-        float radius = (1.0 + (length(cameraPosition - fragPosition) / farPlane)) / 25.0;
+        float tolerance = length(diff) - max(0.5 * (1.0 - dot(normal, lightDir)), 0.05);
+        float radius = (1.0 + (length(viewDir) / farPlane)) / 25.0;
+        //PCF
         for (int i = 0; i < size; i++)
         {
-            if ((length(diff) - tolerance) > (texture(shadowMap, diff + (offsets[i] * radius)).r * farPlane))
+            if (tolerance > (texture(shadowMap, diff + (offsets[i] * radius)).r * farPlane))
             {
                 shadows++;
             }
         }
-        shadows = 1.0f - (shadows / float(size));
+        shadows = 1.0f - (shadows / size);
     }
+    else { shadows = 1.0; }
 
     //Final
     fragColour = vec4((ambient + (shadows * (diffuse + specular))) * fragmentColour, 1.0);
