@@ -1,5 +1,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/rotate_vector.hpp>
+#include <cmath>
 #include "Animation.h"
 #include "../Globals.h"
 #include "Mesh.h"
@@ -57,16 +58,16 @@ void Animation::animate()
 			}
 			else { progress += turn; }
 
-			mesh->yRot += turn;
+			//Clamp to 0-360
+			mesh->yRot = fmod(mesh->yRot + turn, 360);
 			break;
 		}
 
 		case WAITING:
 		{
-			float wait = deltaTime;
+			const float wait = deltaTime;
 			if (wait > waitTime - progress)
 			{
-				wait = waitTime - progress;
 				state = WALKING;
 				progress = 0.0f;
 			}
