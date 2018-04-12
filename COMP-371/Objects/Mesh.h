@@ -8,9 +8,10 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "Animation.h"
+#include "Collider.h"
 #include "Cube.h"
 #include "Object.h"
-#include "Collider.h"
 
 #define POINTS 8
 
@@ -100,6 +101,7 @@ private:
 	State start;
 	Cube* root;
 	Collider* collider;
+	Animation* animation;
 
 	//Render values
 	glm::vec3 position;
@@ -109,8 +111,8 @@ private:
 	float zRot;
 
 	//Friends
-	/// \brief Giving friend access to the MeshParser class
+	friend class Animation;
+	friend class Collider;
 	friend class MeshParser;
-	///\brief Set input callback function as friend
 	friend void key_callback(GLFWwindow*, int, int, int, int);
 };

@@ -39,3 +39,10 @@ extern bool useTextures, useShadows;
 extern GLenum meshRender;
 /// \brief Joints, in the correct order
 extern std::vector<Cube*> joints;
+/// \brief Frame delta time
+extern float deltaTime;
+
+/**
+ * \brief Calculates the delta time of the last frame and sets it to the deltaTime variable
+ */
+void calculateDeltaTime();

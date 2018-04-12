@@ -81,8 +81,8 @@ const GLint Mesh::indices[] =
 	16, 17, 18,	//Top face
 	16, 18, 19,
 
-	23, 20, 21,	//Bottom face
-	23, 21, 22
+	23, 22, 21,	//Bottom face
+	23, 21, 20
 };
 
 const vec4 Mesh::points[] = 
@@ -97,22 +97,24 @@ const vec4 Mesh::points[] =
 	vec4(-0.5f, -0.5f, -0.5f, 1.0f)
 };
 
-Mesh::Mesh() : Object(), root(nullptr), collider(new Collider(vec3(0.0f))), position(vec3(0.0f)), size(vec3(0.0f)),
-			   scaleFactor(1.0f), yRot(0.0f), zRot(0.0f) { }
+Mesh::Mesh() : Object(), root(nullptr), collider(new Collider(this)), animation(new Animation(this)),
+			   position(vec3(0.0f)), size(vec3(0.0f)), scaleFactor(1.0f), yRot(0.0f), zRot(0.0f) { }
 
 Mesh::Mesh(const Mesh& mesh) : Object(), scaleFactor(mesh.scaleFactor), yRot(mesh.yRot), zRot(mesh.zRot)
 {
 	start = mesh.start;
 	root = new Cube(*mesh.root, this);
-	collider = new Collider(*mesh.collider);
+	collider = new Collider(*mesh.collider, this);
+	animation = new Animation(*mesh.animation, this);
 	position = vec3(mesh.position);
 	size = vec3(mesh.size);
 }
 
 Mesh::~Mesh()
 {
-	//Delete the collider
+	//Delete the collider and animation
 	delete collider;
+	delete animation;
 
 	//Delete root cube if any
 	if (root != nullptr)
@@ -206,8 +208,7 @@ void Mesh::setup()
 			radius = max(radius, length(position - p));
 		}
 
-		//Set collider
-		collider->setPosition(position);
+		//Set collider radius
 		collider->setRadius(radius);
 
 		//Raise set flag
@@ -283,6 +284,9 @@ void Mesh::render(Shader* shader) const
 			shader->setFloat("material.shininess", Object::shininess);
 		}
 	}
+
+	//Animate model
+	animation->animate();
 
 	//Render starting at the root
 	root->render(calculateModelMatrix(), shader);

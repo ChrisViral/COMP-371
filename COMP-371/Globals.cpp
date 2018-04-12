@@ -30,3 +30,12 @@ GLenum meshRender = GL_FILL;
 
 //Joints
 std::vector<Cube*> joints;
+
+float deltaTime = 0.0f;
+static float lastTime = 0.0f;
+void calculateDeltaTime()
+{
+	const float time = glfwGetTime();
+	deltaTime = time - lastTime;
+	lastTime = time;
+}
