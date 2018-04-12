@@ -172,6 +172,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Functions\Random.cpp" />
     <ClCompile Include="Objects\Animation.cpp" />
     <ClCompile Include="Objects\Collider.cpp" />
     <ClCompile Include="COMP-371.cpp" />
@@ -191,6 +192,7 @@
     <ClCompile Include="Parsers\TextUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Functions\Random.h" />
     <ClInclude Include="Objects\Animation.h" />
     <ClInclude Include="Objects\Collider.h" />
     <ClInclude Include="COMP-371.h" />

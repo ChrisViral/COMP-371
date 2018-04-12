@@ -7,8 +7,8 @@
 #pragma once
 
 #include <GL/glew.h>
-#include <glm/glm.hpp>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 #include <string>
 #include <vector>
 
@@ -67,7 +67,17 @@ public:
 	 * \param shader Shader to use to render
 	 */
 	void render(glm::mat4 model, Shader* shader) const;
+	/**
+	 * \brief Gets the model matrix for this cube, unscaled
+	 * \param model Model matrix of the parent
+	 * \return      The resulting model matrix
+	 */
 	glm::mat4 calculateModelMatrix(glm::mat4 model) const;
+	/**
+	 * \brief Adds all the vertices from the cube in world coordinates to the vector
+	 * \param model  Model matrix of the parent
+	 * \param points Vector to add the coordinates to
+	 */
 	void fillPoints(glm::mat4 model, std::vector<glm::vec3>& points);
 
 private:
@@ -85,8 +95,6 @@ private:
 	std::vector<Cube*> children;
 
 	//Friends
-	/// \brief Set MeshParser as friend
 	friend class MeshParser;
-	///\brief Set input callback function as friend
 	friend void key_callback(GLFWwindow*, int, int, int, int);
 };

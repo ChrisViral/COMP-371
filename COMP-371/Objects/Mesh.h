@@ -73,9 +73,14 @@ public:
 	 * \return	   The cube of the given name, or nullptr if it was not found
 	 */
 	Cube* findCube(const std::string& name) const;
+	/**
+	 * \brief Calculates the model matrix for the base mesh
+	 * \return The mesh's model matrix
+	 */
 	glm::mat4 calculateModelMatrix() const;
+	void randomize();
 
-	//Verties for AABB calculation
+	//Vertices for collider calculation
 	static const glm::vec4 points[];
 
 private:

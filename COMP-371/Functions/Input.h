@@ -45,11 +45,3 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
  * \param description Error descritpion
  */
 void error_callback(int error, const char* description);
-
-/**
- * \brief Generates a random integer value between the min and max values inclusively
- * \param min Minimum value
- * \param max Maximum value
- * \return    The randomly generated integer
- */
-static int randomRange(const int min, const int max);

@@ -48,6 +48,9 @@
     <ClCompile Include="Objects\Animation.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Functions\Random.cpp">
+      <Filter>Functions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h" />
@@ -99,6 +102,9 @@
     </ClInclude>
     <ClInclude Include="Objects\Animation.h">
       <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions\Random.h">
+      <Filter>Functions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -12,6 +12,7 @@
 #include <vector>
 #include "Mesh.h"
 #include "../Globals.h"
+#include "../Functions/Random.h"
 
 #define TEXTURE_PATH "Textures/horse.png"
 
@@ -351,4 +352,19 @@ mat4 Mesh::calculateModelMatrix() const
 	model = rotate(model, radians(zRot), zAxis);	//Pitch (vertical) rotation of the horse
 	model = scale(model, size * scaleFactor);		//Scale factor of the horse
 	return model;
+}
+
+void Mesh::randomize()
+{
+	//Randomize position
+	position = vec3(randomRange(-50, 50), position.y, randomRange(-50, 50));
+	scaleFactor = randomRangef(0.8f, 1.2f);
+	yRot = randomRangef(-180.0f, 180.0f);
+
+	//Randomize animation
+	animation->speed = randomRangef(0.5f, 2.0f);
+	animation->steps = randomRange(2, 10);
+	animation->rotSpeed = randomRange(20, 90) * randomSign();
+	animation->rotation = randomRange(20, 90);
+	animation->waitTime = randomRangef(0.5f, 2.0f);
 }

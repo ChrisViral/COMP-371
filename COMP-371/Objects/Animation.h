@@ -28,4 +28,6 @@ private:
 	float rotation;
 	float waitTime;
 	float progress;
+
+	friend class Mesh;
 };

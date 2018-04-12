@@ -8,6 +8,7 @@
 #include <iostream>
 #include "Input.h"
 #include "../Globals.h"
+#include "Random.h"
 
 //Mouse sensitivity
 #define SENSITIVITY 0.1f
@@ -273,10 +274,4 @@ void error_callback(int error, const char* description)
 {
 	//Output to console
 	cerr << "GLFW error code " << error << " encountered\n" << description << endl;
-}
-
-int randomRange(const int min, const int max)
-{
-	//Return a random value between min and max
-	return (rand() % (max - min + 1)) + min;
 }

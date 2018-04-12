@@ -6,7 +6,13 @@
 
 #pragma once
 
+#define HORSE_COUNT 20
+
 class Shader;
+class Mesh;
+
+/// \brief Hord of simulated horses
+extern Mesh* hord[];
 
 /**
  * \brief  Initialize GLFW, GLEW, and OpenGL
