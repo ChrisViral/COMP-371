@@ -25,7 +25,7 @@ glm::mat4 vpMatrix;
 GLFWwindow* window;
 
 //Rendering options
-bool useTextures = false, useShadows = true;
+bool useTextures = false, useShadows = true, renderHord = false;
 GLenum meshRender = GL_FILL;
 
 //Joints

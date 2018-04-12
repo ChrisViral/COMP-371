@@ -48,7 +48,6 @@ void Animation::animate()
 
 			movement *= distance;
 			mesh->position += movement;
-			/*
 			//Get potential collisions
 			int index = -1;
 			vector<int> potential;
@@ -82,7 +81,6 @@ void Animation::animate()
 					}
 				}
 			}
-			*/
 			break;
 		}
 

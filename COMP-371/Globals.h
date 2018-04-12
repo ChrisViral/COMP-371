@@ -34,7 +34,7 @@ extern glm::mat4 vpMatrix;
 /// \brief GL window pointer
 extern GLFWwindow* window;
 /// \brief If textures should be used when rendering
-extern bool useTextures, useShadows;
+extern bool useTextures, useShadows, renderHord;
 /// \brief Rendering type for the horse mesh
 extern GLenum meshRender;
 /// \brief Joints, in the correct order

@@ -29,7 +29,7 @@ static void loadJoints();
  * \brief Renders all the ojects in the scene
  * \param shader Shader to render with
  */
-static void renderAll(Shader* shader = nullptr);
+static void renderAll();
 
 /**
  * \brief Clears all current memory then closes the application

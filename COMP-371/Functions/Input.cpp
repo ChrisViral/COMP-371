@@ -222,6 +222,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		case GLFW_KEY_X:
 			useShadows = !useShadows; break;
 
+		case GLFW_KEY_H:
+			renderHord = !renderHord; break;
+
 			//0 - Rotate joint 0 by 5 degrees
 		case GLFW_KEY_0:
 			joints[0]->angle += 5.0f; break;

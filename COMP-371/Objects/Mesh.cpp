@@ -13,6 +13,7 @@
 #include "Mesh.h"
 #include "../Globals.h"
 #include "../Functions/Random.h"
+#include "../COMP-371.h"
 
 #define TEXTURE_PATH "Textures/horse.png"
 
@@ -210,7 +211,7 @@ void Mesh::setup()
 		}
 
 		//Set collider radius
-		collider->setRadius(radius);
+		collider->setRadius(radius * 0.8f);
 
 		//Raise set flag
 		set = true;
@@ -287,7 +288,7 @@ void Mesh::render(Shader* shader) const
 	}
 
 	//Animate model
-	animation->animate();
+	if (renderHord) { animation->animate(); }
 
 	//Render starting at the root
 	root->render(calculateModelMatrix(), shader);
@@ -357,7 +358,20 @@ mat4 Mesh::calculateModelMatrix() const
 void Mesh::randomize()
 {
 	//Randomize position
-	position = vec3(randomRange(-50, 50), position.y, randomRange(-50, 50));
+	bool valid;
+	do
+	{
+		position = vec3(randomRange(-50, 50), position.y, randomRange(-50, 50));
+		valid = true;
+		for (int i = 0; i < HORSE_COUNT; i++)
+		{
+			//Make sure the horse is not too close to other horses
+			Mesh* h = hord[i];
+			if (h == nullptr || h == this) { break; }
+			if (length(position - h->position) < 8.0f) { valid = false; break; }
+		}
+	} 
+	while (!valid);
 	scaleFactor = randomRangef(0.8f, 1.2f);
 	yRot = randomRangef(-180.0f, 180.0f);
 
