@@ -6,7 +6,7 @@ March 15th 2018
 
 ===== Compilation Information =====
 
-Compiled using Visual Studio 2017 (15.6.2), using the visual studio compilation tools v141, on Windows 10.
+Compiled using Visual Studio 2017 (15.6.6), using the visual studio compilation tools v141, on Windows 10.
 GLEW, GLFW, and GLM, and STBI have been configured to be in the project folder for compilation, for both lib and header files.
 Header files should be in ./Include, lib files should be in ./Lib, and glew32.dll in ./COMP-371, with the code files.
 A compiled binary for Windows is also given in ./Compiled, along with the necessary shader, mesh, and texture files.
@@ -41,6 +41,7 @@ T - Change polygons rendering mode to triangles
 L - Change polygons rendering mode to lines
 B - Toggles textures rendering
 X - Toggles shadows rendering
+H - Toggles horse troop rendering/animations
 
 0 - Bends head_to_neck joint +5 degrees
 1 - Bends neck_to_torso joint +5 degrees

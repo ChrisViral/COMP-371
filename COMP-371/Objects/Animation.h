@@ -1,3 +1,9 @@
+// Christophe Savard
+// 40017812
+// COMP-371 WW 
+// Term Project
+// April 12th 2018
+
 #pragma once
 
 //Forward declarations

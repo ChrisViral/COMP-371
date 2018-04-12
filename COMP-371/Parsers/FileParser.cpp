@@ -1,8 +1,8 @@
 // Christophe Savard
 // 40017812
 // COMP-371 WW 
-// Assignment 2
-// March 15th 2018
+// Term Project
+// April 12th 2018
 
 #include <fstream>
 #include <iostream>
