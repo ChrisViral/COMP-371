@@ -29,6 +29,11 @@ public:
 	 */
 	explicit Cube(Mesh* mesh);
 	/**
+	 * \brief Copy constructor, creates a copy of the given cube
+	 * \param cube Cube to copy
+	 */
+	Cube(const Cube& cube, Mesh* mesh);
+	/**
 	 * \brief Destructor, frees up used memory
 	 */
 	~Cube();
@@ -62,6 +67,8 @@ public:
 	 * \param shader Shader to use to render
 	 */
 	void render(glm::mat4 model, Shader* shader) const;
+	glm::mat4 calculateModelMatrix(glm::mat4 model) const;
+	void fillPoints(glm::mat4 model, std::vector<glm::vec3>& points);
 
 private:
 	//Info fields on the cube

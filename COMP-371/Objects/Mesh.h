@@ -10,6 +10,9 @@
 #include <GLFW/glfw3.h>
 #include "Cube.h"
 #include "Object.h"
+#include "Collider.h"
+
+#define POINTS 8
 
 /**
  * \brief Mesh hierarchical structure object
@@ -22,6 +25,11 @@ public:
 	 * \brief Creates a new empty Mesh object
 	 */
 	Mesh();
+	/**
+	 * \brief Copy constructor, creates a copy of the given Mesh
+	 * \param mesh Mesh to copy
+	 */
+	Mesh(const Mesh& mesh);
 	/**
 	 * \brief Mesh destructor, frees up used memory
 	 */
@@ -38,6 +46,11 @@ public:
 	 * \return VAO of this Mesh
 	 */
 	GLuint getVAO() const { return VAO; }
+	/**
+	 * \brief Gets the collider associated to this model
+	 * \return 
+	 */
+	Collider* getCollider() const { return collider; }
 
 	//Methods
 	/**
@@ -59,6 +72,10 @@ public:
 	 * \return	   The cube of the given name, or nullptr if it was not found
 	 */
 	Cube* findCube(const std::string& name) const;
+	glm::mat4 calculateModelMatrix() const;
+
+	//Verties for AABB calculation
+	static const glm::vec4 points[];
 
 private:
 	//Structs
@@ -82,6 +99,7 @@ private:
 	//Mesh info
 	State start;
 	Cube* root;
+	Collider* collider;
 
 	//Render values
 	glm::vec3 position;

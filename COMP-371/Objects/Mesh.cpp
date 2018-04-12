@@ -9,17 +9,21 @@
 #include <stb/stb_image.h>
 #include <iostream>
 #include <stack>
+#include <vector>
 #include "Mesh.h"
 #include "../Globals.h"
 
 #define TEXTURE_PATH "Textures/horse.png"
 
+using glm::max;
 using glm::radians;
 using glm::vec3;
+using glm::vec4;
 using glm::mat4;
 using std::cout;
 using std::endl;
 using std::stack;
+using std::vector;
 
 const GLfloat Mesh::vertices[] =
 {
@@ -77,14 +81,39 @@ const GLint Mesh::indices[] =
 	16, 17, 18,	//Top face
 	16, 18, 19,
 
-	23, 22, 21,	//Bottom face
-	23, 21, 20
+	23, 20, 21,	//Bottom face
+	23, 21, 22
 };
 
-Mesh::Mesh() : Object(), root(nullptr), position(vec3(0.0f)), size(vec3(0.0f)), scaleFactor(1.0f), yRot(0.0f), zRot(0.0f) { }
+const vec4 Mesh::points[] = 
+{
+	vec4( 0.5f,  0.5f,  0.5f, 1.0f),
+	vec4(-0.5f,  0.5f,  0.5f, 1.0f),
+	vec4( 0.5f, -0.5f,  0.5f, 1.0f),
+	vec4(-0.5f, -0.5f,  0.5f, 1.0f),
+	vec4( 0.5f,  0.5f, -0.5f, 1.0f),
+	vec4(-0.5f,  0.5f, -0.5f, 1.0f),
+	vec4( 0.5f, -0.5f, -0.5f, 1.0f),
+	vec4(-0.5f, -0.5f, -0.5f, 1.0f)
+};
+
+Mesh::Mesh() : Object(), root(nullptr), collider(new Collider(vec3(0.0f))), position(vec3(0.0f)), size(vec3(0.0f)),
+			   scaleFactor(1.0f), yRot(0.0f), zRot(0.0f) { }
+
+Mesh::Mesh(const Mesh& mesh) : Object(), scaleFactor(mesh.scaleFactor), yRot(mesh.yRot), zRot(mesh.zRot)
+{
+	start = mesh.start;
+	root = new Cube(*mesh.root, this);
+	collider = new Collider(*mesh.collider);
+	position = vec3(mesh.position);
+	size = vec3(mesh.size);
+}
 
 Mesh::~Mesh()
 {
+	//Delete the collider
+	delete collider;
+
 	//Delete root cube if any
 	if (root != nullptr)
 	{
@@ -166,6 +195,21 @@ void Mesh::setup()
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 
+		//Get all points of the mesh
+		vector<vec3> points;
+		root->fillPoints(calculateModelMatrix(), points);
+
+		//Get furthest point from center of the mesh
+		float radius = 0.0f;
+		for (const vec3 p : points)
+		{
+			radius = max(radius, length(position - p));
+		}
+
+		//Set collider
+		collider->setPosition(position);
+		collider->setRadius(radius);
+
 		//Raise set flag
 		set = true;
 	}
@@ -174,8 +218,6 @@ void Mesh::setup()
 void Mesh::render(Shader* shader) const
 {
 	//Constant values for the rendering
-	static const vec3 yAxis(0.0f, 1.0f, 0.0f);
-	static const vec3 zAxis(0.0f, 0.0f, 1.0f);
 	static const vec3 ambient(0.2f, 0.1f, 0.05f);
 	static const vec3 diffuse(0.7f, 0.25f, 0.1f);
 	static const vec3 specular(0.25f, 0.15f, 0.1f);
@@ -242,15 +284,8 @@ void Mesh::render(Shader* shader) const
 		}
 	}
 
-	//World position of the Mesh
-	mat4 model(1.0f);
-	model = translate(model, vec3(position.x, position.y * scaleFactor, position.z));	//Horse position on the grid
-	model = rotate(model, radians(yRot), yAxis);	//Yaw (side) rotation of the horse
-	model = rotate(model, radians(zRot), zAxis);	//Pitch (vertical) rotation of the horse
-	model = scale(model, size * scaleFactor);		//Scale factor of the horse
-
 	//Render starting at the root
-	root->render(model, shader);
+	root->render(calculateModelMatrix(), shader);
 
 	//Rendering end
 	glLineWidth(1.0f);
@@ -297,4 +332,19 @@ Cube* Mesh::findCube(const std::string& name) const
 	//Nothing found, return null
 	cout << "Cube of name " << name << " could not be found" << endl;
 	return nullptr;
+}
+
+mat4 Mesh::calculateModelMatrix() const
+{
+	//Rotation axises
+	static const vec3 yAxis(0.0f, 1.0f, 0.0f);
+	static const vec3 zAxis(0.0f, 0.0f, 1.0f);
+
+	//World position of the Mesh
+	mat4 model(1.0f);
+	model = translate(model, vec3(position.x, position.y * scaleFactor, position.z));	//Horse position on the grid
+	model = rotate(model, radians(yRot), yAxis);	//Yaw (side) rotation of the horse
+	model = rotate(model, radians(zRot), zAxis);	//Pitch (vertical) rotation of the horse
+	model = scale(model, size * scaleFactor);		//Scale factor of the horse
+	return model;
 }

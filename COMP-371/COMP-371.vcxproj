@@ -172,6 +172,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Objects\Collider.cpp" />
     <ClCompile Include="COMP-371.cpp" />
     <ClCompile Include="Functions\Input.cpp" />
     <ClCompile Include="Objects\Axis.cpp" />
@@ -189,6 +190,7 @@
     <ClCompile Include="Parsers\TextUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Objects\Collider.h" />
     <ClInclude Include="COMP-371.h" />
     <ClInclude Include="Functions\Input.h" />
     <ClInclude Include="Objects\Axis.h" />
