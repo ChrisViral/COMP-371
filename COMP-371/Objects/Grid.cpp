@@ -68,6 +68,8 @@ void Grid::setup()
 {
 	if (!set)
 	{
+		//This VAO/VBO/EBO setup is adapted from https://learnopengl.com/Getting-started/Hello-Triangle
+
 		//Generate containers
 		glGenVertexArrays(1, &VAO);
 		glGenBuffers(1, &VBO);

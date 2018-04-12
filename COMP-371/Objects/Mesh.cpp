@@ -139,6 +139,8 @@ void Mesh::setup()
 	//Only proceed if not set yet
 	if (!set)
 	{
+		//This VAO/VBO/EBO setup is adapted from https://learnopengl.com/Getting-started/Hello-Triangle
+
 		//Setup start state
 		start.position = vec3(position);
 		start.yRot = yRot;
@@ -361,7 +363,7 @@ void Mesh::randomize()
 	bool valid;
 	do
 	{
-		position = vec3(randomRange(-50, 50), position.y, randomRange(-50, 50));
+		position = vec3(randomRange(-40, 40), position.y, randomRange(-40, 40));
 		valid = true;
 		for (int i = 0; i < HORSE_COUNT; i++)
 		{

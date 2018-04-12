@@ -1,5 +1,7 @@
 #version 450 core
 
+//This shader has been adapted from https://learnopengl.com/Advanced-Lighting/Shadows/Point-Shadows
+
 //Fragment position from geometry shader
 in vec4 fragPosition;
 

@@ -56,6 +56,8 @@ string TextUtils::stripComment(const string text)
 
 string& TextUtils::trim(string &text)
 {
+	//This string trimmer is adapted from https://stackoverflow.com/a/217605/6313408
+
 	//Erase heading and trailing spaces
 	text.erase(text.begin(), find_if(text.begin(), text.end(), [](int c) { return !isspace(c); }));
 	text.erase(find_if(text.rbegin(), text.rend(), [](int c) { return !isspace(c); }).base(), text.end());

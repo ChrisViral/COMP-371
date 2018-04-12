@@ -8,6 +8,8 @@
 
 #include <glm/glm.hpp>
 
+//This Camera class is adapted from https://learnopengl.com/Getting-started/Camera
+
 /**
  * \brief Target focused Camera implementation, implemented with views angle
  */

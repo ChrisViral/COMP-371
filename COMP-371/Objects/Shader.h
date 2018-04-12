@@ -10,6 +10,8 @@
 #include <GL/glew.h>
 #include <string>
 
+//This Shader class is adapted from https://learnopengl.com/Getting-started/Shaders
+
 /**
  * \brief Shader Program wrapper object handling a Vertex and a Fragment lightingShader
  */

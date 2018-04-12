@@ -46,6 +46,8 @@ void Axis::setup()
 	//Do not generate more than once per lifetime
 	if (!set)
 	{
+		//This VAO/VBO/EBO setup is adapted from https://learnopengl.com/Getting-started/Hello-Triangle
+
 		//Generate containers
 		glGenVertexArrays(1, &VAO);
 		glGenBuffers(1, &VBO);

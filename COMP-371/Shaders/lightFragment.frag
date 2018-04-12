@@ -1,5 +1,8 @@
 #version 450 core
 
+//The lighting of this shader has been adapted from https://learnopengl.com/Lighting/Basic-Lighting
+//The shadows implementation from this shaders has been adapted from https://learnopengl.com/Advanced-Lighting/Shadows/Point-Shadows
+
 //Material
 struct Material
 {

@@ -7,7 +7,10 @@ Collider::Collider(Mesh* mesh) : mesh(mesh), radius(0.0f) { }
 
 Collider::Collider(const Collider& collider, Mesh* mesh) : mesh(mesh), radius(collider.radius) { }
 
-Collider::~Collider() { }
+Collider::~Collider()
+{
+	mesh = nullptr;
+}
 
 vec3 Collider::getPosition() const
 {

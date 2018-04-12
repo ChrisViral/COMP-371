@@ -15,5 +15,6 @@ float randomRangef(const float min, const float max)
 
 int randomSign()
 {
+	//Return -1 or 1 depending on random generation
 	return rand() / static_cast<double>(RAND_MAX) > 0.5 ? 1 : -1;
 }

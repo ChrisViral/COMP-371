@@ -222,6 +222,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		case GLFW_KEY_X:
 			useShadows = !useShadows; break;
 
+			//H - Toggle horse hord/animations
 		case GLFW_KEY_H:
 			renderHord = !renderHord; break;
 

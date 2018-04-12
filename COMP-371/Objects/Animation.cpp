@@ -25,16 +25,21 @@ Animation::Animation(const Animation& animation, Mesh* mesh) : mesh(mesh)
 	progress = animation.progress;
 }
 
-Animation::~Animation() { }
+Animation::~Animation()
+{
+	mesh = nullptr;
+}
 
 void Animation::animate()
 {
+	//Forward unit vector
 	static vec3 unit = vec3(1.0f, 0.0f, 0.0f);
 
 	switch (state)
 	{
 		case WALKING:
 		{
+			//Move forward according to frame time
 			vec3 movement = normalize(rotateY(unit, radians(mesh->yRot)));
 			float distance = deltaTime * speed;
 			const float p = steps - progress;
@@ -45,9 +50,9 @@ void Animation::animate()
 				progress = 0.0f;
 			}
 			else { progress += distance; }
-
 			movement *= distance;
 			mesh->position += movement;
+
 			//Get potential collisions
 			int index = -1;
 			vector<int> potential;
@@ -86,6 +91,7 @@ void Animation::animate()
 
 		case TURNING:
 		{
+			//Turn according to frame timing
 			float turn = deltaTime * rotSpeed;
 			const float p = rotation - progress;
 			if (abs(turn) > p)
@@ -103,6 +109,7 @@ void Animation::animate()
 
 		case WAITING:
 		{
+			//Wait a given amount of time before continuing
 			const float wait = deltaTime;
 			if (wait > waitTime - progress)
 			{
